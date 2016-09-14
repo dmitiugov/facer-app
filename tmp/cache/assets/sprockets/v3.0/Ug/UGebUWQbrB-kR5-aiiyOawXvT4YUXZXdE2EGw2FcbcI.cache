@@ -1,0 +1,16 @@
+{:uriI"áfile://app/assets/javascripts/events/_events.html?type=text/ng-html&id=bca0ea25c3015251156ed417361a43352c85a54f4e9d300437d515f8dc81348e:ET:load_pathI"app/assets/javascripts;T:filenameI"/app/assets/javascripts/events/_events.html;T:	nameI"events/_events;T:logical_pathI"events/_events.html;T:content_typeI"text/ng-html;T:sourceI"i<div class="page-header"> 
+  <h3>–ú–µ—Ä–æ–ø—Ä–∏—è—Ç–∏—è:</h3>
+    <ul ng-repeat="event in events.events track by $index">
+        <li>{{event.name}}</li>
+        <li>{{event.description}}</li>
+        <li>—Å–æ–∑–¥–∞–Ω: {{event.created_at | date:'dd-MM-yyyy'}}</li>
+    </ul>
+
+    <h3><a href="#/new-event">–°–æ–∑–¥–∞—Ç—å –º–µ—Ä–æ–ø—Ä–∏—è—Ç–∏–µ</a></h3>
+</div>
+
+;T:metadata{	:dependencieso:Set:
+@hash{
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"=file-digest://app/assets/javascripts/events/_events.html;TT:charsetI"
+utf-8;F:digest"%Ü\ûÄ Èbg.J¸'€ñá≈÷π2“ÌN‰µ“–°z:lengthii:dependencies_digest"%OºMî¥ôÛÅÀ¿∂Í:À¢ê_vO≈â¶¸‡h=´áfm:idI"Ebca0ea25c3015251156ed417361a43352c85a54f4e9d300437d515f8dc81348e;F:
+mtimel+(=’W

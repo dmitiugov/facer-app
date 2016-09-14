@@ -1,0 +1,17 @@
+<div class="page-header" ng-if="events.events">
+  <h3>Мероприятия:</h3>
+    <ul ng-repeat="event in events.events track by $index">
+        <li ng-if="event.name">{{event.name}}</li>
+        <li ng-if="event.description">{{event.description}}</li>
+        <li ng-if="event.date">{{event.date}}</li>
+        <li ng-if="event.created_at">создан: {{event.created_at | date:'dd-MM-yyyy'}}</li>
+        <li>{{event.id}}</li>
+        <ul ng-if="event.guests" ng-repeat="guest in event.guests">
+            <li>{{guest.name}} {{guest.surname}}</li>
+        </ul>
+        <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>Delete Event!</a>
+    </ul>
+
+    <h3><a href="#/new-event">Создать мероприятие</a></h3>
+</div>
+

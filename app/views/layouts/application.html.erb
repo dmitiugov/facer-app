@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FlapperNews</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+<body ng-app="flapperNews">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div ng-include="'nav/_nav.html'"></div>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <ui-view></ui-view>
+    </div>
+  </div>
+</body>
+
+</html>
