@@ -39,6 +39,17 @@ function($stateProvider, $urlRouterProvider) {
       }      
     })
 
+      .state('events-show', {
+          url: '/events/{id}',
+          templateUrl: 'events/_show-event.html',
+          controller: 'ShowEventCtrl',
+          resolve: {
+              post: ['$stateParams', 'events', function($stateParams, events) {
+                  return events.get($stateParams.id);
+              }]
+          }
+      })
+
       .state('new-event', {
           url: '/new-event',
           templateUrl: 'events/_new-event.html',
@@ -72,5 +83,5 @@ function($stateProvider, $urlRouterProvider) {
       }]
     });
     
-  $urlRouterProvider.otherwise('login');
+  //$urlRouterProvider.otherwise('login');
 }]);

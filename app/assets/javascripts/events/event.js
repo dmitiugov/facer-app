@@ -1,9 +1,10 @@
 angular.module('flapperNews').factory('events', ['$http', function($http){
 var o = {
     events: [  
+    ],
+    event: [
     ]
   };
-
   o.getAll = function() {
   		return $http.get('/events.json').success(function(data){
       	angular.copy(data, o.events);
@@ -21,6 +22,11 @@ var o = {
             console.log("Event has been deleted!")
         });
     };
-  //console.log(o)
+    o.get = function(id) {
+        return $http.get('/events/' + id + '.json').then(function(res){
+            angular.copy(res.data, o.event);
+        });
+    };
+    //console.log(o)
 return o;
 }])
