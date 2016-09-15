@@ -1,39 +1,63 @@
-<h1>New Event</h1>
-<h4>{{$scope.flash}}</h4>
-<form ng-submit="addEvent()"
-      style="margin-top:30px;">
+<div class="row-fluid">
+    <div class="col-md-12">
+        <h1>New Event</h1>
+        <div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
+        <form ng-submit="addEvent()"
+              style="margin-top:30px;">
 
-    <div class="form-group">
-        <input type="text"
-               class="form-control"
-               placeholder="Title"
-               ng-model="name"></input>
-    </div>
-    <div class="form-group">
-        <input type="text"
-               class="form-control"
-               placeholder="Date"
-               ng-model="date"></input>
-    </div>
-    <div class="form-group">
+            <div class="form-group">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Title"
+                       ng-model="name"></input>
+            </div>
+            <div class="form-group">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Date"
+                       ng-model="date"></input>
+            </div>
+            <div class="form-group">
         <textarea type="text"
-               class="form-control"
-               placeholder="Description"
-               ng-model="description"></textarea>
-    </div>
+                  class="form-control"
+                  placeholder="Description"
+                  ng-model="description"></textarea>
+            </div>
 
-    <button type="submit" class="btn btn-primary">Event</button>
-</form>
-<div>
-    <h4>Добавленные гости:</h4>
-    <ul ng-repeat="guest in guests track by $index">
-        <li>{{guest.name}}</li>
-    </ul>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+
+        </form>
+    </div>
 </div>
-<div class="form-group">
-    <input type="text"
-           class="form-control"
-           placeholder="Guest1"
-           ng-model="guest.name"></input>
+<div class="clearfix"></div>
+<br><br>
+<div class="row-fluid">
+    <div class="col-md-4">
+        <div class="form-group">
+         <input type="text"
+               class="form-control"
+               placeholder="Name"
+               ng-model="guest.name"></input>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <input type="text"
+               class="form-control"
+               placeholder="Surname"
+               ng-model="guest.surname"></input>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button ng-click="addGuest()">+</button>
+    </div>
 </div>
-<button ng-click="addGuest()">Add guest</button>
+
+<div class="row-fluid">
+    <div class="col-md-12">
+        <h4>Добавленные гости:</h4>
+        <ul ng-repeat="guest in guests track by $index">
+            <li>{{guest.name}} {{guest.surname}}</li>
+        </ul>
+    </div>
+</div>

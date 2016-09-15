@@ -12,7 +12,7 @@ class EventsController < ApplicationController
     @event = Event.create(event_params)
     #byebug
     @guests = guests_params[:guests].map { |guest|
-      Guest.create(name: guest[:name], event: @event)
+      Guest.create(name: guest[:name], surname: guest[:surname], event: @event)
     }
 
     respond_with @event
@@ -41,6 +41,6 @@ class EventsController < ApplicationController
   end
 
   def guests_params
-    params.permit(guests: [:name])
+    params.permit(guests: [:name, :surname])
   end
 end

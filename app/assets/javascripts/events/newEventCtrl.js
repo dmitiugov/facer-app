@@ -23,6 +23,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             });
             //console.log($scope)
             $scope.name = '';
+            $scope.surname = '';
             $scope.description = '';
             $scope.date = '';
             $scope.guests = [];
