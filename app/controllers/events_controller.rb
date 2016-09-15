@@ -2,7 +2,6 @@ class EventsController < ApplicationController
   respond_to :json
   before_filter :authenticate_user!
 
-
 	def index
     respond_with Event.all
   end
@@ -10,7 +9,13 @@ class EventsController < ApplicationController
     respond_with Event.find(params[:id])
   end
   def create
-    respond_with Event.create(event_params)
+    @event = Event.create(event_params)
+    #byebug
+    @guests = guests_params[:guests].map { |guest|
+      Guest.create(name: guest[:name], event: @event)
+    }
+
+    respond_with @event
   end
 
   def destroy
@@ -35,5 +40,7 @@ class EventsController < ApplicationController
     params.require(:event).permit(:name, :description, :date)
   end
 
-
+  def guests_params
+    params.permit(guests: [:name])
+  end
 end

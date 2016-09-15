@@ -21,5 +21,19 @@
                placeholder="Description"
                ng-model="description"></textarea>
     </div>
+
     <button type="submit" class="btn btn-primary">Event</button>
 </form>
+<div>
+    <h4>Добавленные гости:</h4>
+    <ul ng-repeat="guest in guests track by $index">
+        <li>{{guest.name}}</li>
+    </ul>
+</div>
+<div class="form-group">
+    <input type="text"
+           class="form-control"
+           placeholder="Guest1"
+           ng-model="guest.name"></input>
+</div>
+<button ng-click="addGuest()">Add guest</button>
