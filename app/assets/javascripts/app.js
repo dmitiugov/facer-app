@@ -1,4 +1,4 @@
-angular.module('flapperNews', ['ui.router', 'templates', 'Devise']).config([
+angular.module('flapperNews', ['ui.router', 'templates', 'Devise', 'datePicker']).config([
 '$stateProvider',
 '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {

@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require bootstrap/dist/css/bootstrap
+ *= require angular-datepicker/dist/angular-datepicker
  *= require_tree .
  *= require_self
  */

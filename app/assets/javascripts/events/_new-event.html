@@ -12,10 +12,14 @@
                        ng-model="name"></input>
             </div>
             <div class="form-group">
-                <input type="text"
-                       class="form-control"
-                       placeholder="Date"
-                       ng-model="date"></input>
+
+                <input class="form-control" date-time ng-model="dates.today"
+                                           id="pickerMinSelector"
+                                           date-change="changeMinMax"
+                                           max-date="maxDate" view="date"
+                                           timezone="UTC"
+                                           format="lll"
+                >
             </div>
             <div class="form-group">
         <textarea type="text"
@@ -61,3 +65,5 @@
         </ul>
     </div>
 </div>
+
+

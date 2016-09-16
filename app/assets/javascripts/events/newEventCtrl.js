@@ -18,7 +18,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             events.create({
                 name: $scope.name,
                 description: $scope.description,
-                date: $scope.date,
+                date: $scope.dates.today._d,
                 guests: $scope.guests,
             });
             //console.log($scope)
@@ -31,5 +31,12 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         };
 
 
-
+        $scope.dates = {
+            today: moment.tz('UTC').hour(12).startOf('h'), //12:00 UTC, today.
+            //minDate: moment.tz('UTC').add(-4, 'd').hour(12).startOf('h'), //12:00 UTC, four days ago.
+            //maxDate: moment.tz('UTC').add(4, 'd').hour(12).startOf('h'), //12:00 UTC, in four days.
+        };
+        /*$scope.consoleDate = function(){
+            console.log($scope.dates.today._d)
+        }*/
     }])
