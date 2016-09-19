@@ -2,19 +2,33 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     '$scope',
     'events',
     'Auth',
-    function($scope, events){
+    'Upload',
+    function($scope, events, Auth, Upload){
+//console.log(Upload)
+
+
+
+        $scope.upload = function(file){
+            Upload.upload({
+                url: 'event_files/',
+                method: 'POST',
+                image: file,
+                fileFormDataName: 'event_file[image]'
+            });
+        };
+
         $scope.flash = ''
         $scope.events=events
         $scope.guests = [];
-        console.log($scope.events)
+        //console.log($scope.events)
         $scope.addGuest = function(){
-            console.log($scope.guest)
+            //console.log($scope.guest)
             $scope.guests.push($scope.guest);
             $scope.guest = '';
             console.log($scope.guests)
         }
         $scope.addEvent = function(){
-            console.log($scope.guests)
+            //console.log($scope.guests)
             events.create({
                 name: $scope.name,
                 description: $scope.description,
@@ -39,4 +53,5 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         /*$scope.consoleDate = function(){
             console.log($scope.dates.today._d)
         }*/
+
     }])

@@ -1,19 +1,0 @@
-{:uriI"‡file://app/assets/javascripts/events/_events.html?type=text/ng-html&id=13634f1f886bf2115c10d42e14bbbc3e44f09b060a5a7c3b3ddd57614b0b4d81:ET:load_pathI"app/assets/javascripts;T:filenameI"/app/assets/javascripts/events/_events.html;T:	nameI"events/_events;T:logical_pathI"events/_events.html;T:content_typeI"text/ng-html;T:sourceI"o<div class="page-header" ng-if="events.events">
-  <h3>ĞœĞµÑ€Ğ¾Ğ¿Ñ€Ğ¸ÑÑ‚Ğ¸Ñ:</h3>
-    <ul ng-repeat="event in events.events track by $index">
-        <li ng-if="event.name">{{event.name}}</li>
-        <li ng-if="event.description">{{event.description}}</li>
-        <li ng-if="event.date">{{event.date}}</li>
-        <li ng-if="event.created_at">ÑĞ¾Ğ·Ğ´Ğ°Ğ½: {{event.created_at | date:'dd-MM-yyyy'}}</li>
-        <li>{{event.id}}</li>
-        <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>Delete Event!</a>
-    </ul>
-
-    <h3><a href="#/new-event">Ğ¡Ğ¾Ğ·Ğ´Ğ°Ñ‚ÑŒ Ğ¼ĞµÑ€Ğ¾Ğ¿Ñ€Ğ¸ÑÑ‚Ğ¸Ğµ</a></h3>
-</div>
-
-;T:metadata{	:dependencieso:Set:
-@hash{
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"=file-digest://app/assets/javascripts/events/_events.html;TT:charsetI"
-utf-8;F:digest"%»wO¾ƒ–%MĞë™3eeñOÖ’fò¢j%:lengthio:dependencies_digest"%±£ğ¹¸=óI‚·/HÁñÏ+Û‡|™Åşp`²Åï:idI"E13634f1f886bf2115c10d42e14bbbc3e44f09b060a5a7c3b3ddd57614b0b4d81;F:
-mtimel+ØW

@@ -6,6 +6,7 @@ gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 gem 'rails_admin'
+gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
 # Use SCSS for stylesheets
 gem 'angular-rails-templates'
 gem 'sass-rails', '~> 5.0'
@@ -19,7 +20,8 @@ gem 'responders', '~> 2.0'
 gem 'angular_rails_csrf'
 gem 'pry'
 gem 'devise', '~> 3.4.0'
-
+gem 'angular-ui-bootstrap-rails'
+gem 'interact-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

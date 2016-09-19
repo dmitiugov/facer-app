@@ -1,8 +1,11 @@
 //= require angular
 //= require angular-rails-templates
 //= require angular-ui-router
+//= require angular-ui-bootstrap-tpls
+//= require interact
 //= require angular-devise
 //= require angular-datepicker
 //= require moment
 //= require moment-timezone
+//= require ng-file-upload
 //= require_tree .

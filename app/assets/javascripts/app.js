@@ -1,4 +1,4 @@
-angular.module('flapperNews', ['ui.router', 'templates', 'Devise', 'datePicker']).config([
+angular.module('flapperNews', ['ui.router', 'templates', 'Devise', 'datePicker', 'ngFileUpload']).config([
 '$stateProvider',
 '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {

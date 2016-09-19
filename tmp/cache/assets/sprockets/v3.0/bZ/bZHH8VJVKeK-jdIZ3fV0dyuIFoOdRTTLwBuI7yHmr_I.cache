@@ -1,29 +1,0 @@
-{:uriI"Šfile://app/assets/javascripts/events/_new-event.html?type=text/ng-html&id=6eeb1d0ba14887c52161955a308924db41f982b1ebfcc7519ff4d56ccdceb58f:ET:load_pathI"app/assets/javascripts;T:filenameI"2app/assets/javascripts/events/_new-event.html;T:	nameI"events/_new-event;T:logical_pathI"events/_new-event.html;T:content_typeI"text/ng-html;T:sourceI"Û<h1>New Event</h1>
-<h4>{{$scope.flash}}</h4>
-<form ng-submit="addEvent()"
-      style="margin-top:30px;">
-
-    <div class="form-group">
-        <input type="text"
-               class="form-control"
-               placeholder="Title"
-               ng-model="name"></input>
-    </div>
-    <div class="form-group">
-        <input type="text"
-               class="form-control"
-               placeholder="Date"
-               ng-model="date"></input>
-    </div>
-    <div class="form-group">
-        <textarea type="text"
-               class="form-control"
-               placeholder="Description"
-               ng-model="description"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Event</button>
-</form>;T:metadata{	:dependencieso:Set:
-@hash{
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"@file-digest://app/assets/javascripts/events/_new-event.html;TT:charsetI"
-utf-8;F:digest"%¾oGQËR_úã©IÕ+ÜçS3áœš#x±²[-c:lengthiÛ:dependencies_digest"%u›¬xîeNÎTV0b:_äêè…yf3\©:idI"E6eeb1d0ba14887c52161955a308924db41f982b1ebfcc7519ff4d56ccdceb58f;F:
-mtimel+ÏØW

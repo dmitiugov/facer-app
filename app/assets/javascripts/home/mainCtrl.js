@@ -1,8 +1,11 @@
 angular.module('flapperNews').controller('MainCtrl', [
 '$scope',
 'posts',
-function($scope, posts){
+    'Upload',
+function($scope, posts, Upload){
+    //console.log(Upload)
   $scope.test = 'Hello world!';
+    //console.log($scope.test)
 	$scope.posts = posts.posts;
 	$scope.addPost = function(){
 	  if(!$scope.title || $scope.title === '') { return; }

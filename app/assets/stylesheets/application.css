@@ -12,6 +12,7 @@
  *
  *= require bootstrap/dist/css/bootstrap
  *= require angular-datepicker/dist/angular-datepicker
+ *= require font-awesome
  *= require_tree .
  *= require_self
  */

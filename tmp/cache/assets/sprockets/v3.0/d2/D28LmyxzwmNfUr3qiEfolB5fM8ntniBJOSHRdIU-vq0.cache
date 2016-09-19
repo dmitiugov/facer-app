@@ -1,23 +1,0 @@
-{:uriI"Šfile://app/assets/javascripts/events/_new-event.html?type=text/ng-html&id=b393820d91d72e301ee03eb81e04e59353c71790301471a43c527f5ba4565d5f:ET:load_pathI"app/assets/javascripts;T:filenameI"2app/assets/javascripts/events/_new-event.html;T:	nameI"events/_new-event;T:logical_pathI"events/_new-event.html;T:content_typeI"text/ng-html;T:sourceI"<h1>New Event</h1>
-
-<form ng-submit="addEvent()"
-      style="margin-top:30px;">
-
-    <div class="form-group">
-        <input type="text"
-               class="form-control"
-               placeholder="Title"
-               ng-model="name"></input>
-    </div>
-    <div class="form-group">
-        <textarea type="text"
-               class="form-control"
-               placeholder="Description"
-               ng-model="description"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Event</button>
-</form>;T:metadata{	:dependencieso:Set:
-@hash{
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"@file-digest://app/assets/javascripts/events/_new-event.html;TT:charsetI"
-utf-8;F:digest"%Sd]-„:Â6Ý<¼/¬®©67§¼«£7Gª¢c:lengthi:dependencies_digest"%	È±É1˜õÏ.¾B?”ëÉÏä¿™ÄBž±¥:idI"Eb393820d91d72e301ee03eb81e04e59353c71790301471a43c527f5ba4565d5f;F:
-mtimel+D?ÕW
