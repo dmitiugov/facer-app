@@ -22,5 +22,11 @@ module FlapperNews
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    config.before_initialize do
+      dev = File.join(Rails.root, 'config', 'config.yml')
+      YAML.load(File.open(dev)).each do |key,value|
+        ENV[key.to_s] = value
+      end if File.exists?(dev)
+    end
   end
 end

@@ -4,7 +4,10 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'sqlite3', group: :development
+gem 'pg', group: :production
+gem 'rails_12factor', group: :production
+#gem 'pg', '0.18.1', group: :production
 gem 'rails_admin'
 gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
 # Use SCSS for stylesheets
@@ -22,6 +25,7 @@ gem 'pry'
 gem 'devise', '~> 3.4.0'
 gem 'angular-ui-bootstrap-rails'
 gem 'interact-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -9,6 +9,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
 
 
         $scope.upload = function(file){
+            console.log(file)
             Upload.upload({
                 url: 'event_files/',
                 method: 'POST',
