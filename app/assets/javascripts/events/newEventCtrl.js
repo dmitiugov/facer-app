@@ -11,7 +11,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         $scope.upload = function(file){
             console.log(file)
             Upload.upload({
-                url: 'event_files/',
+                url: 'events.json',
                 method: 'POST',
                 image: file,
                 fileFormDataName: 'event_file[image]'

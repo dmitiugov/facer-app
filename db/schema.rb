@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919090551) do
+ActiveRecord::Schema.define(version: 20160921132818) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "body"
@@ -34,10 +34,13 @@ ActiveRecord::Schema.define(version: 20160919090551) do
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "date"
-    t.string   "afisha"
+    t.string   "afisha_file_name"
+    t.string   "afisha_content_type"
+    t.integer  "afisha_file_size"
+    t.datetime "afisha_updated_at"
   end
 
   create_table "guests", force: :cascade do |t|

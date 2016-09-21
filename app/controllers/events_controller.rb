@@ -1,11 +1,13 @@
 class EventsController < ApplicationController
+
   respond_to :json
   before_filter :authenticate_user!
 
 	def index
     respond_with Event.all
   end
-  def show         
+  def show
+    #@afisha_path = Event.find(params[:id]).afisha_url(:small)
     respond_with Event.find(params[:id])
   end
   def create
@@ -36,7 +38,7 @@ class EventsController < ApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:name, :description, :date)
+    params.require(:event).permit(:name, :description, :date, :afisha)
   end
   def guests_params
     params.permit(guests: [:name, :surname])

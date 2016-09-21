@@ -9,7 +9,7 @@ gem 'pg', group: :production
 gem 'rails_12factor', group: :production
 #gem 'pg', '0.18.1', group: :production
 gem 'rails_admin'
-gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
+gem "paperclip", "~> 5.0.0"
 # Use SCSS for stylesheets
 gem 'angular-rails-templates'
 gem 'sass-rails', '~> 5.0'
