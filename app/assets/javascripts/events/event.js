@@ -12,11 +12,19 @@ var o = {
     });
   };
   o.create = function(event) {
-      console.log(event)
+      //console.log(event)
         return $http.post('/events.json', event).success(function(data){
             //o.events.push(data);
         });
     };
+
+  o.edit = function(event) {
+        console.log(event)
+        return $http.put('/events/'+ event.id + '.json', event).success(function(data){
+            console.log("Event has been updated!")
+        });
+    };
+
     o.destroy = function(event) {
         return $http.delete('/events/' + event.id + '.json').success(function(data){
             console.log("Event has been deleted!")

@@ -50,6 +50,16 @@ function($stateProvider, $urlRouterProvider) {
           }
       })
 
+      .state('events-edit', {
+          url: '/events/edit/{id}',
+          templateUrl: 'events/_new-event.html',
+          controller: 'EditEventCtrl',
+          resolve: {
+              post: ['$stateParams', 'events', function($stateParams, events) {
+                  return events.get($stateParams.id);
+              }]
+          }
+      })
 
       .state('new-event', {
           url: '/new-event',

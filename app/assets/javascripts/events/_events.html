@@ -7,6 +7,7 @@
         <li><img ng-src="{{event.file}}" width="100"></li>
         <li ng-if="event.created_at">создан: {{event.created_at | date:'dd-MM-yyyy'}}</li>
         <li>{{event.id}}</li>
+        <li><a href="#/events/edit/{{event.id}}">Edit</a></li>
         <div ng-show="event.guests.length">
             <h4>Guests:</h4>
             <ul ng-repeat="guest in event.guests">

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   get    'login'   => 'application#angular'
   root 'application#angular'
-  resources :events, only: [:create, :index, :show, :destroy]
+  resources :events, only: [:create, :index, :show, :destroy, :update]
   resources :guests, only: [:create, :index, :show, :destroy]
   resources :event_files, only: [:create]
   resources :posts, only: [:create, :index, :show] do

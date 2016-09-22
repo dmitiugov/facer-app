@@ -18,21 +18,20 @@ class EventsController < ApplicationController
     respond_with @event
   end
 
-  def saveEvent
-    @event = Event.new(file_params)
-    if @event.save
-      render json: {success: true}
-    else
-      render json: @event.errors
-    end
+  def edit
+    respond_with Event.find(params[:id])
   end
 
-
+  def update
+    @event = Event.find(params[:id])
+    @event.update!(event_params)
+    respond_with @event
+  end
 
   def destroy
     @event = Event.find(params[:id])
     @event.destroy
-
+    respond_with @event
   end
 
   def authenticate_user!
