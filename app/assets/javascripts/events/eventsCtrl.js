@@ -2,9 +2,7 @@ angular.module('flapperNews').controller('EventsCtrl', [
 '$scope',
 'events',
     'Auth',
-    'Upload',
-function($scope, events, Auth, Upload){
-    console.log(Upload)
+function($scope, events, Auth){
     $scope.auth = Auth.isAuthenticated()
     //console.log($scope.auth)
 	$scope.events=events

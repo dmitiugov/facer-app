@@ -4,19 +4,22 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     'Auth',
     'Upload',
     function($scope, events, Auth, Upload){
-//console.log(Upload)
-
-
-
-        $scope.upload = function(file){
-            console.log(file)
-            Upload.upload({
-                url: 'events.json',
-                method: 'POST',
-                image: file,
-                fileFormDataName: 'event_file[image]'
-            });
-        };
+        Auth.currentUser().then(function(user) {
+            // User was logged in, or Devise returned
+            // previously authenticated session.
+            $scope.user_name = user.username;
+        }, function(error) {
+            // unauthenticated error
+        });
+        $scope.upload = function (file) {
+                $scope.upload = Upload.upload({
+                    url: '/events.json',
+                    method: 'POST',
+                    fields: { 'user[name]': $scope.user_name, name: $scope.name, description: $scope.description, date: $scope.dates.today._d, guests: $scope.guests },
+                    file: file,
+                    fileFormDataName: 'user[image]'
+                });
+        }
 
         $scope.flash = ''
         $scope.events=events
@@ -30,12 +33,16 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         }
         $scope.addEvent = function(){
             //console.log($scope.guests)
-            events.create({
+            if ($scope.file) {
+                console.log($scope.file)
+                $scope.upload($scope.file);
+            }
+            /*events.create({
                 name: $scope.name,
                 description: $scope.description,
                 date: $scope.dates.today._d,
                 guests: $scope.guests,
-            });
+            });*/
             //console.log($scope)
             $scope.name = '';
             $scope.surname = '';

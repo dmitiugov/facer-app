@@ -1,79 +1,0 @@
-{:uriI"Šfile://app/assets/javascripts/events/_new-event.html?type=text/ng-html&id=360f3266189d1a7179b8cece05096f0aaad0deac92c6c0c70b749a61cd528066:ET:load_pathI"app/assets/javascripts;T:filenameI"2app/assets/javascripts/events/_new-event.html;T:	nameI"events/_new-event;T:logical_pathI"events/_new-event.html;T:content_typeI"text/ng-html;T:sourceI"%	<div class="row-fluid">
-    <div class="col-md-12">
-        <h1>New Event</h1>
-        <div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
-        <form ng-submit="addEvent()"
-              style="margin-top:30px;">
-            <div class="form-group">
-
-            </div>
-
-
-            <div class="form-group">
-                <input type="text"
-                       class="form-control"
-                       placeholder="Title"
-                       ng-model="name"></input>
-            </div>
-            <div class="form-group">
-
-                <input class="form-control" date-time ng-model="dates.today"
-                                           id="pickerMinSelector"
-                                           date-change="changeMinMax"
-                                           max-date="maxDate" view="date"
-                                           timezone="UTC"
-                                           format="lll"
-                >
-            </div>
-            <div class="form-group">
-        <textarea type="text"
-                  class="form-control"
-                  placeholder="Description"
-                  ng-model="description"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Ğ”Ğ¾Ğ±Ğ°Ğ²Ğ¸Ñ‚ÑŒ</button>
-
-        </form>
-    </div>
-</div>
-<div class="clearfix"></div>
-<br><br>
-<div class="row-fluid">
-    <div class="col-md-4">
-        <div class="form-group">
-         <input type="text"
-               class="form-control"
-               placeholder="Name"
-               ng-model="guest.name"></input>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <input type="text"
-               class="form-control"
-               placeholder="Surname"
-               ng-model="guest.surname"></input>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <button ng-click="addGuest()">+</button>
-    </div>
-</div>
-
-<div class="row-fluid">
-    <div class="col-md-12">
-        <h4>Ğ”Ğ¾Ğ±Ğ°Ğ²Ğ»ĞµĞ½Ğ½Ñ‹Ğµ Ğ³Ğ¾ÑÑ‚Ğ¸:</h4>
-        <ul ng-repeat="guest in guests track by $index">
-            <li>{{guest.name}} {{guest.surname}}</li>
-        </ul>
-    </div>
-</div>
-<div class="clearfix"></div>
-<h4>File upload</h4>
-<div class="button" ngf-select="upload($file)">Upload on file select</div>
-;T:metadata{	:dependencieso:Set:
-@hash{
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"@file-digest://app/assets/javascripts/events/_new-event.html;TT:charsetI"
-utf-8;F:digest"%¿Ô1pÇô‹âÅyõƒİ?¥˜T‡/½J-R±‚~Å:lengthi%	:dependencies_digest"%Ò2ØÂ»öã¢Ûé§+×¡×L(öI&ÁNëUX‘øÓØL:idI"E360f3266189d1a7179b8cece05096f0aaad0deac92c6c0c70b749a61cd528066;F:
-mtimel+ıÚßW

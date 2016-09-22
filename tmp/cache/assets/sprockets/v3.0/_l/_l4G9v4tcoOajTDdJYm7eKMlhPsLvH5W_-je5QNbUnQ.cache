@@ -1,0 +1,28 @@
+{:uriI"‡file://app/assets/javascripts/events/_events.html?type=text/ng-html&id=f30844a0556383a1ccc5b240bd3de067826f04754889936d1695d673373b86c3:ET:load_pathI"app/assets/javascripts;T:filenameI"/app/assets/javascripts/events/_events.html;T:	nameI"events/_events;T:logical_pathI"events/_events.html;T:content_typeI"text/ng-html;T:sourceI"ª<div class="page-header" >
+  <h3>ĞœĞµÑ€Ğ¾Ğ¿Ñ€Ğ¸ÑÑ‚Ğ¸Ñ:</h3>
+    <ul ng-if="auth" ng-repeat="event in events.events track by $index">
+        <li ng-if="event.name"><a ng-href="#/events/{{event.id}}">{{event.name}}</a></li>
+        <li ng-if="event.description">{{event.description}}</li>
+        <li ng-if="event.date">{{event.date}}</li>
+        <li><img ng-src="{{event.file}}" width="100"></li>
+        <li ng-if="event.created_at">ÑĞ¾Ğ·Ğ´Ğ°Ğ½: {{event.created_at | date:'dd-MM-yyyy'}}</li>
+        <li>{{event.id}}</li>
+        <div ng-show="event.guests.length">
+            <h4>Guests:</h4>
+            <ul ng-repeat="guest in event.guests">
+                <li>{{guest.name}} {{guest.surname}}</li>
+            </ul>
+        </div>
+
+        <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>Delete Event!</a>
+    </ul>
+
+    <h3><a href="#/new-event">Ğ¡Ğ¾Ğ·Ğ´Ğ°Ñ‚ÑŒ Ğ¼ĞµÑ€Ğ¾Ğ¿Ñ€Ğ¸ÑÑ‚Ğ¸Ğµ</a></h3>
+</div>
+
+<hr>
+<br>;T:metadata{	:dependencieso:Set:
+@hash{
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"=file-digest://app/assets/javascripts/events/_events.html;TT:charsetI"
+utf-8;F:digest"%YšaiYï´F9¤$åc©ï©ìŠe1jõäœ#‚À‡[÷:lengthiª:dependencies_digest"%æKx Z×%SèÉÁªâßQóYñQpd;Q™ÉáDê:idI"Ef30844a0556383a1ccc5b240bd3de067826f04754889936d1695d673373b86c3;F:
+mtimel+çãW

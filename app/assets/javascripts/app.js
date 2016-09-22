@@ -50,6 +50,7 @@ function($stateProvider, $urlRouterProvider) {
           }
       })
 
+
       .state('new-event', {
           url: '/new-event',
           templateUrl: 'events/_new-event.html',

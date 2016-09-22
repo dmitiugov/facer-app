@@ -7,17 +7,27 @@ class EventsController < ApplicationController
     respond_with Event.all
   end
   def show
-    #@afisha_path = Event.find(params[:id]).afisha_url(:small)
     respond_with Event.find(params[:id])
   end
   def create
     @event = Event.create(event_params)
-    #byebug
-    @guests = guests_params[:guests].map { |guest|
-      Guest.create(name: guest[:name], surname: guest[:surname], event: @event)
-    }
+    @guests = guests_params[:guests].each do |guest|
+      #byebug
+      Guest.create(name: guest[1][:name], surname: guest[1][:surname], event: @event)
+    end
     respond_with @event
   end
+
+  def saveEvent
+    @event = Event.new(file_params)
+    if @event.save
+      render json: {success: true}
+    else
+      render json: @event.errors
+    end
+  end
+
+
 
   def destroy
     @event = Event.find(params[:id])
@@ -38,7 +48,7 @@ class EventsController < ApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:name, :description, :date, :afisha)
+    params.permit(:name, :description, :date, :file)
   end
   def guests_params
     params.permit(guests: [:name, :surname])
