@@ -8,5 +8,4 @@
 //= require moment
 //= require moment-timezone
 //= require ng-file-upload
-//= require angularjs-file-upload
 //= require_tree .

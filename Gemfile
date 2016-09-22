@@ -10,7 +10,6 @@ gem 'rails_12factor', group: :production
 #gem 'pg', '0.18.1', group: :production
 gem 'rails_admin'
 gem "paperclip", "~> 5.0.0"
-gem 'angularjs-file-upload-rails', '~> 2.2.0'
 # Use SCSS for stylesheets
 gem 'angular-rails-templates'
 gem 'sass-rails', '~> 5.0'
