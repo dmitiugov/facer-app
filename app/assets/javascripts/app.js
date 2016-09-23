@@ -50,6 +50,7 @@ function($stateProvider, $urlRouterProvider) {
           }
       })
 
+
       .state('events-edit', {
           url: '/events/edit/{id}',
           templateUrl: 'events/_new-event.html',
@@ -69,6 +70,18 @@ function($stateProvider, $urlRouterProvider) {
               eventPromise: ['events',
                   function(events){
                       return events.getAll();
+                  }]
+          }
+      })
+
+      .state('special_guests', {
+          url: '/special_guests',
+          templateUrl: 'special-guests/_special-guests.html',
+          controller: 'specialGuestsCtrl',
+          resolve: {
+              eventPromise: ['special_guests',
+                  function(special_guests){
+                      return special_guests.getAll();
                   }]
           }
       })

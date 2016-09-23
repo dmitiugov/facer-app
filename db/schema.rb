@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922141946) do
+ActiveRecord::Schema.define(version: 20160923084646) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "body"
@@ -43,6 +43,22 @@ ActiveRecord::Schema.define(version: 20160922141946) do
     t.datetime "file_updated_at"
   end
 
+  create_table "events_parts", id: false, force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "special_guest_id"
+  end
+
+  add_index "events_parts", ["event_id"], name: "index_events_parts_on_event_id"
+  add_index "events_parts", ["special_guest_id"], name: "index_events_parts_on_special_guest_id"
+
+  create_table "events_special_guests", id: false, force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "special_guest_id"
+  end
+
+  add_index "events_special_guests", ["event_id"], name: "index_events_special_guests_on_event_id"
+  add_index "events_special_guests", ["special_guest_id"], name: "index_events_special_guests_on_special_guest_id"
+
   create_table "guests", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "name"
@@ -65,6 +81,18 @@ ActiveRecord::Schema.define(version: 20160922141946) do
   end
 
   add_index "posts", ["user_id"], name: "index_posts_on_user_id"
+
+  create_table "special_guests", force: :cascade do |t|
+    t.string   "name"
+    t.string   "surname"
+    t.string   "bio"
+    t.string   "description"
+    t.boolean  "inside"
+    t.boolean  "outside"
+    t.integer  "age"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
