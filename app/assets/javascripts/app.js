@@ -86,6 +86,17 @@ function($stateProvider, $urlRouterProvider) {
           }
       })
 
+      .state('show-special_guests', {
+          url: '/special_guests/{id}',
+          templateUrl: 'special-guests/_show-special-guest.html',
+          controller: 'showSpecialGuestCtrl',
+          resolve: {
+              post: ['$stateParams', 'special_guests', function($stateParams, special_guests) {
+                  return special_guests.get($stateParams.id);
+              }]
+          }
+      })
+
       .state('new-special_guests', {
           url: '/new-special_guests',
           templateUrl: 'special-guests/_new-special-guest.html',
