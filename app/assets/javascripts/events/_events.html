@@ -1,25 +1,33 @@
 <div class="page-header" >
-  <h3>Мероприятия:</h3>
-    <ul ng-if="events" ng-repeat="event in events.events track by $index">
-        <li ng-if="event.name"><a ng-href="#/events/{{event.id}}">{{event.name}}</a></li>
-        <li ng-if="event.description">{{event.description}}</li>
-        <li ng-if="event.date">{{event.date}}</li>
-        <li><img ng-src="{{event.file}}" width="100"></li>
-        <li ng-if="event.created_at">создан: {{event.created_at | date:'dd-MM-yyyy'}}</li>
-        <li>{{event.id}}</li>
-        <li><a href="#/events/edit/{{event.id}}">Edit</a></li>
-        <div ng-show="event.guests.length">
-            <h4>Guests:</h4>
-            <ul ng-repeat="guest in event.guests">
-                <li>{{guest.name}} {{guest.surname}}</li>
+    <div class="row">
+        <div class="col-md-9"><h4>Мероприятия:</h4></div>
+
+        <div class="col-md-3">
+            <a href="#/new-event" class="btn btn-primary">Создать мероприятие</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul ng-if="events" ng-repeat="event in events.events track by $index">
+                <li ng-if="event.name"><a ng-href="#/events/{{event.id}}">{{event.name}}</a></li>
+                <li ng-if="event.description">{{event.description}}</li>
+                <li ng-if="event.date">{{event.date}}</li>
+                <li><img ng-src="{{event.file}}" width="100"></li>
+                <li ng-if="event.created_at">создан: {{event.created_at | date:'dd-MM-yyyy'}}</li>
+                <li>{{event.id}}</li>
+                <li><a href="#/events/edit/{{event.id}}">Edit</a></li>
+                <div ng-show="event.guests.length">
+                    <p>Гости:</p>
+                    <ul ng-repeat="guest in event.guests">
+                        <li>{{guest.name}} {{guest.surname}}</li>
+                    </ul>
+                </div>
+
+                <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>Delete Event!</a>
             </ul>
         </div>
 
-        <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>Delete Event!</a>
-    </ul>
+    </div>
 
-    <h3><a href="#/new-event">Создать мероприятие</a></h3>
 </div>
-
-<hr>
-<br>

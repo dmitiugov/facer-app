@@ -1,6 +1,7 @@
 <div class="row-fluid">
     <div class="col-md-12">
-        <h1>New Event</h1>
+        <h4>{{title}}</h4>
+        <img ng-if="file" ng-src="{{file}}">
         <div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
         <form ng-submit="addEvent()"
               style="margin-top:30px;">
@@ -26,11 +27,11 @@
                 >
             </div>
 
-            <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+            <div class="button btn btn-primary" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
                  ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-                 >Select</div>
-
-
+                 >Выбрать фото</div>
+<div class="clearfix"></div>
+<br>
             <div class="form-group">
         <textarea type="text"
                   class="form-control"
@@ -63,7 +64,7 @@
         </div>
     </div>
     <div class="col-md-2">
-        <button ng-click="addGuest()">+</button>
+        <button ng-click="addGuest()" class="btn btn-primary">+</button>
     </div>
 </div>
 

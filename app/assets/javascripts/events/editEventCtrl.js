@@ -4,12 +4,14 @@ angular.module('flapperNews').controller('EditEventCtrl', [
     'Auth',
     'Upload',
     function($scope, events, Auth, Upload){
+    $scope.title = 'Редактировать событие'
        //console.log(events.event)
         $scope.flash = ''
         $scope.name = events.event.name
         $scope.date = events.event.date
         $scope.description = events.event.description
         $scope.guests = events.event.guests
+        $scope.file = events.event.file
         $scope.id = events.event.id
         console.log($scope.id)
         $scope.addGuest = function(){
@@ -24,7 +26,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
              description: $scope.description,
              date: $scope.date,
                 id: $scope.id,
-             //guests: $scope.guests,
+             guests: $scope.guests,
              });
             $scope.flash = 'Событие изменено';
         };

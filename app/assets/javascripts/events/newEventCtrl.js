@@ -4,6 +4,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     'Auth',
     'Upload',
     function($scope, events, Auth, Upload){
+    $scope.title = 'Создать событие'
         Auth.currentUser().then(function(user) {
             // User was logged in, or Devise returned
             // previously authenticated session.
