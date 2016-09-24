@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
   respond_to :json
-  before_filter :authenticate_user!
+  #before_filter :authenticate_user!
 
 	def index
     respond_with Event.all
@@ -11,10 +11,16 @@ class EventsController < ApplicationController
   end
   def create
     @event = Event.create(event_params)
-    @guests = guests_params[:guests].each do |guest|
-      #byebug
-      Guest.create(name: guest[1][:name], surname: guest[1][:surname], event: @event)
-    end
+    #byebug
+      @guests = guests_params[:guests].each do |guest|
+        #byebug
+        Guest.create(name: guest[1][:name], surname: guest[1][:surname], event: @event)
+      end
+
+      #@guests = guests_params[:guests].map { |guest|
+       # Guest.create(name: guest[:name], surname: guest[:surname], event: @event)
+      #}
+
     respond_with @event
   end
 

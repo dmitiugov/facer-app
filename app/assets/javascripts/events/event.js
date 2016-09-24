@@ -14,7 +14,7 @@ var o = {
   o.create = function(event) {
       //console.log(event)
         return $http.post('/events.json', event).success(function(data){
-            //o.events.push(data);
+            console.log(data)
         });
     };
 

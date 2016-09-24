@@ -79,7 +79,19 @@ function($stateProvider, $urlRouterProvider) {
           templateUrl: 'special-guests/_special-guests.html',
           controller: 'specialGuestsCtrl',
           resolve: {
-              eventPromise: ['special_guests',
+              specialGuestsPromise: ['special_guests',
+                  function(special_guests){
+                      return special_guests.getAll();
+                  }]
+          }
+      })
+
+      .state('new-special_guests', {
+          url: '/new-special_guests',
+          templateUrl: 'special-guests/_new-special-guest.html',
+          controller: 'newSpecialGuestCtrl',
+          resolve: {
+              specialGuestsPromise: ['special_guests',
                   function(special_guests){
                       return special_guests.getAll();
                   }]

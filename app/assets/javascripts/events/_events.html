@@ -1,6 +1,6 @@
 <div class="page-header" >
   <h3>Мероприятия:</h3>
-    <ul ng-if="auth" ng-repeat="event in events.events track by $index">
+    <ul ng-if="events" ng-repeat="event in events.events track by $index">
         <li ng-if="event.name"><a ng-href="#/events/{{event.id}}">{{event.name}}</a></li>
         <li ng-if="event.description">{{event.description}}</li>
         <li ng-if="event.date">{{event.date}}</li>

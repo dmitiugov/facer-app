@@ -36,14 +36,17 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             if ($scope.file) {
                 console.log($scope.file)
                 $scope.upload($scope.file);
+            } else {
+                /*events.create({
+                    name: $scope.name,
+                    description: $scope.description,
+                    date: $scope.dates.today._d,
+                    guests: $scope.guests,
+                })*/
+                $scope.file = 'http://a1.mzstatic.com/us/r30/Purple71/v4/9d/34/f5/9d34f54f-7b14-45c6-50dd-c915071c1826/icon175x175.png'
+                console.log($scope.file)
+                $scope.upload($scope.file);
             }
-            /*events.create({
-                name: $scope.name,
-                description: $scope.description,
-                date: $scope.dates.today._d,
-                guests: $scope.guests,
-            });*/
-            //console.log($scope)
             $scope.name = '';
             $scope.surname = '';
             $scope.description = '';
