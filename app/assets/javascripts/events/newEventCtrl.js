@@ -43,7 +43,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                     date: $scope.dates.today._d,
                     guests: $scope.guests,
                 })*/
-                $scope.file = 'http://a1.mzstatic.com/us/r30/Purple71/v4/9d/34/f5/9d34f54f-7b14-45c6-50dd-c915071c1826/icon175x175.png'
+                $scope.file = '/system/special_guests/default-image.jpg'
                 console.log($scope.file)
                 $scope.upload($scope.file);
             }

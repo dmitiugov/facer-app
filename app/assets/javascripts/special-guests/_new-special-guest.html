@@ -1,1 +1,64 @@
-<h1>New</h1>
+<div class="row-fluid">
+    <div class="col-md-12">
+        <h4>{{title}}</h4>
+        <div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
+        <form ng-submit="addSpecialGuest()"
+              style="margin-top:30px;">
+            <div class="form-group">
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Name"
+                               ng-model="name"></input>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Surname"
+                               ng-model="surname"></input>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+
+                <input type="text"
+                       class="form-control"
+                       placeholder="Age"
+                       ng-model="age"></input>
+            </div>
+
+            <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                 ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+            >Select Photo</div>
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <textarea type="text"
+                                  class="form-control"
+                                  placeholder="Description"
+                                  ng-model="description"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <textarea type="text"
+                                  class="form-control"
+                                  placeholder="Bio"
+                                  ng-model="bio"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">{{title}}</button>
+
+        </form>
+    </div>
+</div>
+
