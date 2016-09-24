@@ -1,9 +1,0 @@
-{:uriI"Šfile://app/assets/javascripts/events/_add-photo.html?type=text/ng-html&id=6e174ced79c60cb7055f262194416055f7b8d107c4848d4c9ef2ff0a931e1669:ET:load_pathI"app/assets/javascripts;T:filenameI"2app/assets/javascripts/events/_add-photo.html;T:	nameI"events/_add-photo;T:logical_pathI"events/_add-photo.html;T:content_typeI"text/ng-html;T:sourceI"İ<h1>Add</h1>
-
-<div class="button" name="file" ngf-pattern="'image/*'"
-     ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-     ngf-resize="{width: 100, height: 100}" ngf-select="upload(file)">Select</div>;T:metadata{	:dependencieso:Set:
-@hash{
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI"@file-digest://app/assets/javascripts/events/_add-photo.html;TT:charsetI"
-utf-8;F:digest"%ÿ–7tÍ÷Ô¦»Ò™Ïÿà×)KVïŸoâ°‘ŒzÏå:lengthiİ:dependencies_digest"%ÈîÒëy¦ûX˜í—Ñ4u0ÅçÂ¡Ú—u®A ò:idI"E6e174ced79c60cb7055f262194416055f7b8d107c4848d4c9ef2ff0a931e1669;F:
-mtimel+MáâW

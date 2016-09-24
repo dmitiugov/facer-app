@@ -1,17 +1,0 @@
-{:uriI"„file://app/assets/javascripts/auth/_login.html?type=text/ng-html&id=2fc757e08a7fd39e0b1b0e74c7074414657d1a076c63bf47300e09ecc2795e29:ET:load_pathI"app/assets/javascripts;T:filenameI",app/assets/javascripts/auth/_login.html;T:	nameI"auth/_login;T:logical_pathI"auth/_login.html;T:content_typeI"text/ng-html;T:sourceI"˜<div class="page-header">
-  <h1>Log In</h1>
-</div>
-
-<form ng-submit="login()">
-  <div class="input-group">
-    <input type="email" class="form-control" placeholder="Email" ng-model="user.email">
-  </div>
-  <div class="input-group">
-    <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
-  </div>
-  <input type="submit" class="btn btn-default" value="Log In">
-</form>;T:metadata{	:dependencieso:Set:
-@hash{
-I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"8processors:type=text/ng-html&file_type=text/ng-html;TTI":file-digest://app/assets/javascripts/auth/_login.html;TT:charsetI"
-utf-8;F:digest"%»µcçžÄcô·þW;;ÀqIÙÉÍE/®Ã…[(:lengthi˜:dependencies_digest"%àÔ½¶ä)IOºjÕ¯toå+[EŸÜ¾¼¾è->Lž:idI"E2fc757e08a7fd39e0b1b0e74c7074414657d1a076c63bf47300e09ecc2795e29;F:
-mtimel+´+ÐW
