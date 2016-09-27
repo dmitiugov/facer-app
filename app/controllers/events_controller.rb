@@ -10,16 +10,21 @@ class EventsController < ApplicationController
     respond_with Event.find(params[:id])
   end
   def create
-    @event = Event.create(event_params)
-    #byebug
-      @guests = guests_params[:guests].each do |guest|
-        #byebug
-        Guest.create(name: guest[1][:name], surname: guest[1][:surname], event: @event)
-      end
 
-      #@guests = guests_params[:guests].map { |guest|
-       # Guest.create(name: guest[:name], surname: guest[:surname], event: @event)
-      #}
+    @event = Event.create(event_params)
+
+    #byebug
+
+      #@guests = params[:guests].each do |guest|
+       # Guest.create(name: guest[1][:name], surname: guest[1][:surname], event: @event)
+      #end
+
+
+      #ниже старый метод создания гостей без аплоада
+      #лучше будет переписать создание гостей на колбеке при аплоаде изнутри контроллера гостей, также как сейчас создаются гости без аплоада
+      #@guests = event_params[:guests].map { |guest|
+      # Guest.create(name: guest[:name], surname: guest[:surname], event: @event)
+     # }
 
     respond_with @event
   end
@@ -32,6 +37,9 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @event.update!(event_params)
     respond_with @event
+    @guests = guests_params[:guests].map { |guest|
+    Guest.create(name: guest[:name], surname: guest[:surname], event: @event)
+    }
   end
 
   def destroy
@@ -56,6 +64,6 @@ class EventsController < ApplicationController
     params.permit(:name, :description, :date, :file)
   end
   def guests_params
-    params.permit(guests: [:name, :surname])
+   params.permit(guests: [:name, :surname])
   end
 end

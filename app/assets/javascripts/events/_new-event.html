@@ -1,8 +1,9 @@
 <div class="row-fluid">
     <div class="col-md-12">
         <h4>{{title}}</h4>
-        <img ng-if="file" ng-src="{{file}}">
         <div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
+        <img ng-if="file" ng-src="{{file}}">
+
         <form ng-submit="addEvent()"
               style="margin-top:30px;">
             <div class="form-group">
@@ -68,6 +69,12 @@
     </div>
 </div>
 
+<!--<div class="row">
+    <div ng-repeat="special in specials track by $index" class="col-md-12">
+        {{special.name}} - {{special.surname}}
+    </div>
+</div>-->
+
 <div class="row-fluid">
     <div class="col-md-12">
         <h4>Добавленные гости:</h4>
@@ -76,5 +83,49 @@
         </ul>
     </div>
 </div>
-<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="clearfix"></div>
+        <!--<p>Selected:
 
+            {{specials.selected}}</p>-->
+
+        <button ng-click="showSelected()">Show Selected</button>
+        <ui-select multiple ng-model="specials.selected"
+                   theme="bootstrap"
+                   ng-disabled="specials.disabled"
+                   reset-search-input="false"
+                   title="Choose an person">
+            <ui-select-match placeholder="Enter an name...">{{$item.name}}</ui-select-match>
+            <ui-select-choices repeat="item in specials track by $index"
+                               refresh="refreshSpecials($select.search) | filter: $select.search"
+                               refresh-delay="0">
+                <div ng-bind-html="item.name | highlight: $select.search">{{item.name}} {{item.surname}}</div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</div>
+
+
+<!--<ui-select multiple sortable="true" ng-model="specialsfor.selected" theme="select2" class="form-control" title="Choose a person">
+    <ui-select-match placeholder="Select or search a person in the list...">{{$item.name}}</ui-select-match>
+    <ui-select-choices repeat="item in specialsfor | filter: $select.search">
+        <div ng-bind-html="item.name | highlight: $select.search"></div>
+        <small ng-bind-html="item.surname | highlight: $select.search"></small>
+    </ui-select-choices>
+</ui-select>
+
+
+<!--<ui-select ng-model="ctrl.address.selected"
+           theme="bootstrap"
+           ng-disabled="ctrl.disabled"
+           reset-search-input="false"
+           style="width: 300px;"
+           title="Choose an address">
+    <ui-select-match placeholder="Enter an address...">{{$select.selected.formatted_address}}</ui-select-match>
+    <ui-select-choices repeat="address in ctrl.addresses track by $index"
+                       refresh="ctrl.refreshAddresses($select.search)"
+                       refresh-delay="0">
+        <div ng-bind-html="address.formatted_address | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>-->

@@ -3,18 +3,27 @@ var o = {
     events: [  
     ],
     event: [
-    ]
+    ],
+    special_guests: [
+    ],
   };
   o.getAll = function() {
   		return $http.get('/events.json').success(function(data){
       	angular.copy(data, o.events);
-      	//console.log(o)
     });
   };
+  o.getSpecials = function() {
+      return $http.get('/special_guests.json').success(function(data) {
+          angular.copy(data, o.special_guests);
+      });
+  };
+  o.createGuest = function(guest) {
+      return $http.post('/guests.json', guest).success(function(data){
+      });
+  }
   o.create = function(event) {
-      //console.log(event)
         return $http.post('/events.json', event).success(function(data){
-            console.log(data)
+            return data
         });
     };
 
@@ -35,6 +44,5 @@ var o = {
             angular.copy(res.data, o.event);
         });
     };
-    //console.log(o)
 return o;
 }])

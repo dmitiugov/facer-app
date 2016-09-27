@@ -7,12 +7,15 @@ class GuestsController < ApplicationController
     respond_with Guest.find(params[:id])
   end
   def create
-    respond_with Guest.create(guest_params)
+    @guest = guest_params[:guests].map { |guest|
+     Guest.create(name: guest[:name], surname: guest[:surname], event_id: guest[:event_id])
+     }
+    render "events.json"
   end
 
 
   private
   def guest_params
-    params.require(:guest).permit(:name)
+    params.permit(guests: [:name, :surname, :event_id])
   end
 end

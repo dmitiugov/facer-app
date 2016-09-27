@@ -3,7 +3,33 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     'events',
     'Auth',
     'Upload',
-    function($scope, events, Auth, Upload){
+    '$http',
+    function($scope, events, Auth, Upload, $http){
+
+    $scope.showSelected = function(){
+        //console.log($scope.specials.selected)
+
+        for (var i = 0; i <= $scope.specials.selected.length; i ++) {
+            //console.log($scope.specials.selected[i].id)
+            $scope.selectedids.push($scope.specials.selected[i].id)
+            console.log($scope.selectedids)
+        }
+
+        }
+
+        $scope.specials = []
+        $scope.selectedids = []
+       $scope.refreshSpecials = function(name) {
+            var params = {name: name, sensor: false};
+            return $http.get(
+                '/special_guests.json',
+                {params: params}
+            ).then(function(response) {
+                $scope.specials = response.data;
+                //console.log($scope.specials)
+            });
+        };
+
     $scope.title = 'Создать событие'
         Auth.currentUser().then(function(user) {
             // User was logged in, or Devise returned
@@ -16,9 +42,24 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                 $scope.upload = Upload.upload({
                     url: '/events.json',
                     method: 'POST',
-                    fields: { 'user[name]': $scope.user_name, name: $scope.name, description: $scope.description, date: $scope.dates.today._d, guests: $scope.guests },
+                    fields: { 'user[name]': $scope.user_name,
+                        name: $scope.name,
+                        description: $scope.description,
+                        date: $scope.dates.today._d,
                     file: file,
-                    fileFormDataName: 'user[image]'
+                    fileFormDataName: 'user[image]'},
+                }).then(function (resp) {
+                    //console.log(resp.data);
+                    var id = resp.data.id
+                    //console.log($scope.guests)
+                    $scope.guests.event_id = ''
+                    for (var i=0; i<$scope.guests.length; i++) {
+                        $scope.guests[i].event_id = id
+                        //console.log($scope.guests[i])
+                    }
+                    events.createGuest({
+                      guests: $scope.guests,
+                    })
                 });
         }
 
@@ -27,32 +68,38 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         $scope.guests = [];
         //console.log($scope.events)
         $scope.addGuest = function(){
-            //console.log($scope.guest)
             $scope.guests.push($scope.guest);
             $scope.guest = '';
-            console.log($scope.guests)
+            //console.log($scope.guests)
         }
         $scope.addEvent = function(){
-            //console.log($scope.guests)
             if ($scope.file) {
-                console.log($scope.file)
+                //console.log($scope.file)
+
                 $scope.upload($scope.file);
             } else {
-                /*events.create({
+                events.create({
                     name: $scope.name,
                     description: $scope.description,
                     date: $scope.dates.today._d,
-                    guests: $scope.guests,
-                })*/
-                $scope.file = '/system/special_guests/default-image.jpg'
-                console.log($scope.file)
-                $scope.upload($scope.file);
+                }).then(function(data) {
+                    var id = data.data.id
+                    $scope.guests.event_id = ''
+                    for (var i=0; i<$scope.guests.length; i++) {
+                        $scope.guests[i].event_id = id
+                        //console.log($scope.guests[i])
+                    }
+                    events.createGuest({
+                        guests: $scope.guests,
+                    })
+                }, function(error) {
+                   console.log('Error Create')
+                });
             }
             $scope.name = '';
             $scope.surname = '';
             $scope.description = '';
             $scope.date = '';
-            $scope.guests = [];
             $scope.flash = 'Событие добавлено';
         };
 
