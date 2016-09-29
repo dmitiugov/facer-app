@@ -7,14 +7,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     function($scope, events, Auth, Upload, $http){
 
     $scope.showSelected = function(){
-        //console.log($scope.specials.selected)
-
-        for (var i = 0; i <= $scope.specials.selected.length; i ++) {
-            //console.log($scope.specials.selected[i].id)
-            $scope.selectedids.push($scope.specials.selected[i].id)
-            console.log($scope.selectedids)
-        }
-
+        console.log($scope.specials.selected)
         }
 
         $scope.specials = []
@@ -26,17 +19,14 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                 {params: params}
             ).then(function(response) {
                 $scope.specials = response.data;
-                //console.log($scope.specials)
             });
         };
 
     $scope.title = 'Создать событие'
         Auth.currentUser().then(function(user) {
-            // User was logged in, or Devise returned
-            // previously authenticated session.
             $scope.user_name = user.username;
         }, function(error) {
-            // unauthenticated error
+           console.log(error)
         });
         $scope.upload = function (file) {
                 $scope.upload = Upload.upload({
@@ -49,17 +39,23 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                     file: file,
                     fileFormDataName: 'user[image]'},
                 }).then(function (resp) {
-                    //console.log(resp.data);
                     var id = resp.data.id
-                    //console.log($scope.guests)
                     $scope.guests.event_id = ''
                     for (var i=0; i<$scope.guests.length; i++) {
                         $scope.guests[i].event_id = id
-                        //console.log($scope.guests[i])
                     }
-                    events.createGuest({
-                      guests: $scope.guests,
-                    })
+                    console.log($scope.specials.selected)
+                    for (var i=0; i<$scope.specials.selected.length; i++){
+                        $scope.specials.selected[i].event_id=''
+                        $scope.specials.selected[i].event_id = id
+                    }
+                    console.log($scope.specials.selected)
+                    if($scope.guests || $scope.specials.selected) {
+                        events.createGuest({
+                            guests: $scope.guests,
+                            specials: $scope.specials.selected,
+                        })
+                    }
                 });
         }
 
@@ -70,12 +66,9 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         $scope.addGuest = function(){
             $scope.guests.push($scope.guest);
             $scope.guest = '';
-            //console.log($scope.guests)
         }
         $scope.addEvent = function(){
             if ($scope.file) {
-                //console.log($scope.file)
-
                 $scope.upload($scope.file);
             } else {
                 events.create({
@@ -85,12 +78,18 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                 }).then(function(data) {
                     var id = data.data.id
                     $scope.guests.event_id = ''
+                    console.log($scope.specials.selected)
                     for (var i=0; i<$scope.guests.length; i++) {
                         $scope.guests[i].event_id = id
-                        //console.log($scope.guests[i])
+                    }
+
+                    for (var i=0; i<$scope.specials.selected.length; i++){
+                        $scope.specials.selected[i].event_id=''
+                        $scope.specials.selected[i].event_id = id
                     }
                     events.createGuest({
                         guests: $scope.guests,
+                        specials: $scope.specials.selected,
                     })
                 }, function(error) {
                    console.log('Error Create')

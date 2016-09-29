@@ -17,8 +17,8 @@ var o = {
           angular.copy(data, o.special_guests);
       });
   };
-  o.createGuest = function(guest) {
-      return $http.post('/guests.json', guest).success(function(data){
+  o.createGuest = function(guest, special) {
+      return $http.post('/guests.json', guest, special).success(function(data){
       });
   }
   o.create = function(event) {

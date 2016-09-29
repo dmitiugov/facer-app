@@ -15,16 +15,6 @@ class EventsController < ApplicationController
 
     #byebug
 
-      #@guests = params[:guests].each do |guest|
-       # Guest.create(name: guest[1][:name], surname: guest[1][:surname], event: @event)
-      #end
-
-
-      #ниже старый метод создания гостей без аплоада
-      #лучше будет переписать создание гостей на колбеке при аплоаде изнутри контроллера гостей, также как сейчас создаются гости без аплоада
-      #@guests = event_params[:guests].map { |guest|
-      # Guest.create(name: guest[:name], surname: guest[:surname], event: @event)
-     # }
 
     respond_with @event
   end
