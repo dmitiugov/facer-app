@@ -6,6 +6,8 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     '$http',
     function($scope, events, Auth, Upload, $http){
 
+
+
     $scope.showSelected = function(){
         console.log($scope.specials.selected)
         }
@@ -44,16 +46,18 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                     for (var i=0; i<$scope.guests.length; i++) {
                         $scope.guests[i].event_id = id
                     }
-                    console.log($scope.specials.selected)
                     for (var i=0; i<$scope.specials.selected.length; i++){
                         $scope.specials.selected[i].event_id=''
                         $scope.specials.selected[i].event_id = id
                     }
-                    console.log($scope.specials.selected)
                     if($scope.guests || $scope.specials.selected) {
                         events.createGuest({
                             guests: $scope.guests,
                             specials: $scope.specials.selected,
+                        }).then(function (resp) {
+                            $scope.guests = '';
+                            $scope.specials.selected = '';
+                            $scope.file = '';
                         })
                     }
                 });
@@ -62,7 +66,6 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         $scope.flash = ''
         $scope.events=events
         $scope.guests = [];
-        //console.log($scope.events)
         $scope.addGuest = function(){
             $scope.guests.push($scope.guest);
             $scope.guest = '';
@@ -78,7 +81,6 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                 }).then(function(data) {
                     var id = data.data.id
                     $scope.guests.event_id = ''
-                    console.log($scope.specials.selected)
                     for (var i=0; i<$scope.guests.length; i++) {
                         $scope.guests[i].event_id = id
                     }
@@ -90,6 +92,10 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                     events.createGuest({
                         guests: $scope.guests,
                         specials: $scope.specials.selected,
+                    }).then(function (resp) {
+                        $scope.guests = '';
+                        $scope.specials.selected = '';
+                        $scope.file = '';
                     })
                 }, function(error) {
                    console.log('Error Create')

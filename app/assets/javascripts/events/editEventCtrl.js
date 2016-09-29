@@ -6,6 +6,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
     function($scope, events, Auth, Upload){
     $scope.title = 'Редактировать событие'
        //console.log(events.event)
+        $scope.edit = true
         $scope.flash = ''
         $scope.name = events.event.name
         $scope.date = events.event.date
