@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160923150929) do
+ActiveRecord::Schema.define(version: 20160930143114) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "body"
@@ -65,8 +65,9 @@ ActiveRecord::Schema.define(version: 20160923150929) do
     t.string   "surname"
     t.string   "bio"
     t.integer  "age"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "inside",     default: false
   end
 
   add_index "guests", ["event_id"], name: "index_guests_on_event_id"

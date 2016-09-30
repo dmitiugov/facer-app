@@ -44,5 +44,11 @@ var o = {
             angular.copy(res.data, o.event);
         });
     };
+    o.changeInside = function(guest) {
+        console.log(guest)
+        return $http.put('/guests/'+ guest.id + '.json', guest).success(function(data){
+            console.log("Status has been updated!")
+        });
+    }
 return o;
 }])

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get    'login'   => 'application#angular'
   root 'application#angular'
   resources :events, only: [:create, :index, :show, :destroy, :update]
-  resources :guests, only: [:create, :index, :show, :destroy]
+  resources :guests, only: [:create, :index, :show, :destroy, :update]
   resources :special_guests, only: [:create, :index, :show, :destroy, :update]
   resources :event_files, only: [:create]
   resources :posts, only: [:create, :index, :show] do
