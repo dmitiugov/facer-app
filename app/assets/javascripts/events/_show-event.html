@@ -1,79 +1,96 @@
-<h4>{{eve.event.name}}</h4>
-<p>{{eve.event.description}}</p>
-<img ng-src="{{eve.event.file}}">
-<hr>
-<h4>Guests:</h4>
-<div class="">
 
-    <div class="alert alert-info">
-        <p>Sort Type: {{ sortType }}</p>
-        <p>Sort Reverse: {{ sortReverse }}</p>
-        <p>Search Query: {{ searchFish }}</p>
-    </div>
 
-    <form>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                <input type="text" class="form-control" placeholder="Search" ng-model="searchSurname">
+<div class="alert alert-warning" ng-if="eve.event.flash">
+    <strong>Warning!</strong> {{eve.event.flash}}
+</div>
+
+<div class="row-fluid" ng-if="eve.event.id">
+    <div class="col-md-12">
+        <h4>{{eve.event.name}}</h4>
+        <p>{{eve.event.description}}</p>
+        <img ng-src="{{eve.event.file}}">
+        <hr>
+        <h4>Guests:</h4>
+        <div class="">
+
+            <div class="alert alert-info">
+                <p>Sort Type: {{ sortType }}</p>
+                <p>Sort Reverse: {{ sortReverse }}</p>
+                <p>Search Query: {{ searchFish }}</p>
             </div>
-        </div>
-    </form>
 
-    <table class="table table-bordered table-striped show-event-guests">
+            <form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        <input type="text" class="form-control" placeholder="Search" ng-model="searchSurname">
+                    </div>
+                </div>
+            </form>
 
-        <thead>
-        <tr>
-            <td>
-                <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
-                    Name
-                    <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
-                </a>
-            </td>
-            <td>
-                <a href="#" ng-click="sortType = 'surname'; sortReverse = !sortReverse">
-                   Surname
-                    <span ng-show="sortType == 'surname' && !sortReverse" class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'surname' && sortReverse" class="fa fa-caret-up"></span>
-                </a>
-            </td>
-            <td>
-                <a href="#" ng-click="sortType = 'bio'; sortReverse = !sortReverse">
-                    Biography
-                    <span ng-show="sortType == 'bio' && !sortReverse" class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'bio' && sortReverse" class="fa fa-caret-up"></span>
-                </a>
-            </td>
-            <td>
-                <a href="#" ng-click="sortType = 'inside'; sortReverse = !sortReverse">
-                    Inside-Outside
-                    <span ng-show="sortType == 'inside' && !sortReverse" class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'inside' && sortReverse" class="fa fa-caret-up"></span>
-                </a>
-            </td>
-        </tr>
-        </thead>
+            <table class="table table-bordered table-striped show-event-guests">
 
-        <tbody>
-        <tr ng-repeat="guest in eve.event.guests | orderBy:sortType:sortReverse | filter:searchSurname">
-            <td>{{ guest.name }}</td>
-            <td>{{ guest.surname }}</td>
-            <td>{{ guest.bio }}</td>
-            <td><a ng-click="changeStatus(guest.id, guest.inside)">
+                <thead>
+                <tr>
+                    <td>
+                        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                            Name
+                            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'surname'; sortReverse = !sortReverse">
+                            Surname
+                            <span ng-show="sortType == 'surname' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'surname' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'bio'; sortReverse = !sortReverse">
+                            Biography
+                            <span ng-show="sortType == 'bio' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'bio' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" ng-click="sortType = 'inside'; sortReverse = !sortReverse">
+                            Inside-Outside
+                            <span ng-show="sortType == 'inside' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'inside' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat="guest in eve.event.guests | orderBy:sortType:sortReverse | filter:searchSurname">
+                    <td>{{ guest.name }}</td>
+                    <td>{{ guest.surname }}</td>
+                    <td>{{ guest.bio }}</td>
+                    <td><a ng-click="changeStatus(guest.id, guest.inside)">
                 <span ng-if="guest.inside == true">
-                     <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+                     <i class="fa fa-caret-square-o-right" aria-hidden="true"
+                        uib-popover="Гость внутри"
+                        popover-trigger="mouseenter"
+                        popover-placement="right"
+                     ></i>
                 </span>
-                <span ng-if="guest.inside == false">
-                     <i class="fa fa-caret-square-o-left" aria-hidden="true"></i>
+                        <span ng-if="guest.inside == false">
+                     <i class="fa fa-caret-square-o-left" aria-hidden="true"
+                        uib-popover="Гость снаружи"
+                        popover-trigger="mouseenter"
+                        popover-placement="right"></i>
                 </span>
-                </a>
-            </td>
-        </tr>
-        </tbody>
+                    </a>
+                    </td>
+                </tr>
+                </tbody>
 
-    </table>
+            </table>
 
 
 
+        </div>
+    </div>
 </div>

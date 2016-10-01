@@ -1,7 +1,9 @@
 class SpecialGuestsController < ApplicationController
   respond_to :json
   def index
-    respond_with SpecialGuest.all
+    #respond_with SpecialGuest.all
+    @accaunt = Accaunt.find(current_user.accaunt_id)
+    respond_with @accaunt.special_guests
   end
   def show
     respond_with SpecialGuest.find(params[:id])

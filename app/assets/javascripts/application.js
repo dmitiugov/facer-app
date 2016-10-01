@@ -1,6 +1,7 @@
 //= require angular
 //= require angular-rails-templates
 //= require angular-ui-router
+//= require angular-ui-bootstrap
 //= require angular-ui-bootstrap-tpls
 //= require angular-ui-select
 //= require interact

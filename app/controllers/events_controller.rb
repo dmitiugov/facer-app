@@ -4,14 +4,25 @@ class EventsController < ApplicationController
   #before_filter :authenticate_user!
 
 	def index
-    respond_with Event.all
+    @accaunt = Accaunt.find(current_user.accaunt_id)
+    respond_with @accaunt.events
   end
   def show
-    respond_with Event.find(params[:id])
+    #byebug
+    @accaunt = Accaunt.find(current_user.accaunt_id)
+    @event = Event.find(params[:id])
+    if @accaunt.events.ids.include?(@event.id)
+      respond_with @event
+    else
+      respond_with flash: "You don't have permission for this action"
+    end
   end
   def create
+    #@accaunt = Accaunt.find(current_user.accaunt_id)
 
     @event = Event.create(event_params)
+    @event.accaunt = Accaunt.find(current_user.accaunt_id)
+    @event.save!
 
     #byebug
 

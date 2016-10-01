@@ -3,14 +3,14 @@ angular.module('flapperNews').controller('ShowEventCtrl', [
     'events',
     'Auth',
     function($scope, events){
+//console.log(ui.bootstrap.popover)
         $scope.eve = events
+        console.log($scope.eve.event)
         $scope.sortType     = 'name'; // set the default sort type
         $scope.sortReverse  = false;  // set the default sort order
         $scope.searchSurname   = '';     // set the default search/filter term
 
         $scope.changeStatus = function(id, inside) {
-            console.log(id)
-            console.log(inside)
             if(id) {
                 events.changeInside({
                     id: id,
