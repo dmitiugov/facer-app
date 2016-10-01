@@ -70,6 +70,9 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             $scope.guests.push($scope.guest);
             $scope.guest = '';
         }
+        $scope.deleteGuest = function ($index) {
+           $scope.guests[$index] = null
+        }
         $scope.addEvent = function(){
             if ($scope.file) {
                 $scope.upload($scope.file);

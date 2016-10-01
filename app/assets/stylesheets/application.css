@@ -17,3 +17,16 @@
  *= require_tree .
  *= require_self
  */
+
+.creating.guest i {
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff
+}
+.creating.guest p {
+    font-size: 20px;
+    color: #fff
+}
+.show-event-guests i {
+    cursor: pointer;
+}

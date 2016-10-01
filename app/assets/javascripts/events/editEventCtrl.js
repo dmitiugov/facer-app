@@ -22,6 +22,9 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             $scope.guests.push($scope.guest);
             $scope.guest = '';
         }
+        $scope.deleteGuest = function ($index) {
+            $scope.guests[$index] = null
+        }
         $scope.addEvent = function(){
 
             events.edit({

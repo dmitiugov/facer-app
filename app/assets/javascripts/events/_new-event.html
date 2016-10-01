@@ -80,9 +80,15 @@
 <div class="row-fluid">
     <div class="col-md-12">
         <h4>Добавленные гости:</h4>
-        <ul ng-repeat="guest in guests track by $index">
-            <li>{{guest.name}} {{guest.surname}}</li>
-        </ul>
+        <div ng-repeat="guest in guests track by $index" class="creating guest">
+            <p ng-if="guest">
+                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                {{guest.name}} {{guest.surname}}
+
+                    <i class="fa fa-trash-o" aria-hidden="true" ng-click="deleteGuest($index)"></i>
+
+            </p>
+        </div>
     </div>
 </div>
 <div class="row">
