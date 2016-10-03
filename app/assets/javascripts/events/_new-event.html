@@ -1,118 +1,122 @@
-<div class="row-fluid">
-    <div class="col-md-12">
-        <h4>{{title}}</h4>
-        <div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
-        <img ng-if="edit" ng-src="{{file}}">
-
-        <form ng-submit="addEvent()"
-              style="margin-top:30px;">
-            <div class="form-group">
-
-            </div>
 
 
-            <div class="form-group">
-                <input type="text"
-                       class="form-control"
-                       placeholder="Title"
-                       ng-model="name"></input>
-            </div>
-            <div class="form-group">
+<h4>{{title}}</h4>
+<div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
 
-                <input class="form-control" date-time ng-model="dates.today"
-                                           id="pickerMinSelector"
-                                           date-change="changeMinMax"
-                                           max-date="maxDate" view="date"
-                                           timezone="UTC"
-                                           format="lll"
-                >
-            </div>
 
-            <div class="button btn btn-primary" ngf-select ng-model="file" name="file"
-                 ngf-accept="'.jpg,.png,.jpeg'" ngf-max-size="20MB" ngf-min-height="100"
-                 >Выбрать фото</div>
-            <div class="clearfix"></div>
-            <img ngf-src="file" ngf-resize="{width: 200, quality: 0.9}">
-<div class="clearfix"></div>
-<br>
-            <div class="form-group">
+<uib-tabset active="activeJustified" justified="true">
+    <uib-tab index="0" heading="Информация о событии">
+        <div class="row-fluid">
+            <div class="col-md-12">
+
+                <img ng-if="edit" ng-src="{{file}}">
+
+
+                <div class="form-group">
+
+                </div>
+
+
+                <div class="form-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Название"
+                           ng-model="name"></input>
+                </div>
+                <div class="form-group">
+
+                    <input class="form-control" date-time ng-model="dates.today"
+                           id="pickerMinSelector"
+                           date-change="changeMinMax"
+                           max-date="maxDate" view="date"
+                           timezone="UTC"
+                           format="lll"
+                    >
+                </div>
+
+                <div class="button btn btn-primary" ngf-select ng-model="file" name="file"
+                     ngf-accept="'.jpg,.png,.jpeg'" ngf-max-size="20MB" ngf-min-height="100"
+                >Выбрать фото</div>
+                <div class="clearfix"></div>
+                <img ngf-src="file" ngf-resize="{width: 200, quality: 0.9}">
+                <div class="clearfix"></div>
+                <br>
+                <div class="form-group">
         <textarea type="text"
                   class="form-control"
                   placeholder="Description"
                   ng-model="description"></textarea>
+                </div>
+
+
+
+
             </div>
-
-            <button type="submit" class="btn btn-primary">Добавить</button>
-
-        </form>
-    </div>
-</div>
-<div class="clearfix"></div>
-<br><br>
-<div class="row-fluid">
-    <div class="col-md-4">
-        <div class="form-group">
-         <input type="text"
-               class="form-control"
-               placeholder="Name"
-               ng-model="guest.name"></input>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <input type="text"
-               class="form-control"
-               placeholder="Surname"
-               ng-model="guest.surname"></input>
+    </uib-tab>
+    <uib-tab index="1" heading="Постоянные гости" ng-click="digestCycle()">
+        <ui-select multiple ng-model="specials.selected"
+                   theme="bootstrap"
+                   ng-disabled="specials.disabled"
+                   close-on-select="false" style="width: 400px;"
+                   title="Choose a person">
+            <ui-select-match placeholder="Select person...">{{$item.name}} {{$item.surname}}</ui-select-match>
+            <ui-select-choices repeat="item in specials"
+                               refresh="refreshSpecials($select.search)"
+                               refresh-delay="0">
+                <div ng-bind-html="person.name | highlight: $select.search"></div>
+                <small>
+                    name: {{item.name}}
+                    surname: {{item.surname}}
+                </small>
+            </ui-select-choices>
+        </ui-select>
+        <div class="clearfix"></div>
+        <h4>Постоянные гости:</h4>
+        <p ng-repeat="special in specials.selected">
+
+            {{special.name}} {{special.surname}}</p>
+
+
+        <a href="" ng-click="selectAll()">Select All</a>
+        <a href="" ng-click="resetAll()">Reset All</a>
+    </uib-tab>
+    <uib-tab index="2" heading="Гости по спискам">
+        <div class="row-fluid">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Name"
+                           ng-model="guest.name"></input>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Surname"
+                           ng-model="guest.surname"></input>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button ng-click="addGuest()" class="btn btn-primary">+</button>
+            </div>
         </div>
-    </div>
-    <div class="col-md-2">
-        <button ng-click="addGuest()" class="btn btn-primary">+</button>
-    </div>
-</div>
 
-<!--<div class="row">
-    <div ng-repeat="special in specials track by $index" class="col-md-12">
-        {{special.name}} - {{special.surname}}
-    </div>
-</div>-->
-
-<div class="row-fluid">
-    <div class="col-md-12">
         <h4>Добавленные гости:</h4>
         <div ng-repeat="guest in guests track by $index" class="creating guest">
             <p ng-if="guest">
                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                 {{guest.name}} {{guest.surname}}
 
-                    <i class="fa fa-trash-o" aria-hidden="true" ng-click="deleteGuest($index)"></i>
+                <i class="fa fa-trash-o" aria-hidden="true" ng-click="deleteGuest($index)"></i>
 
             </p>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="clearfix"></div>
-        <h4>Selected:</h4>
-        <p ng-repeat="special in specials.selected">
+    </uib-tab>
+</uib-tabset>
 
-            {{special.name}} {{special.surname}}</p>
-
-        <!--<button ng-click="showSelected()">Show Selected</button>-->
-        <ui-select multiple ng-model="specials.selected"
-                   theme="bootstrap"
-                   ng-disabled="specials.disabled"
-                   reset-search-input="false"
-                   title="Choose an person">
-            <ui-select-match placeholder="Enter an name...">{{$item.name}}</ui-select-match>
-            <ui-select-choices repeat="item in specials track by $index"
-                               refresh="refreshSpecials($select.search) | filter: $select.search"
-                               refresh-delay="0">
-                <div ng-bind-html="item.name | highlight: $select.search">{{item.name}} {{item.surname}}</div>
-            </ui-select-choices>
-        </ui-select>
-    </div>
-</div>
-
-
+<div class="clearfix"></div>
+<hr>
+<button type="submit" class="btn btn-primary" ng-click="addEvent()">Создать мероприятие</button>

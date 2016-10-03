@@ -70,17 +70,18 @@
                     <td>{{ guest.bio }}</td>
                     <td><a ng-click="changeStatus(guest.id, guest.inside)">
                 <span ng-if="guest.inside == true">
-                     <i class="fa fa-caret-square-o-right" aria-hidden="true"
-                        uib-popover="Гость внутри"
-                        popover-trigger="mouseenter"
-                        popover-placement="right"
-                     ></i>
+
+                    <i class="fa fa-sign-in" aria-hidden="true"
+                       uib-popover="Гость внутри"
+                       popover-trigger="mouseenter"
+                       popover-placement="right"></i>
                 </span>
                         <span ng-if="guest.inside == false">
-                     <i class="fa fa-caret-square-o-left" aria-hidden="true"
-                        uib-popover="Гость снаружи"
-                        popover-trigger="mouseenter"
-                        popover-placement="right"></i>
+                            <i class="fa fa-sign-out fa-flip-horizontal" aria-hidden="true"
+                               uib-popover="Гость снаружи"
+                               popover-trigger="mouseenter"
+                               popover-placement="right"></i>
+
                 </span>
                     </a>
                     </td>

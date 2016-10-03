@@ -6,7 +6,19 @@ class SpecialGuestsController < ApplicationController
     respond_with @accaunt.special_guests
   end
   def show
-    respond_with SpecialGuest.find(params[:id])
+    @accaunt = Accaunt.find(current_user.accaunt_id)
+    @special = SpecialGuest.find_by_id params[:id]
+
+
+    if @special.nil?
+      respond_with flash: "Guest with this ID not found!"
+    else
+      if @accaunt.special_guests.ids.include?(@special.id)
+        respond_with @special
+      else
+        respond_with flash: "You don't have permission for this action!"
+      end
+    end
   end
   def create
     params[:avatar] = params[:file]

@@ -1,21 +1,37 @@
+
 angular.module('flapperNews').controller('NewEventCtrl', [
     '$scope',
     'events',
     'Auth',
     'Upload',
     '$http',
-    function($scope, events, Auth, Upload, $http){
+    '$sce',
+    '$window',
+    '$timeout',
+    function($scope, events, Auth, Upload, $http, $sce, $window, $timeout){
 
 
+        $scope.dygestCycle = function(){
+            $scope.$digest();
+        }
+        $scope.trustAsHtml = function(value) {
+            return $sce.trustAsHtml(value);
+        };
 
+        $scope.specials = []
+        $scope.selectedids = []
     $scope.showSelected = function(){
         console.log($scope.specials.selected)
         }
 
-        $scope.specials = []
-        $scope.selectedids = []
+        $scope.selectAll = function() {
+            $scope.specials.selected = $scope.specials
+                  };
+        $scope.resetAll = function() {
+            $scope.specials.selected = []
+        }
        $scope.refreshSpecials = function(name) {
-            var params = {name: name, sensor: false};
+            var params = {name: name};
             return $http.get(
                 '/special_guests.json',
                 {params: params}
@@ -66,9 +82,11 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         $scope.flash = ''
         $scope.events=events
         $scope.guests = [];
+        $scope.guest = []
         $scope.addGuest = function(){
             $scope.guests.push($scope.guest);
-            $scope.guest = '';
+            $scope.guest = [];
+
         }
         $scope.deleteGuest = function ($index) {
            $scope.guests[$index] = null
