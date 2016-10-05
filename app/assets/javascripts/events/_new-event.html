@@ -5,7 +5,9 @@
 
 
 <uib-tabset active="activeJustified" justified="true">
-    <uib-tab index="0" heading="Информация о событии">
+    <uib-tab index="0">
+        <uib-tab-heading class="create-heading">Информация о событии&nbsp;&nbsp;
+            <i class="fa fa-info-circle" aria-hidden="true"></i></uib-tab-heading>
         <div class="row-fluid">
             <div class="col-md-12">
 
@@ -16,16 +18,17 @@
 
                 </div>
 
+                <br />
 
                 <div class="form-group">
                     <input type="text"
                            class="form-control"
                            placeholder="Название"
-                           ng-model="name"></input>
+                           ng-model="eve.name"></input>
                 </div>
                 <div class="form-group">
 
-                    <input class="form-control" date-time ng-model="dates.today"
+                    <input class="form-control" date-time ng-model="eve.date"
                            id="pickerMinSelector"
                            date-change="changeMinMax"
                            max-date="maxDate" view="date"
@@ -34,61 +37,70 @@
                     >
                 </div>
 
-                <div class="button btn btn-primary" ngf-select ng-model="file" name="file"
-                     ngf-accept="'.jpg,.png,.jpeg'" ngf-max-size="20MB" ngf-min-height="100"
-                >Выбрать фото</div>
+
+                <div class="btn btn-info" ngf-select ng-model="eve.file" name="file" ngf-pattern="'image/*'"
+                     ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+                >Выбрать фото&nbsp;<i class="fa fa-picture-o" aria-hidden="true"></i></div>
                 <div class="clearfix"></div>
-                <img ngf-src="file" ngf-resize="{width: 200, quality: 0.9}">
+                <img ngf-src="eve.file" ngf-resize="{width: 200, quality: 0.9}">
                 <div class="clearfix"></div>
                 <br>
                 <div class="form-group">
         <textarea type="text"
                   class="form-control"
                   placeholder="Description"
-                  ng-model="description"></textarea>
+                  ng-model="eve.description"></textarea>
                 </div>
 
+                <h4>Постоянные гости:</h4>
+                <ui-select multiple ng-model="eve.specials.selected" close-on-select="false"
+                           style="width: 600px;" title="Choose a person">
+                    <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.surname}}&gt;</ui-select-match>
+                    <ui-select-choices repeat="item in eve.specials track by $index"
+                                       refresh="refreshSpecials($select.search)"
+                                       refresh-delay="0">
+                        <div ng-bind-html="person.name"></div>
+                        <small>
+                            name: {{item.name}}
+                            surname: {{item.surname}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
 
-
+                <a href="" ng-click="selectAll()">Выбрать всех</a>
+                <a href="" ng-click="resetAll()">Удалить всех</a>
 
             </div>
+
         </div>
     </uib-tab>
-    <uib-tab index="1" heading="Постоянные гости" ng-click="digestCycle()">
-        <ui-select multiple ng-model="specials.selected"
-                   theme="bootstrap"
-                   ng-disabled="specials.disabled"
-                   close-on-select="false" style="width: 400px;"
-                   title="Choose a person">
-            <ui-select-match placeholder="Select person...">{{$item.name}} {{$item.surname}}</ui-select-match>
-            <ui-select-choices repeat="item in specials"
-                               refresh="refreshSpecials($select.search)"
-                               refresh-delay="0">
-                <div ng-bind-html="person.name | highlight: $select.search"></div>
-                <small>
-                    name: {{item.name}}
-                    surname: {{item.surname}}
-                </small>
-            </ui-select-choices>
-        </ui-select>
+    <uib-tab index="1">
+        <uib-tab-heading class="create-heading" ng-click="">Постоянные гости&nbsp;&nbsp;
+            <i class="fa fa-user" aria-hidden="true"></i></uib-tab-heading>
+        <br>
+
+
+
+
         <div class="clearfix"></div>
         <h4>Постоянные гости:</h4>
-        <p ng-repeat="special in specials.selected">
+        <p ng-repeat="special in eve.specials.selected">
 
             {{special.name}} {{special.surname}}</p>
 
 
-        <a href="" ng-click="selectAll()">Select All</a>
-        <a href="" ng-click="resetAll()">Reset All</a>
+
     </uib-tab>
-    <uib-tab index="2" heading="Гости по спискам">
+    <uib-tab index="2">
+        <uib-tab-heading class="create-heading">Гости по спискам&nbsp;&nbsp;
+            <i class="fa fa-users" aria-hidden="true"></i></uib-tab-heading>
         <div class="row-fluid">
             <div class="col-md-4">
                 <div class="form-group">
                     <input type="text"
                            class="form-control"
                            placeholder="Name"
-                           ng-model="guest.name"></input>
+                           ng-model="eve.guest.name"></input>
                 </div>
             </div>
             <div class="col-md-6">
@@ -96,7 +108,7 @@
                     <input type="text"
                            class="form-control"
                            placeholder="Surname"
-                           ng-model="guest.surname"></input>
+                           ng-model="eve.guest.surname"></input>
                 </div>
             </div>
             <div class="col-md-2">
@@ -105,7 +117,7 @@
         </div>
 
         <h4>Добавленные гости:</h4>
-        <div ng-repeat="guest in guests track by $index" class="creating guest">
+        <div ng-repeat="guest in eve.guests track by $index" class="creating guest">
             <p ng-if="guest">
                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                 {{guest.name}} {{guest.surname}}
@@ -119,4 +131,7 @@
 
 <div class="clearfix"></div>
 <hr>
-<button type="submit" class="btn btn-primary" ng-click="addEvent()">Создать мероприятие</button>
+<button class="btn btn-primary" ng-click="addEvent()">Создать мероприятие</button>
+
+
+<div class="clearfix"></div>

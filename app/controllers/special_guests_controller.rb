@@ -25,7 +25,7 @@ class SpecialGuestsController < ApplicationController
     params[:file] = false
     #byebug
     respond_with SpecialGuest.create(guest_params)
-    byebug
+    #byebug
   end
 
 

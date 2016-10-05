@@ -4,13 +4,14 @@ angular.module('flapperNews').controller('EventsCtrl', [
     'Auth',
 function($scope, events, Auth){
     $scope.auth = Auth.isAuthenticated()
-    //console.log($scope.auth)
 	$scope.events=events
     $scope.deleteEvent = function(id){
         events.destroy({
             id: id,
         });
     }
-
-
+    console.log($scope)
+    $scope.model = {
+        name: 'Tabs'
+    };
 }])

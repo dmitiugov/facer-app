@@ -3,7 +3,8 @@ angular.module('flapperNews').controller('ShowEventCtrl', [
     'events',
     'Auth',
     function($scope, events){
-//console.log(ui.bootstrap.popover)
+        $scope.inside = 'Внутри'
+        $scope.outside = 'Снаружи'
         $scope.eve = events
         console.log($scope.eve.event)
         $scope.sortType     = 'name'; // set the default sort type

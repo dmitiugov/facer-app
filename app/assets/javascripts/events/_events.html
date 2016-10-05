@@ -1,36 +1,50 @@
-<div class="page-header" >
-    <div class="row">
-        <div class="col-md-9"><h4>Мероприятия:</h4></div>
+<div class="row">
+    <div class="col-md-9"><h4>Мероприятия:</h4></div>
 
-        <div class="col-md-3">
-            <a href="#/new-event" class="btn btn-primary">Создать мероприятие</a>
-        </div>
+    <div class="col-md-3">
+        <a href="#/new-event" class="btn btn-primary">Создать&nbsp;&nbsp;<i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
     </div>
-
-
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <ul ng-if="events" ng-repeat="event in events.events track by $index">
-                <li ng-if="event.name"><a ng-href="#/events/{{event.id}}">{{event.name}}</a></li>
-                <li ng-if="event.description">{{event.description}}</li>
-                <li ng-if="event.date">Начало в: {{event.date | date:'yyyy-MM-dd HH:mm'}}</li>
-                <li><img ng-src="{{event.file}}" width="100"></li>
-                <li ng-if="event.created_at">создан: {{event.created_at | date:'dd-MM-yyyy'}}</li>
-                <li>{{event.id}}</li>
-                <li><a href="#/events/edit/{{event.id}}">Edit</a></li>
-                <div ng-show="event.guests.length">
-                    <p>Гости:</p>
-                    <ul ng-repeat="guest in event.guests">
-                        <li>{{guest.name}} {{guest.surname}}</li>
-                    </ul>
-                </div>
-
-                <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>Delete Event!</a>
-            </ul>
-        </div>
-
-    </div>
-
 </div>
+<br>
+<uib-tabset justified="true">
+    <uib-tab index="1"
+             active="active"
+             disable="disabled"
+             >
+        <uib-tab-heading>Лента&nbsp;&nbsp;<i class="fa fa-smile-o" aria-hidden="true"></i></uib-tab-heading>
+        <div class="row">
+            <div class="col-md-12 events-content">
+                <ul ng-if="events" ng-repeat="event in events.events track by $index">
+                    <li ng-if="event.name"><a ng-href="#/events/{{event.id}}">{{event.name}}</a></li>
+                    <li ng-if="event.description">{{event.description}}</li>
+                    <li ng-if="event.date">Начало в: {{event.date | date:'yyyy-MM-dd HH:mm'}}</li>
+                    <li><img ng-src="{{event.file}}" width="100"></li>
+                    <li ng-if="event.created_at">создан: {{event.created_at | date:'dd-MM-yyyy'}}</li>
+                    <li>{{event.id}}</li>
+                    <li><a href="#/events/edit/{{event.id}}">Edit</a></li>
+                    <div ng-show="event.guests.length" class="events-list-guests">
+                        <p>Гости:</p>
+                        <ul ng-repeat="guest in event.guests">
+                            <li>{{guest.name}} {{guest.surname}}</li>
+                        </ul>
+                    </div>
+
+                    <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>Delete Event!</a>
+                </ul>
+            </div>
+
+        </div>
+    </uib-tab>
+    <uib-tab index="2"
+             active="active"
+             disable="disabled"
+             >
+        <uib-tab-heading>Календарь&nbsp;&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></uib-tab-heading>
+        Календарь
+    </uib-tab>
+
+
+
+
+
+<div class="clearfix"></div>

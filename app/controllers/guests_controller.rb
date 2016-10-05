@@ -7,13 +7,14 @@ class GuestsController < ApplicationController
     respond_with Guest.find(params[:id])
   end
   def create
+    #byebug
     @guest = guest_params[:guests].map { |guest|
      Guest.create(name: guest[:name], surname: guest[:surname], event_id: guest[:event_id])
      }
     @special = special_params[:specials].map { |special|
-      @special1 = SpecialGuest.find(special[:id])
-      @event = Event.find(special[:event_id])
-      @event.special_guests << @special1
+     @special1 = SpecialGuest.find(special[:id])
+     @event = Event.find(special[:event_id])
+     @event.special_guests << @special1
     }
     head :created, location: guest_path(@guest)
   end

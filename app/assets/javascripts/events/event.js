@@ -17,11 +17,14 @@ var o = {
           angular.copy(data, o.special_guests);
       });
   };
-  o.createGuest = function(guest, special) {
-      return $http.post('/guests.json', guest, special).success(function(data){
+  o.createGuest = function(guests, specials) {
+      console.log(guests)
+      return $http.post('/guests.json', guests, specials).success(function(data){
       });
   }
   o.create = function(event) {
+      console.log(event)
+      console.log(typeof event)
         return $http.post('/events.json', event).success(function(data){
             return data
         });

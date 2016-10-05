@@ -25,6 +25,7 @@
                 if (intercept && response.status === 401) {
                     var deferred = $q.defer();
                     $rootScope.$broadcast('devise:unauthorized', response, deferred);
+                    deferred.reject(response);
                     return deferred.promise;
                 }
 
@@ -43,7 +44,9 @@
     var paths = {
         login: '/users/sign_in.json',
         logout: '/users/sign_out.json',
-        register: '/users.json'
+        register: '/users.json',
+        sendResetPasswordInstructions: '/users/password.json',
+        resetPassword: '/users/password.json'
     };
 
     /**
@@ -52,7 +55,9 @@
     var methods = {
         login: 'POST',
         logout: 'DELETE',
-        register: 'POST'
+        register: 'POST',
+        sendResetPasswordInstructions: 'POST',
+        resetPassword: 'PUT'
     };
 
     /**
@@ -81,7 +86,7 @@
 
     // A helper function that will setup the ajax config
     // and merge the data key if provided
-    function httpConfig(action, data) {
+    function httpConfig(action, data, additionalConfig) {
         var config = {
             method: methods[action].toLowerCase(),
             url: paths[action]
@@ -96,6 +101,7 @@
             }
         }
 
+        angular.extend(config, additionalConfig);
         return config;
     }
 
@@ -152,6 +158,7 @@
         // A reset that saves null for currentUser
         function reset() {
             save(null);
+            service._promise = null;
         }
 
         function broadcast(name) {
@@ -177,6 +184,21 @@
             parse: _parse,
 
             /**
+             * The Auth service's current promise
+             * This is shared between all instances of Auth
+             * on the scope.
+             */
+            _promise: null,
+
+            /* reset promise and current_user, after call this method all
+             * xhr request will be reprocessed when they will be call
+             */
+            reset: function(){
+                reset();
+                service.currentUser();
+            },
+
+            /**
              * A login function to authenticate with the server.
              * Keep in mind, credentials are sent in plaintext;
              * use a SSL connection to secure them. By default,
@@ -192,15 +214,18 @@
              *  });
              *
              * @param {Object} [creds] A hash of user credentials.
+             * @param {Object} [config] Optional, additional config which
+             *                  will be added to http config for underlying
+             *                  $http.
              * @returns {Promise} A $http promise that will be resolved or
              *                  rejected by the server.
              */
-            login: function(creds) {
+            login: function(creds, config) {
                 var withCredentials = arguments.length > 0,
                     loggedIn = service.isAuthenticated();
 
                 creds = creds || {};
-                return $http(httpConfig('login', creds))
+                return $http(httpConfig('login', creds, config))
                     .then(service.parse)
                     .then(save)
                     .then(function(user) {
@@ -224,12 +249,15 @@
              *      AuthProvider.logoutPath('path/on/server.json');
              *      AuthProvider.logoutMethod('GET');
              *  });
+             * @param {Object} [config] Optional, additional config which
+             *                  will be added to http config for underlying
+             *                  $http.
              * @returns {Promise} A $http promise that will be resolved or
              *                  rejected by the server.
              */
-            logout: function() {
+            logout: function(config) {
                 var returnOldUser = constant(service._currentUser);
-                return $http(httpConfig('logout'))
+                return $http(httpConfig('logout', undefined, config))
                     .then(reset)
                     .then(returnOldUser)
                     .then(broadcast('logout'));
@@ -251,15 +279,68 @@
              *  });
              *
              * @param {Object} [creds] A hash of user credentials.
+             * @param {Object} [config] Optional, additional config which
+             *                  will be added to http config for underlying
+             *                  $http.
              * @returns {Promise} A $http promise that will be resolved or
              *                  rejected by the server.
              */
-            register: function(creds) {
+            register: function(creds, config) {
                 creds = creds || {};
-                return $http(httpConfig('register', creds))
+                return $http(httpConfig('register', creds, config))
                     .then(service.parse)
                     .then(save)
                     .then(broadcast('new-registration'));
+            },
+
+            /**
+             * A function to send the reset password instructions to the
+             * user email.
+             * By default, `sendResetPasswordInstructions` will POST to '/users/password.json'.
+             *
+             * The path and HTTP method used to send instructions are configurable
+             * using
+             *
+             *  angular.module('myModule', ['Devise']).
+             *  config(function(AuthProvider) {
+             *      AuthProvider.sendResetPasswordInstructionsPath('path/on/server.json');
+             *      AuthProvider.sendResetPasswordInstructionsMethod('POST');
+             *  });
+             *
+             * @param {Object} [creds] A hash containing user email.
+             * @returns {Promise} A $http promise that will be resolved or
+             *                  rejected by the server.
+             */
+            sendResetPasswordInstructions: function(creds) {
+                creds = creds || {};
+                return $http(httpConfig('sendResetPasswordInstructions', creds))
+                    .then(service.parse)
+                    .then(broadcast('send-reset-password-instructions-successfully'));
+            },
+
+            /**
+             * A reset function to reset user password.
+             * By default, `resetPassword` will PUT to '/users/password.json'.
+             *
+             * The path and HTTP method used to reset password are configurable
+             * using
+             *
+             *  angular.module('myModule', ['Devise']).
+             *  config(function(AuthProvider) {
+             *      AuthProvider.resetPasswordPath('path/on/server.json');
+             *      AuthProvider.resetPasswordMethod('POST');
+             *  });
+             *
+             * @param {Object} [creds] A hash containing password, password_confirmation and reset_password_token.
+             * @returns {Promise} A $http promise that will be resolved or
+             *                  rejected by the server.
+             */
+            resetPassword: function(creds) {
+                creds = creds || {};
+                return $http(httpConfig('resetPassword', creds))
+                    .then(service.parse)
+                    .then(save)
+                    .then(broadcast('reset-password-successfully'));
             },
 
             /**
@@ -279,7 +360,10 @@
                 if (service.isAuthenticated()) {
                     return $q.when(service._currentUser);
                 }
-                return service.login();
+                if(service._promise === null){
+                    service._promise = service.login();
+                }
+                return service._promise;
             },
 
             /**

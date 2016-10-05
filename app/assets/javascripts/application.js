@@ -1,9 +1,10 @@
 //= require angular
 //= require angular-rails-templates
 //= require angular-ui-router
-//= require angular-ui-bootstrap
-//= require angular-ui-bootstrap-tpls
+//= require angular-bootstrap
 //= require angular-ui-select
+//= require angular-sanitize
+//= require angular-animate
 //= require interact
 //= require angular-devise
 //= require angular-datepicker

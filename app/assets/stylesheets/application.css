@@ -19,14 +19,15 @@
  */
 
 .creating.guest i {
-    font-size: 20px;
+    font-size: 15px;
     cursor: pointer;
-    color: #fff
-}
-.creating.guest p {
-    font-size: 20px;
-    color: #fff
 }
 .show-event-guests i {
     cursor: pointer;
+}
+.events-content li, .events-content p, .events-list-guests p, .events-list-guests ul li {
+    color: #000
+}
+.create-heading {
+    font-size: 13px;
 }

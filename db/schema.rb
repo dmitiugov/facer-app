@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930143114) do
+ActiveRecord::Schema.define(version: 20161001120807) do
+
+  create_table "accaunts", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.string   "body"
@@ -41,7 +48,10 @@ ActiveRecord::Schema.define(version: 20160930143114) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+    t.integer  "accaunt_id"
   end
+
+  add_index "events", ["accaunt_id"], name: "index_events_on_accaunt_id"
 
   create_table "events_parts", id: false, force: :cascade do |t|
     t.integer "event_id"
@@ -96,7 +106,10 @@ ActiveRecord::Schema.define(version: 20160930143114) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "accaunt_id"
   end
+
+  add_index "special_guests", ["accaunt_id"], name: "index_special_guests_on_accaunt_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -112,8 +125,10 @@ ActiveRecord::Schema.define(version: 20160930143114) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username"
+    t.integer  "accaunt_id"
   end
 
+  add_index "users", ["accaunt_id"], name: "index_users_on_accaunt_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true

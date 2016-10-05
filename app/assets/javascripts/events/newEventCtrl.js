@@ -5,129 +5,9 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     'Auth',
     'Upload',
     '$http',
-    '$sce',
-    '$window',
     '$timeout',
-    function($scope, events, Auth, Upload, $http, $sce, $window, $timeout){
+    function($scope, events, Auth, Upload, $http, $timeout){
 
-
-        $scope.dygestCycle = function(){
-            $scope.$digest();
-        }
-        $scope.trustAsHtml = function(value) {
-            return $sce.trustAsHtml(value);
-        };
-
-        $scope.specials = []
-        $scope.selectedids = []
-    $scope.showSelected = function(){
-        console.log($scope.specials.selected)
-        }
-
-        $scope.selectAll = function() {
-            $scope.specials.selected = $scope.specials
-                  };
-        $scope.resetAll = function() {
-            $scope.specials.selected = []
-        }
-       $scope.refreshSpecials = function(name) {
-            var params = {name: name};
-            return $http.get(
-                '/special_guests.json',
-                {params: params}
-            ).then(function(response) {
-                $scope.specials = response.data;
-            });
-        };
-
-    $scope.title = 'Создать событие'
-        Auth.currentUser().then(function(user) {
-            $scope.user_name = user.username;
-        }, function(error) {
-           console.log(error)
-        });
-        $scope.upload = function (file) {
-                $scope.upload = Upload.upload({
-                    url: '/events.json',
-                    method: 'POST',
-                    fields: { 'user[name]': $scope.user_name,
-                        name: $scope.name,
-                        description: $scope.description,
-                        date: $scope.dates.today._d,
-                    file: file,
-                    fileFormDataName: 'user[image]'},
-                }).then(function (resp) {
-                    var id = resp.data.id
-                    $scope.guests.event_id = ''
-                    for (var i=0; i<$scope.guests.length; i++) {
-                        $scope.guests[i].event_id = id
-                    }
-                    for (var i=0; i<$scope.specials.selected.length; i++){
-                        $scope.specials.selected[i].event_id=''
-                        $scope.specials.selected[i].event_id = id
-                    }
-                    if($scope.guests || $scope.specials.selected) {
-                        events.createGuest({
-                            guests: $scope.guests,
-                            specials: $scope.specials.selected,
-                        }).then(function (resp) {
-                            $scope.guests = '';
-                            $scope.specials.selected = '';
-                            $scope.file = '';
-                        })
-                    }
-                });
-        }
-
-        $scope.flash = ''
-        $scope.events=events
-        $scope.guests = [];
-        $scope.guest = []
-        $scope.addGuest = function(){
-            $scope.guests.push($scope.guest);
-            $scope.guest = [];
-
-        }
-        $scope.deleteGuest = function ($index) {
-           $scope.guests[$index] = null
-        }
-        $scope.addEvent = function(){
-            if ($scope.file) {
-                $scope.upload($scope.file);
-            } else {
-                events.create({
-                    name: $scope.name,
-                    description: $scope.description,
-                    date: $scope.dates.today._d,
-                }).then(function(data) {
-                    var id = data.data.id
-                    $scope.guests.event_id = ''
-                    for (var i=0; i<$scope.guests.length; i++) {
-                        $scope.guests[i].event_id = id
-                    }
-
-                    for (var i=0; i<$scope.specials.selected.length; i++){
-                        $scope.specials.selected[i].event_id=''
-                        $scope.specials.selected[i].event_id = id
-                    }
-                    events.createGuest({
-                        guests: $scope.guests,
-                        specials: $scope.specials.selected,
-                    }).then(function (resp) {
-                        $scope.guests = '';
-                        $scope.specials.selected = '';
-                        $scope.file = '';
-                    })
-                }, function(error) {
-                   console.log('Error Create')
-                });
-            }
-            $scope.name = '';
-            $scope.surname = '';
-            $scope.description = '';
-            $scope.date = '';
-            $scope.flash = 'Событие добавлено';
-        };
 
 
         $scope.dates = {
@@ -135,8 +15,121 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             //minDate: moment.tz('UTC').add(-4, 'd').hour(12).startOf('h'), //12:00 UTC, four days ago.
             //maxDate: moment.tz('UTC').add(4, 'd').hour(12).startOf('h'), //12:00 UTC, in four days.
         };
-        /*$scope.consoleDate = function(){
-            console.log($scope.dates.today._d)
-        }*/
+        $scope.eve = {
+            name: '',
+            file: '',
+            description: '',
+            date: $scope.dates.today,
+            guest: {},
+            guests: [],
+            specials: [],
+        }
+
+        $scope.addGuest = function(){
+            console.log($scope.eve)
+            $scope.eve.guests.push($scope.eve.guest)
+            $scope.eve.guest = {}
+            //console.log($scope.eve.date.format("YYYY-MM-DD HH:mm:ss"))
+            //console.log($scope.eve.name)
+        }
+
+
+
+        //$scope.selectedids = []
+        $scope.showSelected = function(){
+            console.log($scope.eve.specials.selected)
+        }
+
+        $scope.selectAll = function() {
+            $scope.eve.specials.selected = $scope.eve.specials
+        };
+        $scope.resetAll = function() {
+            $scope.eve.specials.selected = []
+        }
+        $scope.refreshSpecials = function(name) {
+            var params = {name: name};
+            return $http.get(
+                '/special_guests.json',
+                {params: params}
+            ).then(function(response) {
+                $scope.eve.specials = response.data;
+            });
+        };
+
+        $scope.title = 'Создать событие'
+        Auth.currentUser().then(function(user) {
+            $scope.user_name = user.username;
+        }, function(error) {
+            console.log(error)
+        });
+        $scope.upload = function (file) {
+            $scope.upload = Upload.upload({
+                url: '/events.json',
+                method: 'POST',
+                fields: { 'user[name]': $scope.user_name,
+                    name: $scope.eve.name,
+                    description: $scope.eve.description,
+                    date: $scope.eve.date.format("YYYY-MM-DD HH:mm:ss"),
+                    file: file,
+                    fileFormDataName: 'user[image]'},
+            }).then(function (resp) {
+                var id = resp.data.id
+                for (var i=0; i<$scope.eve.guests.length; i++) {
+                    $scope.eve.guests[i].event_id = ''
+                    $scope.eve.guests[i].event_id = id
+                }
+
+                for (var i=0; i<$scope.eve.specials.selected.length; i++){
+                    $scope.eve.specials.selected[i].event_id=''
+                    $scope.eve.specials.selected[i].event_id = id
+                }
+                events.createGuest({
+                    guests: $scope.eve.guests,
+                    specials: $scope.eve.specials.selected,
+                }).then(function (resp) {
+                    console.log(resp)
+                })
+            });
+        }
+
+        $scope.flash = ''
+        $scope.events=events
+
+        $scope.deleteGuest = function ($index) {
+            $scope.eve.guests[$index] = null
+        }
+        $scope.addEvent = function(eve){
+
+            if ($scope.eve.file) {
+                $scope.upload($scope.eve.file);
+            } else {
+                events.create({
+                    name: $scope.eve.name,
+                    description: $scope.eve.description,
+                    date: $scope.eve.date.format("YYYY-MM-DD HH:mm:ss"),
+                }).then(function(data) {
+                    var id = data.data.id
+                    for (var i=0; i<$scope.eve.guests.length; i++) {
+                        $scope.eve.guests[i].event_id = ''
+                        $scope.eve.guests[i].event_id = id
+                    }
+
+                    for (var i=0; i<$scope.eve.specials.selected.length; i++){
+                     $scope.eve.specials.selected[i].event_id=''
+                     $scope.eve.specials.selected[i].event_id = id
+                     }
+                     events.createGuest({
+                     guests: $scope.eve.guests,
+                     specials: $scope.eve.specials.selected,
+                     }).then(function (resp) {
+                         console.log(resp)
+                     })
+                }, function(error) {
+                    console.log('Error Create')
+                });
+            }
+            $scope.flash = 'Событие добавлено';
+        }
+
 
     }])
