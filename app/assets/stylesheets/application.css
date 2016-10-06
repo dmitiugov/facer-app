@@ -13,6 +13,7 @@
  *= require bootstrap/dist/css/bootstrap
  *= require angular-datepicker/dist/angular-datepicker
  *= require font-awesome
+ *= require fullcalendar
  *= require angular-ui-select
  *= require_tree .
  *= require_self

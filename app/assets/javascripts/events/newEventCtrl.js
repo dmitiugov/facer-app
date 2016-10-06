@@ -6,7 +6,8 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     'Upload',
     '$http',
     '$timeout',
-    function($scope, events, Auth, Upload, $http, $timeout){
+    '$location',
+    function($scope, events, Auth, Upload, $http, $timeout, $location){
 
 
 
@@ -88,6 +89,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                     specials: $scope.eve.specials.selected,
                 }).then(function (resp) {
                     console.log(resp)
+                    $location.path('/events')
                 })
             });
         }
@@ -123,6 +125,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                      specials: $scope.eve.specials.selected,
                      }).then(function (resp) {
                          console.log(resp)
+                         $location.path('/events')
                      })
                 }, function(error) {
                     console.log('Error Create')
