@@ -12,27 +12,80 @@
              disable="disabled"
              >
         <uib-tab-heading>Лента&nbsp;&nbsp;<i class="fa fa-smile-o" aria-hidden="true"></i></uib-tab-heading>
-        <div class="row">
-            <div class="col-md-12 events-content">
-                <ul ng-if="events" ng-repeat="event in events.events track by $index">
-                    <li ng-if="event.name"><a ng-href="#/events/{{event.id}}">{{event.name}}</a></li>
-                    <li ng-if="event.description">{{event.description}}</li>
-                    <li ng-if="event.date">Начало в: {{event.date | date:'yyyy-MM-dd HH:mm'}}</li>
-                    <li><img ng-src="{{event.file}}" width="100"></li>
-                    <li ng-if="event.created_at">создан: {{event.created_at | date:'dd-MM-yyyy'}}</li>
-                    <li>{{event.id}}</li>
-                    <li><a href="#/events/edit/{{event.id}}">Edit</a></li>
-                    <div ng-show="event.guests.length" class="events-list-guests">
-                        <p>Гости:</p>
-                        <ul ng-repeat="guest in event.guests">
-                            <li>{{guest.name}} {{guest.surname}}</li>
-                        </ul>
+        <div class="row events-content">
+            <div class="col-md-12">
+                <div class="panel panel-default" ng-if="events" ng-repeat="event in events.events track by $index">
+                    <div class="panel-heading" ng-if="event.name">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="label label-success"><a ng-href="#/events/{{event.id}}">{{event.name}}</a></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="label label-default" style="margin-right: 5px">
+                                    Начало в: {{event.date | date:'yyyy-MM-dd HH:mm'}}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="#/events/edit/{{event.id}}"><i class="fa fa-pencil-square" aria-hidden="true"
+                                                                        uib-popover="Редактировать"
+                                                                        popover-trigger="'mouseenter'"
+                                                                        popover-placement="top"></i></a>
+                                <a href="#" ng-click='archiveEvent(event.id)'><i class="fa fa-archive" aria-hidden="true"
+                                                                                 uib-popover="Архивировать"
+                                                                                 popover-trigger="'mouseenter'"
+                                                                                 popover-placement="top"></i></a>
+                                <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>
+                                    <i class="fa fa-trash-o" aria-hidden="true"
+                                       uib-popover="Удалить"
+                                       popover-trigger="'mouseenter'"
+                                       popover-placement="top"></i>
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
+                    <div class="panel-body" >
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a ng-href="#/events/{{event.id}}"><img ng-if="event.file" ng-src="{{event.file}}"></a>
+                            </div>
+                            <div class="col-md-6">
+                                <div ng-if="event.guests.length>0">
+                                    <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">
+                                        Гости по спискам</button>
+                                    <div uib-collapse="isCollapsed">
+                                        <div class="well well-lg">
+                                            <p ng-repeat="guest in event.guests">{{guest.name}} {{guest.surname}}</p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>Delete Event!</a>
-                </ul>
+                                <div ng-if="event.special_guests.length>0">
+                                    <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">
+                                        Постоянные гости</button>
+                                    <div uib-collapse="isCollapsed">
+                                        <div class="well well-lg">
+                                            <p ng-repeat="guest in event.special_guests">{{guest.name}} {{guest.surname}}<br>
+                                                <img ng-src="{{guest.file}}" alt="" class="img-thumbnail" style="max-width: 50px">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="label label-default" style="margin-right: 5px">
+                            Создан: {{event.created_at | date:'yyyy-MM-dd HH:mm'}}
+                        </div>
+                        <div class="label label-default">
+                            Изменен: {{event.updated_at | date:'yyyy-MM-dd HH:mm'}}
+                        </div>
+
+
+                    </div>
+                </div>
             </div>
-
         </div>
     </uib-tab>
     <uib-tab index="2"

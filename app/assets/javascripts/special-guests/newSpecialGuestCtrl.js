@@ -24,8 +24,8 @@ angular.module('flapperNews').controller('newSpecialGuestCtrl', [
         }
         $scope.addSpecialGuest = function(){
             if ($scope.file) {
-                console.log($scope.file)
-                //$scope.upload($scope.file);
+                //console.log($scope.file)
+                $scope.upload($scope.file);
             } else {
                 $scope.file = '/system/special_guests/20151012_561baed03a54e.jpg'
                 console.log($scope.file)

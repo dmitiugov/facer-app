@@ -26,8 +26,9 @@
 .show-event-guests i {
     cursor: pointer;
 }
-.events-content li, .events-content p, .events-list-guests p, .events-list-guests ul li {
-    color: #000
+.events-content .label a {
+    color: #fff;
+    text-decoration: none;
 }
 .create-heading {
     font-size: 13px;

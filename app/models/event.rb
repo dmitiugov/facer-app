@@ -6,8 +6,9 @@ class Event < ActiveRecord::Base
   has_many :guests
   has_and_belongs_to_many :special_guests
   def as_json(options={})
-    super(options.merge(include: :special_guests))
+    super(options)
         .merge(:file => file.url(:medium))
         .merge(:guests => guests)
+        .merge(:special_guests => special_guests(:avatar => file.url(:thumb)))
   end
 end

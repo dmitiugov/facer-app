@@ -13,11 +13,11 @@
         <h4>Guests:</h4>
         <div class="">
 
-            <div class="alert alert-info">
+            <!--<div class="alert alert-info">
                 <p>Sort Type: {{ sortType }}</p>
                 <p>Sort Reverse: {{ sortReverse }}</p>
                 <p>Search Query: {{ searchFish }}</p>
-            </div>
+            </div>-->
 
             <form>
                 <div class="form-group">
@@ -32,6 +32,7 @@
 
                 <thead>
                 <tr>
+                    <td><i class="fa fa-user-secret" aria-hidden="true"></i></td>
                     <td>
                         <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
                             Name
@@ -65,9 +66,33 @@
 
                 <tbody>
                 <tr ng-repeat="guest in eve.event.guests | orderBy:sortType:sortReverse | filter:searchSurname">
+                    <td></td>
                     <td>{{ guest.name }}</td>
                     <td>{{ guest.surname }}</td>
                     <td>{{ guest.bio }}</td>
+                    <td><a ng-click="changeStatus(guest.id, guest.inside)">
+                <span ng-if="guest.inside == true">
+
+                    <i class="fa fa-sign-in" aria-hidden="true"
+                       uib-popover="{{inside}}"
+                       popover-trigger="'mouseenter'"
+                       popover-placement="right"></i>
+                </span>
+                        <span ng-if="guest.inside == false">
+                            <i class="fa fa-sign-out fa-flip-horizontal" aria-hidden="true"
+                               uib-popover="{{outside}}"
+                               popover-trigger="'mouseenter'"
+                               popover-placement="right"></i>
+
+                </span>
+                    </a>
+                    </td>
+                </tr>
+                <tr ng-repeat="guest in eve.event.special_guests | orderBy:sortType:sortReverse | filter:searchSurname">
+                    <td><img ng-if="guest.file" ng-src="{{guest.file}}" class="img-thumbnail" style="max-width: 50px"></td>
+                    <td>{{ guest.name }}</td>
+                    <td>{{ guest.surname }}</td>
+                    <td>{{ guest.description }}</td>
                     <td><a ng-click="changeStatus(guest.id, guest.inside)">
                 <span ng-if="guest.inside == true">
 
