@@ -109,6 +109,35 @@ function($stateProvider, $urlRouterProvider) {
           }
       })
 
+      .state('artists', {
+          url: '/artists',
+          templateUrl: 'artists/_artists.html',
+          controller: 'artistsCtrl',
+          resolve: {
+              artistsPromise: ['artists',
+                  function(artists){
+                      return artists.getAll();
+                  }]
+          }
+      })
+
+      .state('show-artists', {
+          url: '/artists/{id}',
+          templateUrl: 'artists/_show-artist.html',
+          controller: 'showArtistCtrl',
+          resolve: {
+              post: ['$stateParams', 'artists', function($stateParams, artists) {
+                  return artists.get($stateParams.id);
+              }]
+          }
+      })
+
+      .state('new-artists', {
+          url: '/new-artists',
+          templateUrl: 'artists/_new-artist.html',
+          controller: 'newArtistCtrl'
+      })
+
     .state('login', {
       url: '/login',
       templateUrl: 'auth/_login.html',

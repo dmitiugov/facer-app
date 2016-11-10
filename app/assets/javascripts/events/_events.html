@@ -77,6 +77,11 @@
                         <hr>
                         <div class="label label-default" style="margin-right: 5px">
                             Создан: {{event.created_at | date:'yyyy-MM-dd HH:mm'}}
+                            <span ng-if="event.user">
+                                 by {{event.user.name}}&nbsp;{{event.user.surname}}
+                            </span>
+
+
                         </div>
                         <div class="label label-default">
                             Изменен: {{event.updated_at | date:'yyyy-MM-dd HH:mm'}}

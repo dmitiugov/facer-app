@@ -13,6 +13,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     if @accaunt.events.ids.include?(@event.id)
       respond_with @event
+      #byebug
     else
       respond_with flash: "You don't have permission for this action"
     end
@@ -22,6 +23,7 @@ class EventsController < ApplicationController
 
     @event = Event.create(event_params)
     @event.accaunt = Accaunt.find(current_user.accaunt_id)
+    @event.user = User.find(current_user)
     @event.save!
 
     #byebug
