@@ -4,7 +4,7 @@
 <div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
 
 
-<uib-tabset active="activeJustified" justified="true">
+<uib-tabset>
     <uib-tab index="0">
         <uib-tab-heading class="create-heading">Информация о событии&nbsp;&nbsp;
             <i class="fa fa-info-circle" aria-hidden="true"></i></uib-tab-heading>
@@ -52,6 +52,17 @@
                   ng-model="eve.description"></textarea>
                 </div>
 
+
+
+            </div>
+
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="create-heading" ng-click="refreshSpecials()">Постоянные гости&nbsp;&nbsp;
+            <i class="fa fa-user" aria-hidden="true"></i></uib-tab-heading>
+        <div class="row-fluid">
+            <div class="col-md-12">
                 <h4>Постоянные гости:</h4>
                 <ui-select multiple ng-model="eve.specials.selected" close-on-select="false"
                            style="width: 600px;" title="Choose a person">
@@ -69,16 +80,6 @@
                 <br>
                 <a href="" ng-click="selectAll()">Выбрать всех</a>
                 <a href="" ng-click="resetAll()">Удалить всех</a>
-
-            </div>
-
-        </div>
-    </uib-tab>
-    <uib-tab index="1">
-        <uib-tab-heading class="create-heading" ng-click="">Постоянные гости&nbsp;&nbsp;
-            <i class="fa fa-user" aria-hidden="true"></i></uib-tab-heading>
-        <div class="row-fluid">
-            <div class="col-md-12">
                 <h4>Постоянные гости:</h4>
                 <p ng-repeat="special in eve.specials.selected">
 
@@ -123,7 +124,12 @@
             <h4>Добавленные гости:</h4>
             <div ng-repeat="guest in eve.guests track by $index" class="creating guest">
                 <p ng-if="guest">
-                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    <i class="fa fa-user-plus"
+                       uib-popover-template="dynamicPopover.templateUrl"
+                       popover-title="{{dynamicPopover.title}}"
+                       type="button"
+                       ng-click="addInfoGuest($index)"
+                       aria-hidden="true"></i>
                     {{guest.name}} {{guest.surname}}
 
                     <i class="fa fa-trash-o" aria-hidden="true" ng-click="deleteGuest($index)"></i>

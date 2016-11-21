@@ -97,9 +97,9 @@
              active="active"
              disable="disabled"
              >
-        <uib-tab-heading>Календарь&nbsp;&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></uib-tab-heading>
+        <uib-tab-heading ng-click="renderCalender()">Календарь&nbsp;&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></uib-tab-heading>
         <br><br>
-        <div ui-calendar="uiConfig.calendar" ng-model="eventy">
+        <div ui-calendar="uiConfig.calendar" calendar="myCalendar" ng-model="eventy">
     </uib-tab>
 
 

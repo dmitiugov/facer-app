@@ -55,6 +55,13 @@
                         </a>
                     </td>
                     <td>
+                        <a href="#" ng-click="sortType = 'age'; sortReverse = !sortReverse">
+                            Age
+                            <span ng-show="sortType == 'age' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'age' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
                         <a href="#" ng-click="sortType = 'inside'; sortReverse = !sortReverse">
                             Inside-Outside
                             <span ng-show="sortType == 'inside' && !sortReverse" class="fa fa-caret-down"></span>
@@ -70,6 +77,7 @@
                     <td>{{ guest.name }}</td>
                     <td>{{ guest.surname }}</td>
                     <td>{{ guest.bio }}</td>
+                    <td>{{ guest.age }}</td>
                     <td><a ng-click="changeStatus(guest.id, guest.inside)">
                 <span ng-if="guest.inside == true">
 
@@ -93,6 +101,7 @@
                     <td>{{ guest.name }}</td>
                     <td>{{ guest.surname }}</td>
                     <td>{{ guest.description }}</td>
+                    <td>{{ guest.age }}</td>
                     <td><a ng-click="changeStatus(guest.id, guest.inside)">
                 <span ng-if="guest.inside == true">
 

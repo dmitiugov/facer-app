@@ -43,9 +43,6 @@ function($scope, events, Auth, $compile, uiCalendarConfig, $timeout){
     }
     $scope.eventy[0].color = 'yellow';
     $scope.eventy[0].textColor = 'black';
-    console.log($scope.eventy)
-    //console.log($scope.events.events)
-    $scope.eventSources = [$scope.eventy]
     $scope.uiConfig = {
         calendar:{
             height: 450,
@@ -60,5 +57,9 @@ function($scope, events, Auth, $compile, uiCalendarConfig, $timeout){
             eventResize: $scope.alertOnResize
         }
     };
-
+    $scope.renderCalender = function() {
+        $timeout(function(){
+            uiCalendarConfig.calendars.myCalendar.fullCalendar('render')
+        }, 200);
+    }
 }])

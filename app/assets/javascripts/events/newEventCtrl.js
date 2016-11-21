@@ -7,8 +7,8 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     '$http',
     '$timeout',
     '$location',
-    function($scope, events, Auth, Upload, $http, $timeout, $location){
-
+    '$compile',
+    function($scope, events, Auth, Upload, $http, $timeout, $location, $compile){
 
 
         $scope.dates = {
@@ -33,7 +33,17 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             //console.log($scope.eve.date.format("YYYY-MM-DD HH:mm:ss"))
             //console.log($scope.eve.name)
         }
-
+        $scope.addInfoxGuest = function ($index) {
+            console.log($index);
+            $scope.eve.guest.age = $scope.dynamicPopover.age;
+            console.log($scope.eve.guest);
+            console.log($scope.eve.guests);
+            $scope.eve.guests[$index].age = '';
+            $scope.eve.guests[$index].bio = '';
+            $scope.eve.guests[$index].age = $scope.eve.guest.age;
+            $scope.eve.guests[$index].bio = $scope.eve.guest.bio;
+            console.log($scope.eve.guests);
+        }
 
 
         //$scope.selectedids = []
@@ -47,6 +57,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         $scope.resetAll = function() {
             $scope.eve.specials.selected = []
         }
+
         $scope.refreshSpecials = function(name) {
             var params = {name: name};
             return $http.get(
@@ -56,7 +67,6 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                 $scope.eve.specials = response.data;
             });
         };
-
         $scope.title = 'Создать событие'
         Auth.currentUser().then(function(user) {
             $scope.user_name = user.username;
@@ -98,8 +108,20 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         $scope.events=events
 
         $scope.deleteGuest = function ($index) {
-            $scope.eve.guests[$index] = null
+            $scope.eve.guests[$index] = null;
         }
+        $scope.addInfoGuest = function ($index) {
+            console.log($index);
+
+        }
+
+        $scope.dynamicPopover = {
+            templateUrl: 'events/templates/edit_guest.html',
+            title: 'Add Info',
+            age: 18,
+            ageHeading: 'Age',
+            bio: 'Bio'
+        };
         $scope.addEvent = function(eve){
 
             if ($scope.eve.file) {

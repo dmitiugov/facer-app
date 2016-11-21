@@ -9,7 +9,7 @@ class GuestsController < ApplicationController
   def create
     #byebug
     @guest = guest_params[:guests].map { |guest|
-     Guest.create(name: guest[:name], surname: guest[:surname], event_id: guest[:event_id])
+     Guest.create(name: guest[:name], surname: guest[:surname], event_id: guest[:event_id], bio: guest[:bio], age: guest[:age])
      }
     @special = special_params[:specials].map { |special|
      @special1 = SpecialGuest.find(special[:id])
@@ -33,7 +33,7 @@ class GuestsController < ApplicationController
 
   private
   def guest_params
-    params.permit(guests: [:name, :surname, :event_id])
+    params.permit(guests: [:name, :surname, :event_id, :bio, :age])
   end
   def special_params
     params.permit(specials: [:id, :event_id])

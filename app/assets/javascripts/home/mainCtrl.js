@@ -2,8 +2,10 @@ angular.module('flapperNews').controller('MainCtrl', [
 '$scope',
 'posts',
     'Upload',
-function($scope, posts, Upload){
+    'Auth',
+function($scope, posts, Upload, Auth){
     //console.log(Upload)
+    //console.log(Auth);
   $scope.test = 'Hello world!';
     //console.log($scope.test)
 	$scope.posts = posts.posts;
