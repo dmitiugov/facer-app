@@ -25,10 +25,7 @@ class EventsController < ApplicationController
     @event.accaunt = Accaunt.find(current_user.accaunt_id)
     @event.user = User.find(current_user)
     @event.save!
-
     #byebug
-
-
     respond_with @event
   end
 
@@ -39,10 +36,10 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     @event.update!(event_params)
+    #@guests = guests_params[:guests].map { |guest|
+    #Guest.create(name: guest[:name], surname: guest[:surname], event: @event)
+    #}
     respond_with @event
-    @guests = guests_params[:guests].map { |guest|
-    Guest.create(name: guest[:name], surname: guest[:surname], event: @event)
-    }
   end
 
   def destroy

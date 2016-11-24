@@ -10,7 +10,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     '$compile',
     function($scope, events, Auth, Upload, $http, $timeout, $location, $compile){
 
-
+        $scope.action = 'Создать событие'
         $scope.dates = {
             today: moment.tz('UTC').hour(12).startOf('h'), //12:00 UTC, today.
             //minDate: moment.tz('UTC').add(-4, 'd').hour(12).startOf('h'), //12:00 UTC, four days ago.
@@ -52,10 +52,14 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         }
 
         $scope.selectAll = function() {
-            $scope.eve.specials.selected = $scope.eve.specials
+            $scope.eve.specials.selected = []
+            for(var i = 0; i<$scope.eve.specials.length; i++) {
+                var special = $scope.eve.specials[i]
+                $scope.eve.specials.selected.push(special);
+            }
         };
         $scope.resetAll = function() {
-            $scope.eve.specials.selected = []
+            $scope.eve.specials.selected = null
         }
 
         $scope.refreshSpecials = function(name) {

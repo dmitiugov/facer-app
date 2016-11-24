@@ -8,15 +8,20 @@ class GuestsController < ApplicationController
   end
   def create
     #byebug
+    if (guest_params.has_key?(:guests))
     @guest = guest_params[:guests].map { |guest|
      Guest.create(name: guest[:name], surname: guest[:surname], event_id: guest[:event_id], bio: guest[:bio], age: guest[:age])
      }
-    @special = special_params[:specials].map { |special|
-     @special1 = SpecialGuest.find(special[:id])
-     @event = Event.find(special[:event_id])
-     @event.special_guests << @special1
-    }
-    head :created, location: guest_path(@guest)
+    end
+    #if (guest_params.has_key?(:specials))
+      @special = special_params[:specials].map { |special|
+       @special1 = SpecialGuest.find(special[:id])
+       @event = Event.find(special[:event_id])
+       @event.special_guests << @special1
+      }
+    #end
+    #respond_with flash: "Guests created"
+    head :created, location: events_path
   end
   def update
 
@@ -28,7 +33,11 @@ class GuestsController < ApplicationController
     head :created, location: guest_path(@guest)
     #byebug
   end
-
+  def destroy
+    @guest = Guest.find(params[:id])
+    @guest.destroy
+    respond_with @guest
+  end
 
 
   private

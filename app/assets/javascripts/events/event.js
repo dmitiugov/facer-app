@@ -22,6 +22,13 @@ var o = {
       return $http.post('/guests.json', guests, specials).success(function(data){
       });
   }
+  o.deleteGuest = function(guest){
+      console.log(guest);
+      return $http.delete('/guests/' + guest.guest.id + '.json').success(function(data){
+          console.log("Guest has been deleted!")
+      });
+
+  }
   o.create = function(event) {
       console.log(event)
       console.log(typeof event)
@@ -33,6 +40,7 @@ var o = {
   o.edit = function(event) {
         console.log(event)
         return $http.put('/events/'+ event.id + '.json', event).success(function(data){
+            return data
             console.log("Event has been updated!")
         });
     };

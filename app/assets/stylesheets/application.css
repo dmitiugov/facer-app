@@ -33,3 +33,14 @@
 .create-heading {
     font-size: 13px;
 }
+ul.nav.navbar-nav li {
+    float: none;
+}
+#main-template div.row.ng-scope {
+    margin-top: 10px;
+}
+@media (min-width: 768px) {
+    ul.nav.navbar-nav li {
+        float: none;
+    }
+}
