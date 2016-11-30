@@ -22,6 +22,12 @@ var o = {
       return $http.post('/guests.json', guests, specials).success(function(data){
       });
   }
+  o.updateSpecials = function (specials) {
+      console.log(specials);
+      return $http.post('/special_guests.json', specials).success(function(data){
+          console.log("Specials has been updated!")
+      });
+  }
   o.deleteGuest = function(guest){
       console.log(guest);
       return $http.delete('/guests/' + guest.guest.id + '.json').success(function(data){

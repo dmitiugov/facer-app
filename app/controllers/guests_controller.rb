@@ -13,14 +13,21 @@ class GuestsController < ApplicationController
      Guest.create(name: guest[:name], surname: guest[:surname], event_id: guest[:event_id], bio: guest[:bio], age: guest[:age])
      }
     end
-    #if (guest_params.has_key?(:specials))
+  # TODO здесь надо еще сделать проверку ID из таблички @event.special_guests в ID которые приходят из парамс
+  # если нет, то удалить ID из таблички
+    # То есть сейчас
+    #id=[]
+    if (special_params.has_key?(:specials))
       @special = special_params[:specials].map { |special|
+        id.push(special[:id])
+
        @special1 = SpecialGuest.find(special[:id])
        @event = Event.find(special[:event_id])
-       @event.special_guests << @special1
+       if (!@event.special_guests.ids.include?(@special1.id))
+         @event.special_guests << @special1
+       end
       }
-    #end
-    #respond_with flash: "Guests created"
+    end
     head :created, location: events_path
   end
   def update

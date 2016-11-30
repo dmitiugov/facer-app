@@ -81,10 +81,13 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 console.log($scope.eve.specials.selected);
                 events.createGuest({
                     guests: $scope.eve.newguests,
-                    specials: $scope.eve.specials.selected,
+                    //specials: $scope.eve.specials.selected,
                 }).then(function (resp) {
-                    //console.log(resp)
-                    $location.path('/events')
+                    console.log(resp)
+                    //$location.path('/events')
+                    events.updateSpecials({
+                        specials: $scope.eve.specials.selected
+                    })
                 })
             })
             $scope.flash = 'Событие изменено';

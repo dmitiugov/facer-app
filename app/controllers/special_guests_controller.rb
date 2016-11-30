@@ -21,16 +21,16 @@ class SpecialGuestsController < ApplicationController
     end
   end
   def create
-
     params[:avatar] = params[:file]
     params[:file] = false
-    #byebug
     special = SpecialGuest.create(guest_params)
     special.accaunt = Accaunt.find(current_user.accaunt_id)
     special.save!
     respond_with special
   end
+  def update
 
+  end
 
   private
   def guest_params

@@ -159,6 +159,4 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             }
             $scope.flash = 'Событие добавлено';
         }
-
-
     }])
