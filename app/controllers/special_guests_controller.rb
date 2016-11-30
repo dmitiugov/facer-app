@@ -8,8 +8,6 @@ class SpecialGuestsController < ApplicationController
   def show
     accaunt = Accaunt.find(current_user.accaunt_id)
     special = SpecialGuest.find_by_id params[:id]
-
-  #byebug
     if special.nil?
       respond_with flash: "Guest with this ID not found!"
     else

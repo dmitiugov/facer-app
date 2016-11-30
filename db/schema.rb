@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010160301) do
+ActiveRecord::Schema.define(version: 20161130070455) do
 
   create_table "accaunts", force: :cascade do |t|
     t.string   "name"
@@ -75,22 +75,6 @@ ActiveRecord::Schema.define(version: 20161010160301) do
 
   add_index "events", ["accaunt_id"], name: "index_events_on_accaunt_id"
   add_index "events", ["user_id"], name: "index_events_on_user_id"
-
-  create_table "events_parts", id: false, force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "special_guest_id"
-  end
-
-  add_index "events_parts", ["event_id"], name: "index_events_parts_on_event_id"
-  add_index "events_parts", ["special_guest_id"], name: "index_events_parts_on_special_guest_id"
-
-  create_table "events_special_guests", id: false, force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "special_guest_id"
-  end
-
-  add_index "events_special_guests", ["event_id"], name: "index_events_special_guests_on_event_id"
-  add_index "events_special_guests", ["special_guest_id"], name: "index_events_special_guests_on_special_guest_id"
 
   create_table "guests", force: :cascade do |t|
     t.integer  "event_id"
@@ -174,5 +158,17 @@ ActiveRecord::Schema.define(version: 20161010160301) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true
+
+  create_table "visits", force: :cascade do |t|
+    t.integer  "special_guest_id"
+    t.integer  "event_id"
+    t.string   "time_start"
+    t.string   "time_end"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "visits", ["event_id"], name: "index_visits_on_event_id"
+  add_index "visits", ["special_guest_id"], name: "index_visits_on_special_guest_id"
 
 end

@@ -17,15 +17,9 @@ var o = {
           angular.copy(data, o.special_guests);
       });
   };
-  o.createGuest = function(guests, specials) {
+  o.createGuest = function(guests) {
       console.log(guests)
-      return $http.post('/guests.json', guests, specials).success(function(data){
-      });
-  }
-  o.updateSpecials = function (specials) {
-      console.log(specials);
-      return $http.post('/special_guests.json', specials).success(function(data){
-          console.log("Specials has been updated!")
+      return $http.post('/guests.json', guests).success(function(data){
       });
   }
   o.deleteGuest = function(guest){
@@ -66,6 +60,12 @@ var o = {
         return $http.put('/guests/'+ guest.id + '.json', guest).success(function(data){
             console.log("Status has been updated!")
         });
+    };
+    o.createVisit = function(visits) {
+        console.log(visits);
+        return $http.post('/visits.json', visits).success(function (data) {
+            console.log(data);
+        })
     }
 return o;
 }])

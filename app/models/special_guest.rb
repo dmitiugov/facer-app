@@ -4,8 +4,10 @@ class SpecialGuest < ActiveRecord::Base
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
 
 
-  has_and_belongs_to_many :events
+
   belongs_to :accaunt
+  has_many :visits
+  has_many :events, :through => :visits
   def as_json(options = {})
     super
         .merge(:file => avatar.url(:medium))

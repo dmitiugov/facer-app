@@ -5,10 +5,8 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     'Auth',
     'Upload',
     '$http',
-    '$timeout',
     '$location',
-    '$compile',
-    function($scope, events, Auth, Upload, $http, $timeout, $location, $compile){
+    function($scope, events, Auth, Upload, $http, $location){
 
         $scope.action = 'Создать событие'
         $scope.dates = {
@@ -24,6 +22,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             guest: {},
             guests: [],
             specials: [],
+            visits: [],
         }
 
         $scope.addGuest = function(){
@@ -89,20 +88,29 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                     fileFormDataName: 'user[image]'},
             }).then(function (resp) {
                 var id = resp.data.id
+
                 for (var i=0; i<$scope.eve.guests.length; i++) {
                     $scope.eve.guests[i].event_id = ''
                     $scope.eve.guests[i].event_id = id
                 }
-
-                for (var i=0; i<$scope.eve.specials.selected.length; i++){
-                    $scope.eve.specials.selected[i].event_id=''
-                    $scope.eve.specials.selected[i].event_id = id
+                console.log($scope.eve.specials.selected);
+                if  ($scope.eve.specials.selected) {
+                    for (var i=0; i<$scope.eve.specials.selected.length; i++) {
+                        var visit = {};
+                        visit.event_id = '';
+                        visit.event_id = id;
+                        visit.special_id = '';
+                        visit.special_id = $scope.eve.specials.selected[i].id;
+                        $scope.eve.visits.push(visit);
+                    }
                 }
+                console.log($scope.eve);
                 events.createGuest({
                     guests: $scope.eve.guests,
-                    specials: $scope.eve.specials.selected,
                 }).then(function (resp) {
-                    console.log(resp)
+                    events.createVisit({
+                        visits: $scope.eve.visits,
+                    })
                     $location.path('/events')
                 })
             });
@@ -141,17 +149,26 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                         $scope.eve.guests[i].event_id = ''
                         $scope.eve.guests[i].event_id = id
                     }
+                    if  ($scope.eve.specials.selected) {
 
-                    for (var i=0; i<$scope.eve.specials.selected.length; i++){
-                     $scope.eve.specials.selected[i].event_id=''
-                     $scope.eve.specials.selected[i].event_id = id
-                     }
+                        for (var i=0; i<$scope.eve.specials.selected.length; i++) {
+                            var visit = {};
+                            visit.event_id = '';
+                            visit.event_id = id;
+                            visit.special_id = '';
+                            visit.special_id = $scope.eve.specials.selected[i].id;
+                            $scope.eve.visits.push(visit);
+                        }
+                    }
                      events.createGuest({
                      guests: $scope.eve.guests,
-                     specials: $scope.eve.specials.selected,
                      }).then(function (resp) {
-                         console.log(resp)
-                         $location.path('/events')
+                         console.log($scope.eve);
+                         events.createVisit({
+                            visits: $scope.eve.visits,
+                         }).then(function (resp) {
+                             $location.path('/events')
+                         })
                      })
                 }, function(error) {
                     console.log('Error Create')

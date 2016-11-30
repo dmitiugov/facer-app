@@ -6,8 +6,9 @@ class Event < ActiveRecord::Base
   belongs_to :user
   has_many :guests
   has_many :shows
+  has_many :visits
   has_many :artists, :through => :shows
-  has_and_belongs_to_many :special_guests
+  has_many :special_guests, :through => :visits
   def as_json(options={})
     super(options)
         .merge(:file => file.url(:medium))
