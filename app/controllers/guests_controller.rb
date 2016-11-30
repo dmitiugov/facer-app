@@ -8,7 +8,7 @@ class GuestsController < ApplicationController
   end
   def create
     if (guest_params.has_key?(:guests))
-    @guest = guest_params[:guests].map { |guest|
+    guest_params[:guests].map { |guest|
      Guest.create(name: guest[:name], surname: guest[:surname], event_id: guest[:event_id], bio: guest[:bio], age: guest[:age])
      }
     end

@@ -16,5 +16,6 @@ class Event < ActiveRecord::Base
         .merge(:special_guests => special_guests(:avatar => file.url(:thumb)))
         .merge(:user => user)
         .merge(:artists => artists)
+        .merge(:visits => visits)
   end
 end

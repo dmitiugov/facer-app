@@ -64,7 +64,7 @@
         <div class="row-fluid">
             <div class="col-md-12">
                 <h4>Постоянные гости:</h4>
-                <ui-select multiple ng-model="eve.specials.selected" close-on-select="false"
+                <ui-select multiple on-remove="deleteVisit($item)" on-select="addVisit($item)" ng-model="eve.specials.selected" close-on-select="false"
                            style="width: 600px;" title="Choose a person">
                     <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.surname}}&gt;</ui-select-match>
                     <ui-select-choices repeat="item in eve.specials track by $index"

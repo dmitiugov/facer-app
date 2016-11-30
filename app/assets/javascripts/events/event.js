@@ -56,16 +56,22 @@ var o = {
         });
     };
     o.changeInside = function(guest) {
-        console.log(guest)
+        //console.log(guest)
         return $http.put('/guests/'+ guest.id + '.json', guest).success(function(data){
             console.log("Status has been updated!")
         });
     };
     o.createVisit = function(visits) {
-        console.log(visits);
+        //console.log(visits);
         return $http.post('/visits.json', visits).success(function (data) {
             console.log(data);
         })
+    }
+    o.deleteVisit = function(visit) {
+        //console.log(visit);
+        return $http.delete('/visits/' + visit.visit + '.json').success(function(data){
+          console.log("Visit has been deleted!")
+        });
     }
 return o;
 }])

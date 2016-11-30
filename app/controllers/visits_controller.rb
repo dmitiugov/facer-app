@@ -23,12 +23,13 @@ class VisitsController < ApplicationController
   end
 
   def destroy
-
+    visit = Visit.find(params[:id])
+    visit.destroy
+    respond_with visit
   end
 
   private
   def visits_params
-
     params.permit(visits: [:event_id, :special_id])
   end
 end

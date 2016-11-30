@@ -30,8 +30,11 @@ class SpecialGuestsController < ApplicationController
 
   end
 
+
+
   private
   def guest_params
     params.permit(:name, :surname, :avatar, :description, :bio, :age)
   end
+
 end
