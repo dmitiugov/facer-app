@@ -68,7 +68,7 @@ var o = {
         })
     }
     o.deleteVisit = function(visit) {
-        //console.log(visit);
+        console.log(visit);
         return $http.delete('/visits/' + visit.visit + '.json').success(function(data){
           console.log("Visit has been deleted!")
         });
