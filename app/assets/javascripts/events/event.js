@@ -73,5 +73,17 @@ var o = {
           console.log("Visit has been deleted!")
         });
     }
+    o.createShow = function(shows) {
+        console.log(shows);
+        return $http.post('/shows.json', shows).success(function (data) {
+            console.log(data);
+        })
+    }
+    o.deleteShow = function(show) {
+        console.log(show);
+        return $http.delete('/shows/' + show.show + '.json').success(function(data){
+            console.log("Show has been deleted!")
+        });
+    }
 return o;
 }])

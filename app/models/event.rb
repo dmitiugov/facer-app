@@ -17,5 +17,6 @@ class Event < ActiveRecord::Base
         .merge(:user => user)
         .merge(:artists => artists)
         .merge(:visits => visits)
+        .merge(:shows => shows)
   end
 end

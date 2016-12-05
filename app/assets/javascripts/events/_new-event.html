@@ -146,6 +146,31 @@
         <div class="row-fluid">
             <div class="col-md-12">
 
+                    <h4>Постоянные гости:</h4>
+                    <ui-select multiple on-remove="deleteShow($item)" on-select="addShow($item)" ng-model="eve.artists.selected" close-on-select="false"
+                               style="width: 600px;" title="Choose a artist">
+                        <ui-select-match placeholder="Select artist...">{{$item.name}} {{item.description}}</ui-select-match>
+                        <ui-select-choices repeat="item in eve.artists track by $index"
+                                           refresh="refreshArtists($select.search)"
+                                           refresh-delay="0">
+                            <div ng-bind-html=""></div>
+                            <small>
+                                name: {{item.name}}
+                                description : {{item.description}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <br>
+                    <a href="" ng-click="selectAllArtists()">Выбрать всех</a>
+                    <a href="" ng-click="resetAllArtists()">Удалить всех</a>
+                    <h4>Постоянные гости:</h4>
+                <div class="row">
+                    <div ng-repeat="artist in eve.artists.selected" class="col-md-3">
+                        {{artist.name}}<br>
+                        <img ng-src="{{artist.photo}}" class="img-thumbnail">
+                    </div>
+                </div>
+
             </div>
         </div>
     </uib-tab>

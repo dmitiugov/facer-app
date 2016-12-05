@@ -72,6 +72,17 @@
                                     </div>
                                 </div>
 
+                                <div ng-if="event.artists.length>0">
+                                    <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">
+                                        Артисты</button>
+                                    <div uib-collapse="isCollapsed">
+                                        <div class="well well-lg">
+                                            <p ng-repeat="artist in event.artists">{{artist.name}} {{artist.bio}}<br>
+                                            <img ng-src="{{artist.photo}}" class="img-thumbnail"></p>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <hr>
