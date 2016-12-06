@@ -163,11 +163,24 @@
                     <br>
                     <a href="" ng-click="selectAllArtists()">Выбрать всех</a>
                     <a href="" ng-click="resetAllArtists()">Удалить всех</a>
-                    <h4>Постоянные гости:</h4>
+                    <h4>Артисты:</h4>
                 <div class="row">
                     <div ng-repeat="artist in eve.artists.selected" class="col-md-3">
                         {{artist.name}}<br>
                         <img ng-src="{{artist.photo}}" class="img-thumbnail">
+                        <label for="time-start">Время начала</label>
+                        <input type="text"
+                               class="form-control"
+                                name="time-start"
+                               id="time-start"
+                               ng-model="artist.time_start" ui-mask="99:99"></input>
+                        <label for="time-end">Время конца</label>
+                        <input type="text"
+                               name="time-end"
+                               id="time-end"
+                               class="form-control"
+                               ng-model="artist.time_end" ui-mask="99:99"></input>
+                        <a href="" ng-click="addTimeToShow()">Время выступления</a>
                     </div>
                 </div>
 

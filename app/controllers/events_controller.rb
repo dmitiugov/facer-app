@@ -4,15 +4,16 @@ class EventsController < ApplicationController
   #before_filter :authenticate_user!
 
 	def index
-    accaunt = Accaunt.find(current_user.accaunt_id)
-    respond_with accaunt.events
+    @accaunt = Accaunt.find(current_user.accaunt_id)
+    respond_with @accaunt.events
   end
   def show
     #byebug
-    accaunt = Accaunt.find(current_user.accaunt_id)
-    event = Event.find(params[:id])
-    if accaunt.events.ids.include?(event.id)
-      respond_with event
+    @accaunt = Accaunt.find(current_user.accaunt_id)
+    @event = Event.find(params[:id])
+    #byebug
+    if @accaunt.events.ids.include?(@event.id)
+      respond_with @event
       #byebug
     else
       respond_with flash: "You don't have permission for this action"
@@ -21,28 +22,29 @@ class EventsController < ApplicationController
   def create
     #accaunt = Accaunt.find(current_user.accaunt_id)
 
-    event = Event.create(event_params)
-    event.accaunt = Accaunt.find(current_user.accaunt_id)
-    event.user = User.find(current_user)
-    event.save!
+    @event = Event.create(event_params)
+    @event.accaunt = Accaunt.find(current_user.accaunt_id)
+    @event.user = User.find(current_user)
+    @event.save!
     #byebug
-    respond_with event
+    respond_with @event
   end
 
   def edit
-    respond_with Event.find(params[:id])
+    @event = Event.find(params[:id])
+    respond_with @event
   end
 
   def update
-    event = Event.find(params[:id])
-    event.update!(event_params)
-    respond_with event
+    @event = Event.find(params[:id])
+    @event.update!(event_params)
+    respond_with @event
   end
 
   def destroy
-    event = Event.find(params[:id])
-    event.destroy
-    respond_with event
+    @event = Event.find(params[:id])
+    @event.destroy
+    respond_with @event
   end
 
   def authenticate_user!

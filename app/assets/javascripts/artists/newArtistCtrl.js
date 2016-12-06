@@ -5,7 +5,7 @@ angular.module('flapperNews').controller('newArtistCtrl', [
     'Upload',
     function($scope, artists, Auth, Upload){
         $scope.flash = ''
-        $scope.title = 'Добавить artist'
+        $scope.title = 'Добавить артиста'
         Auth.currentUser().then(function(user) {
             // User was logged in, or Devise returned
             // previously authenticated session.
@@ -17,7 +17,7 @@ angular.module('flapperNews').controller('newArtistCtrl', [
             $scope.upload = Upload.upload({
                 url: '/artists.json',
                 method: 'POST',
-                fields: { 'user[name]': $scope.user_name, name: $scope.name, description: $scope.description, bio: $scope.bio},
+                fields: { 'user[name]': $scope.user_name, name: $scope.name, description: $scope.description, bio: $scope.bio, soundcloud: $scope.soundcloud, bandcamp: $scope.bandcamp},
                 file: file,
                 fileFormDataName: 'user[image]'
             });
@@ -34,6 +34,9 @@ angular.module('flapperNews').controller('newArtistCtrl', [
             $scope.name = '';
             $scope.description = '';
             $scope.bio = '';
+            $scope.bandcamp = '';
+            $scope.soundcloud = '';
             $scope.flash = 'Artist добавлен';
+
         };
     }])

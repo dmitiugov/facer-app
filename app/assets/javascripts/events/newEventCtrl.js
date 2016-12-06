@@ -7,7 +7,6 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     '$http',
     '$location',
     function($scope, events, Auth, Upload, $http, $location){
-
         $scope.action = 'Создать событие'
         $scope.dates = {
             today: moment.tz('UTC').hour(12).startOf('h'), //12:00 UTC, today.
@@ -46,7 +45,9 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             console.log($scope.eve.guests);
         }
 
-
+        $scope.addTimeToShow = function(){
+            console.log($scope.eve.artists)
+        }
         //$scope.selectedids = []
         $scope.showSelected = function(){
             console.log($scope.eve.specials.selected)
@@ -132,6 +133,10 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                         show.event_id = id;
                         show.artist_id='';
                         show.artist_id=$scope.eve.artists.selected[i].id;
+                        show.time_start='';
+                        show.time_end='';
+                        show.time_start=$scope.eve.artists.selected[i].time_start;
+                        show.time_end=$scope.eve.artists.selected[i].time_end;
                         $scope.eve.shows.push(show);
                     }
                 console.log($scope.eve);
@@ -201,6 +206,10 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                             show.event_id = id;
                             show.artist_id='';
                             show.artist_id=$scope.eve.artists.selected[i].id;
+                            show.time_start='';
+                            show.time_end='';
+                            show.time_start=$scope.eve.artists.selected[i].time_start;
+                            show.time_end=$scope.eve.artists.selected[i].time_end;
                             $scope.eve.shows.push(show);
                         }
                      events.createGuest({

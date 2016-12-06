@@ -14,4 +14,5 @@
 //= require angular-devise
 //= require angular-datepicker
 //= require ng-file-upload
+//= require angular-ui-mask
 //= require_tree .

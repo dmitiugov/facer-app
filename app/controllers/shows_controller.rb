@@ -12,7 +12,7 @@ class ShowsController < ApplicationController
     if (shows_params.has_key?(:shows))
       #byebug
       shows_params[:shows].map { |show|
-        Show.create(event_id: show[:event_id], artist_id: show[:artist_id])
+        Show.create(event_id: show[:event_id], artist_id: show[:artist_id], time_start: show[:time_start], time_end: show[:time_end])
       }
     end
     head :created, location: events_path
@@ -30,7 +30,7 @@ class ShowsController < ApplicationController
 
   private
   def shows_params
-    params.permit(shows: [:event_id, :artist_id])
+    params.permit(shows: [:event_id, :artist_id, :time_start, :time_end])
   end
 
 end

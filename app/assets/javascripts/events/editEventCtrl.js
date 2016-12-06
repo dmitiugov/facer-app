@@ -23,7 +23,6 @@ angular.module('flapperNews').controller('EditEventCtrl', [
         $scope.eve.id = events.event.id
         $scope.eve.specials = []
         $scope.eve.artists = []
-        console.log($scope.eve)
         $scope.refreshSpecials = function(name) {
             var selected = events.event.special_guests;
             var params = {name: name};
@@ -45,19 +44,61 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             ).then(function(response) {
                 $scope.eve.artists = response.data;
                 $scope.eve.artists.selected = selected;
+                for (var i=0; i<$scope.eve.artists.selected.length; i++) {
+                    //console.log($scope.eve.artists.selected, $scope.eve.shows);
+                    for (var j=0; j<$scope.eve.shows.length; j++) {
+                        if ($scope.eve.artists.selected[i].id == $scope.eve.shows[j].artist_id) {
+                            //console.log('win');
+                            $scope.eve.artists.selected[i].time_start=''
+                            $scope.eve.artists.selected[i].time_end=''
+                            $scope.eve.artists.selected[i].time_start=$scope.eve.shows[j].time_start
+                            $scope.eve.artists.selected[i].time_end=$scope.eve.shows[j].time_end
+                        }
+                    }
+                }
+            console.log($scope.eve);
             });
         }
+        $scope.selectAllArtists = function() {
+            $scope.eve.artists.selected = []
+            for(var i = 0; i<$scope.eve.artists.length; i++) {
+                var artist = $scope.eve.artists[i]
+                $scope.eve.artists.selected.push(artist);
+            }
+            if($scope.eve.shows.length!=0)
+                for (var i=0; i<$scope.eve.artists.length; i++) {
+                   events.deleteShow({
+                        show: $scope.eve.shows[i].id,
+                    })
+                }
+            $scope.eve.new_show = []
+            if  ($scope.eve.artists.selected) {
+                for (var i=0; i<$scope.eve.artists.selected.length; i++) {
+                    var show = {};
+                    show.event_id = '';
+                    show.event_id = $scope.eve.id;
+                    show.artist_id = '';
+                    show.artist_id = $scope.eve.artists.selected[i].id;
+                    $scope.eve.new_show.push(show);
+
+                }
+                events.createShow({
+                    shows: $scope.eve.new_show,
+                })
+            }
+        };
         $scope.selectAll = function() {
             $scope.eve.specials.selected = []
             for(var i = 0; i<$scope.eve.specials.length; i++) {
                 var special = $scope.eve.specials[i]
                 $scope.eve.specials.selected.push(special);
             }
-            for (var i=0; i<$scope.eve.visits.length; i++) {
-                events.deleteVisit({
-                    visit: $scope.eve.visits[i].id,
-                })
-            }
+            if ($scope.eve.visits.length!=0)
+                for (var i=0; i<$scope.eve.visits.length; i++) {
+                    events.deleteVisit({
+                        visit: $scope.eve.visits[i].id,
+                    })
+                }
             $scope.eve.new_visit = []
             if  ($scope.eve.specials.selected) {
                 for (var i=0; i<$scope.eve.specials.selected.length; i++) {
@@ -79,6 +120,17 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 for (var i=0; i<$scope.eve.visits.length; i++) {
                     events.deleteVisit({
                         visit: $scope.eve.visits[i].id,
+                    })
+                }
+            }
+
+        }
+        $scope.resetAllArtists = function() {
+            $scope.eve.artists.selected = null
+            if ($scope.edit) {
+                for (var i=0; i<$scope.eve.artists.length; i++) {
+                    events.deleteShow({
+                        show: $scope.eve.shows[i].id,
                     })
                 }
             }

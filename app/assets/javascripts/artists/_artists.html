@@ -12,7 +12,8 @@
     <div ng-repeat="artist in artists">
 
         <div class="col-md-4"><a ng-href="#/artists/{{artist.id}}"> <img ng-src="{{artist.photo}}" alt="" class="img-thumbnail"></a>
-            <h4><a ng-href="#/artists/{{artist.id}}">{{artist.name}} {{artist.description}}</a></h4></div>
+            <h4><a ng-href="#/artists/{{artist.id}}">{{artist.name}}</a></h4>
+        <p>{{artist.description}}</p></div>
         <div ng-class="isRow($index) ? 'clearfix' : ''"></div>
 
     </div>
