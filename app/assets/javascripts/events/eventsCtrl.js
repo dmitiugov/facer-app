@@ -5,13 +5,16 @@ angular.module('flapperNews').controller('EventsCtrl', [
     '$compile',
     'uiCalendarConfig',
     '$timeout',
-function($scope, events, Auth, $compile, uiCalendarConfig, $timeout){
+    '$location',
+function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $location){
     $scope.auth = Auth.isAuthenticated()
     $scope.isCollapsed = true;
 	$scope.events=events
     $scope.deleteEvent = function(id){
         events.destroy({
             id: id,
+        }).then(function () {
+            $location.path('/events');
         });
     }
 

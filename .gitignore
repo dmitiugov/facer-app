@@ -141,3 +141,4 @@ $RECYCLE.BIN/
 *.lnk
 db/development.db
 public/
+.byebug_history

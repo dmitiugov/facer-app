@@ -18,7 +18,7 @@ var o = {
       });
   };
   o.createGuest = function(guests) {
-      console.log(guests)
+      //console.log(guests)
       return $http.post('/guests.json', guests).success(function(data){
       });
   }
@@ -30,15 +30,15 @@ var o = {
 
   }
   o.create = function(event) {
-      console.log(event)
-      console.log(typeof event)
+      //console.log(event)
+      //console.log(typeof event)
         return $http.post('/events.json', event).success(function(data){
             return data
         });
     };
 
   o.edit = function(event) {
-        console.log(event)
+        //console.log(event)
         return $http.put('/events/'+ event.id + '.json', event).success(function(data){
             return data
             console.log("Event has been updated!")
@@ -48,6 +48,7 @@ var o = {
     o.destroy = function(event) {
         return $http.delete('/events/' + event.id + '.json').success(function(data){
             console.log("Event has been deleted!")
+            $location.path('/events');
         });
     };
     o.get = function(id) {
@@ -80,10 +81,16 @@ var o = {
         })
     }
     o.deleteShow = function(show) {
-        console.log(show);
+        //console.log(show);
         return $http.delete('/shows/' + show.show + '.json').success(function(data){
             console.log("Show has been deleted!")
         });
+    }
+    o.changeShows = function(edit_shows) {
+        console.log(edit_shows);
+        return $http.post('/shows.json', edit_shows).success(function(data){
+            console.log(data, 'Shows has been updated!');
+        })
     }
 return o;
 }])

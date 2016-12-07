@@ -1,8 +1,14 @@
-angular.module('flapperNews', ['ngAnimate', 'ngSanitize',
-    'ui.router', 'ui.bootstrap',
-    'ui.calendar', 'templates',
-    'Devise', 'datePicker',
-    'ngFileUpload', 'ui.select',
+angular.module('flapperNews',
+    ['ngAnimate',
+    'ngSanitize',
+    'ui.router',
+    'ui.bootstrap',
+    'ui.calendar',
+    'templates',
+    'Devise',
+    'datePicker',
+    'ngFileUpload',
+    'ui.select',
     'ui.mask']).config([
 '$stateProvider',
 '$urlRouterProvider',
@@ -162,6 +168,5 @@ function($stateProvider, $urlRouterProvider) {
         })
       }]
     });
-    
-  //$urlRouterProvider.otherwise('login');
+  $urlRouterProvider.otherwise('home');
 }]);

@@ -79,6 +79,8 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                     show.event_id = $scope.eve.id;
                     show.artist_id = '';
                     show.artist_id = $scope.eve.artists.selected[i].id;
+                    show.time_start='';
+                    show.time_end='';
                     $scope.eve.new_show.push(show);
 
                 }
@@ -167,6 +169,8 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             show.event_id = $scope.eve.id;
             show.artist_id = '';
             show.artist_id = $item.id;
+            show.time_start='';
+            show.time_end='';
             $scope.eve.new_show = []
             $scope.eve.new_show.push(show);
             //console.log($scope.eve.visits);
@@ -217,10 +221,23 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                         $scope.eve.specials.selected[i].event_id=''
                         $scope.eve.specials.selected[i].event_id = id
                     }
+                for(var i=0;i<$scope.eve.artists.selected.length;i++){
+                    for (var j=0; j<$scope.eve.shows.length; j++) {
+                        if ($scope.eve.artists.selected[i].id == $scope.eve.shows[j].artist_id) {
+                            $scope.eve.shows[j].time_start = $scope.eve.artists.selected[i].time_start;
+                            $scope.eve.shows[j].time_end = $scope.eve.artists.selected[i].time_end;
+                        }
+                    }
+                }
+                //console.log($scope.eve.shows);
 
+                events.changeShows({
+                    edit_shows: $scope.eve.shows,
+                })
                 events.createGuest({
                     guests: $scope.eve.newguests,
                 }).then(function (resp) {
+                    console.log(resp);
                 })
             })
             $scope.flash = 'Событие изменено';
