@@ -26,6 +26,10 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             artists: [],
         }
 
+        $scope.maskOptions = {
+            maskDefinitions:
+                { '2':/[0-2]/, '4':/[0-4]/, '5':/[0-5]/, '9':/[0-9]/ }
+        }
         $scope.addGuest = function(){
             console.log($scope.eve)
             $scope.eve.guests.push($scope.eve.guest)
@@ -43,14 +47,6 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             $scope.eve.guests[$index].age = $scope.eve.guest.age;
             $scope.eve.guests[$index].bio = $scope.eve.guest.bio;
             console.log($scope.eve.guests);
-        }
-
-        $scope.addTimeToShow = function(){
-            console.log($scope.eve.artists)
-        }
-        //$scope.selectedids = []
-        $scope.showSelected = function(){
-            console.log($scope.eve.specials.selected)
         }
 
         $scope.selectAll = function() {
@@ -131,8 +127,11 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                         var show={};
                         show.event_id='';
                         show.event_id = id;
+                        console.log($scope.eve.artists.selected)
                         show.artist_id='';
                         show.artist_id=$scope.eve.artists.selected[i].id;
+                        show.artist_name='';
+                        show.artist_name=$scope.eve.artists.selected[i].name;
                         show.time_start='';
                         show.time_end='';
                         show.time_start=$scope.eve.artists.selected[i].time_start;
@@ -146,6 +145,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                     events.createVisit({
                         visits: $scope.eve.visits,
                     }).then(function (resp) {
+                        //console.log($scope.eve.shows)
                         events.createShow({
                             shows: $scope.eve.shows,
                         })
@@ -202,10 +202,13 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                     if ($scope.eve.artists.selected)
                         for (var i=0; i<$scope.eve.artists.selected.length; i++) {
                             var show={};
+                            //console.log($scope.eve.artists.selected)
                             show.event_id='';
                             show.event_id = id;
                             show.artist_id='';
                             show.artist_id=$scope.eve.artists.selected[i].id;
+                            show.artist_name='';
+                            show.artist_name=$scope.eve.artists.selected[i].name;
                             show.time_start='';
                             show.time_end='';
                             show.time_start=$scope.eve.artists.selected[i].time_start;
@@ -219,6 +222,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                          events.createVisit({
                             visits: $scope.eve.visits,
                          }).then(function (resp) {
+                             console.log($scope.eve.shows)
                              events.createShow({
                                  shows: $scope.eve.shows
                              })

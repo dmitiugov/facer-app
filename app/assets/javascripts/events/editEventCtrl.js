@@ -23,6 +23,10 @@ angular.module('flapperNews').controller('EditEventCtrl', [
         $scope.eve.id = events.event.id
         $scope.eve.specials = []
         $scope.eve.artists = []
+        $scope.maskOptions = {
+            maskDefinitions:
+            { '2':/[0-2]/, '4':/[0-4]/, '5':/[0-5]/, '9':/[0-9]/ }
+        }
         $scope.refreshSpecials = function(name) {
             var selected = events.event.special_guests;
             var params = {name: name};

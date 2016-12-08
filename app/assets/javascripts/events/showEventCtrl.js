@@ -1,8 +1,18 @@
-angular.module('flapperNews').controller('ShowEventCtrl', [
+angular.module('flapperNews')
+    .filter('addComma', function () {
+        return function (item) {
+            console.log(item.length);
+            var hours = item.substring(0, item.length-2);
+            var mins = item.substring(item.length-2,item.length);
+            return hours + ':' + mins;
+        };
+    })
+    .controller('ShowEventCtrl', [
     '$scope',
     'events',
     'Auth',
     function($scope, events){
+
         $scope.inside = 'Внутри'
         $scope.outside = 'Снаружи'
         $scope.eve = events
