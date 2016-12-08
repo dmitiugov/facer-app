@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208092255) do
+ActiveRecord::Schema.define(version: 20161208144004) do
 
   create_table "accaunts", force: :cascade do |t|
     t.string   "name"
@@ -105,9 +105,10 @@ ActiveRecord::Schema.define(version: 20161208092255) do
     t.integer  "event_id"
     t.string   "time_start"
     t.string   "time_end"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "artist_name"
+    t.boolean  "on_stage",    default: false
   end
 
   add_index "shows", ["artist_id"], name: "index_shows_on_artist_id"
@@ -118,7 +119,6 @@ ActiveRecord::Schema.define(version: 20161208092255) do
     t.string   "surname"
     t.string   "bio"
     t.string   "description"
-    t.boolean  "inside"
     t.integer  "age"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
@@ -165,8 +165,9 @@ ActiveRecord::Schema.define(version: 20161208092255) do
     t.integer  "event_id"
     t.string   "time_start"
     t.string   "time_end"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "inside",           default: false
   end
 
   add_index "visits", ["event_id"], name: "index_visits_on_event_id"

@@ -1,14 +1,14 @@
 <div class="row-fluid">
     <div class="col-md-12">
         <label for="bio">{{dynamicPopover.bio}}</label>
-        <input type="text"
+        <textarea rows="1" type="text"
                class="form-control"
                name="bio"
-               ng-model="eve.guest.bio"></input>
-        <label for="age">{{dynamicPopover.ageHeading}}</label>
+               ng-model="eve.guest.bio"></textarea>
+        <!--<label for="age">{{dynamicPopover.ageHeading}}</label>
         <input type="text"
                class="form-control"
-               type="number" name="age" min="14" max="100" ng-model="dynamicPopover.age"></input>
+               type="number" name="age" min="14" max="100" ng-model="dynamicPopover.age"></input>-->
         <div class="btn-group" uib-dropdown>
             <button id="split-button" type="button" ng-click="addInfoxGuest($index)" class="btn btn-info">Добавить инфо</button>
             <button type="button" class="btn btn-info" uib-dropdown-toggle>
@@ -16,9 +16,9 @@
                 <span class="sr-only">Split button!</span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
-                <li role="menuitem"><a href="#" ng-click="addInfoxGuest($index)">Добавить информацию</a></li>
-                <li role="menuitem"><a href="#">Another action</a></li>
-                <li role="menuitem"><a href="#">Something else here</a></li>
+                <li role="menuitem"><a ng-click="addInfoxGuest($index)">Добавить информацию</a></li>
+                <li role="menuitem"><a ng-click="deleteGuest($index)">Удалить гостя <i class="fa fa-trash-o" aria-hidden="true"></i></a></li>
+                <!--<li role="menuitem"><a href="#">Something else here</a></li>-->
             </ul>
         </div>
         <div class="clearfix"></div>

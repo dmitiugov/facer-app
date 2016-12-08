@@ -19,6 +19,10 @@
  *= require_self
  */
 
+
+a[ng-click]{
+    cursor: pointer;
+}
 .creating.guest i {
     font-size: 15px;
     cursor: pointer;

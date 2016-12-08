@@ -38,17 +38,28 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             //console.log($scope.eve.name)
         }
         $scope.addInfoxGuest = function ($index) {
-            console.log($index);
-            $scope.eve.guest.age = $scope.dynamicPopover.age;
-            console.log($scope.eve.guest);
-            console.log($scope.eve.guests);
-            $scope.eve.guests[$index].age = '';
+            //$scope.eve.guest.age = $scope.dynamicPopover.age;
+            //$scope.eve.guests[$index].age = '';
             $scope.eve.guests[$index].bio = '';
-            $scope.eve.guests[$index].age = $scope.eve.guest.age;
+            //$scope.eve.guests[$index].age = $scope.eve.guest.age;
             $scope.eve.guests[$index].bio = $scope.eve.guest.bio;
-            console.log($scope.eve.guests);
         }
-
+        var refreshStatusArtists = true
+        var refreshStatusSpecials = true
+        $scope.loadRefreshArtists = function() {
+            if (refreshStatusArtists)
+                $scope.refreshArtists();
+            refreshStatusArtists = false;
+        }
+        $scope.loadRefreshSpecials = function() {
+            if (refreshStatusSpecials)
+                $scope.refreshSpecials();
+            refreshStatusSpecials = false;
+        }
+        $scope.AddOnEnter = function(keyEvent) {
+            if (keyEvent.which === 13)
+                $scope.addGuest();
+        }
         $scope.selectAll = function() {
             $scope.eve.specials.selected = []
             for(var i = 0; i<$scope.eve.specials.length; i++) {
@@ -69,15 +80,14 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         $scope.resetAll = function() {
             $scope.eve.specials.selected = null
         }
-
         $scope.refreshSpecials = function(name) {
-            var params = {name: name};
-            return $http.get(
-                '/special_guests.json',
-                {params: params}
-            ).then(function(response) {
-                $scope.eve.specials = response.data;
-            });
+                var params = {name: name};
+                return $http.get(
+                    '/special_guests.json',
+                    {params: params}
+                ).then(function(response) {
+                    $scope.eve.specials = response.data;
+                });
         };
         $scope.refreshArtists = function (name) {
             var params = {name: name};
@@ -169,8 +179,8 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         $scope.dynamicPopover = {
             templateUrl: 'events/templates/edit_guest.html',
             title: 'Add Info',
-            age: 18,
-            ageHeading: 'Age',
+            //age: 18,
+            //ageHeading: 'Age',
             bio: 'Bio'
         };
         $scope.addEvent = function(eve){

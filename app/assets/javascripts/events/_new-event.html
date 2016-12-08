@@ -8,7 +8,7 @@
     <uib-tab index="0">
         <uib-tab-heading class="create-heading">Информация о событии&nbsp;&nbsp;
             <i class="fa fa-info-circle" aria-hidden="true"></i></uib-tab-heading>
-        <div class="row-fluid">
+        <div class="row">
             <div class="col-md-12">
 
                 <img ng-if="edit" ng-src="{{file}}">
@@ -58,10 +58,10 @@
 
         </div>
     </uib-tab>
-    <uib-tab index="1">
+    <uib-tab index="1" select="loadRefreshSpecials()">
         <uib-tab-heading class="create-heading">Постоянные гости&nbsp;&nbsp;
             <i class="fa fa-user" aria-hidden="true"></i></uib-tab-heading>
-        <div class="row-fluid">
+        <div class="row">
             <div class="col-md-12">
                 <h4>Постоянные гости:</h4>
                 <ui-select multiple on-remove="deleteVisit($item)" on-select="addVisit($item)" ng-model="eve.specials.selected" close-on-select="false"
@@ -98,28 +98,45 @@
         <uib-tab-heading class="create-heading">Гости по спискам&nbsp;&nbsp;
             <i class="fa fa-users" aria-hidden="true"></i></uib-tab-heading>
         <br><br>
-        <div class="row-fluid">
+        <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
                     <input type="text"
                            class="form-control"
                            placeholder="Name"
+                           name="guest-name"
                            ng-model="eve.guest.name"></input>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <input type="text"
                            class="form-control"
                            placeholder="Surname"
-                           ng-model="eve.guest.surname"></input>
+                           name="guest-surname"
+                           ng-model="eve.guest.surname" ng-keypress="AddOnEnter($event)"></input>
                 </div>
+            </div>
+            <div class="col-md-2">
+                <span class="label label-default">Возраст:</span>
+                <select ng-model="eve.guest.age" ng-keypress="AddOnEnter($event)">
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                </select>
             </div>
             <div class="col-md-2">
                 <button ng-click="addGuest()" class="btn btn-primary">+</button>
             </div>
         </div>
-    <div class="row-fluid">
+    <div class="row">
         <div class="col-md-12">
             <h4>Добавленные гости:</h4>
             <div ng-repeat="guest in eve.guests track by $index" class="creating guest">
@@ -141,9 +158,9 @@
     </div>
 
     </uib-tab>
-    <uib-tab index="3">
+    <uib-tab select="loadRefreshArtists()" index="3">
         <uib-tab-heading class="create-heading">Артисты<i class="fa fa-music" aria-hidden="true"></i></uib-tab-heading>
-        <div class="row-fluid">
+        <div class="row">
             <div class="col-md-12">
 
                     <h4>Постоянные гости:</h4>

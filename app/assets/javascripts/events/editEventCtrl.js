@@ -167,6 +167,24 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                  show: showId,
             })
         }
+        $scope.AddOnEnter = function(keyEvent) {
+            if (keyEvent.which === 13)
+                $scope.addGuest();
+        }
+        $scope.addInfoxGuest = function ($index) {
+            //$scope.eve.guest.age = $scope.dynamicPopover.age;
+            //$scope.eve.guests[$index].age = '';
+            $scope.eve.guests[$index].bio = '';
+            //$scope.eve.guests[$index].age = $scope.eve.guest.age;
+            $scope.eve.guests[$index].bio = $scope.eve.guest.bio;
+        }
+        $scope.dynamicPopover = {
+            templateUrl: 'events/templates/edit_guest.html',
+            title: 'Add Info',
+            //age: 18,
+            //ageHeading: 'Age',
+            bio: 'Bio'
+        };
         $scope.addShow = function($item) {
             var show = {};
             show.event_id = '';
