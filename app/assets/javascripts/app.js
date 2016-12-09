@@ -119,6 +119,17 @@ function($stateProvider, $urlRouterProvider) {
           }
       })
 
+      .state('edit-special_guests', {
+          url: '/speical_guests/edit/{id}',
+          templateUrl: 'special-guests/_new-special-guest.html',
+          controller: 'editSpecialGuestCtrl',
+          resolve: {
+              post: ['$stateParams', 'special_guests', function($stateParams, special_guests) {
+                  return special_guests.get($stateParams.id);
+              }]
+          }
+      })
+
       .state('artists', {
           url: '/artists',
           templateUrl: 'artists/_artists.html',

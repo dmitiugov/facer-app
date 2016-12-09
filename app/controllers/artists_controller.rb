@@ -1,6 +1,11 @@
 class ArtistsController < ApplicationController
   respond_to :json
+
+
+
   def index
+    @embed = Artist.embed_player
+    #byebug
     @accaunt = Accaunt.find(current_user.accaunt_id)
     respond_with @accaunt.artists
   end
@@ -25,11 +30,10 @@ class ArtistsController < ApplicationController
     @artist.save!
     respond_with @artist
   end
+
   def update
 
   end
-
-
 
   private
   def artist_params

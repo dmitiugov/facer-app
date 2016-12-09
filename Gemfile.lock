@@ -78,6 +78,7 @@ GEM
     haml (4.0.7)
       tilt
     i18n (0.7.0)
+    iconv (1.0.4)
     interact-rails (0.0.1)
       railties
     jbuilder (2.6.0)
@@ -221,8 +222,10 @@ DEPENDENCIES
   angular_rails_csrf
   byebug
   devise (~> 3.4.0)
+  iconv
   interact-rails
   jbuilder (~> 2.0)
+  nokogiri
   paperclip (~> 5.0.0)
   pg
   pry

@@ -45,7 +45,7 @@
 
 <div class="clearfix"></div>
         <hr>
-        <h4>Guests:</h4>
+        <h4>Гости по списку:</h4>
         <div class="">
 
             <!--<div class="alert alert-info">
@@ -131,36 +131,20 @@
                     </a>
                     </td>
                 </tr>
-                <tr ng-repeat="guest in eve.event.special_guests | orderBy:sortType:sortReverse | filter:searchSurname">
-                    <td><img ng-if="guest.file" ng-src="{{guest.file}}" class="img-thumbnail" style="max-width: 50px"></td>
-                    <td>{{ guest.name }}</td>
-                    <td>{{ guest.surname }}</td>
-                    <td>{{ guest.description }}</td>
-                    <td>{{ guest.age }}</td>
-                    <td><a ng-click="changeStatus(guest.id, guest.inside)">
-                <span ng-if="guest.inside == true">
-
-                    <i class="fa fa-sign-in" aria-hidden="true"
-                       uib-popover="{{inside}}"
-                       popover-trigger="'mouseenter'"
-                       popover-placement="right"></i>
-                </span>
-                        <span ng-if="guest.inside == false">
-                            <i class="fa fa-sign-out fa-flip-horizontal" aria-hidden="true"
-                               uib-popover="{{outside}}"
-                               popover-trigger="'mouseenter'"
-                               popover-placement="right"></i>
-
-                </span>
-                    </a>
-                    </td>
-                </tr>
                 </tbody>
 
             </table>
-
-
-
         </div>
+        <div class="clearfix"></div>
+        <hr>
+        <h4>Постоянные гости:</h4>
+        <div class="row">
+            <div class="col-md-3" ng-repeat="guest in eve.event.special_guests">
+                <img ng-src="{{guest.file}}">
+                <p>{{guest.name}}</p>
+                <p>{{guest.surname}}</p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
     </div>
 </div>

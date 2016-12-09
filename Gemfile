@@ -24,6 +24,8 @@ gem 'angular_rails_csrf'
 gem 'pry'
 gem 'devise', '~> 3.4.0'
 gem 'interact-rails'
+gem 'nokogiri'
+gem 'iconv'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

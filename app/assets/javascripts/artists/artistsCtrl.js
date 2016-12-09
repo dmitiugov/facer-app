@@ -3,6 +3,7 @@ angular.module('flapperNews').controller('artistsCtrl', [
     'artists',
     function($scope, artists){
         $scope.artists = artists.artists
+        console.log($scope.artists);
         $scope.deleteArtist = function(id){
             artists.destroy({
                 id: id,
