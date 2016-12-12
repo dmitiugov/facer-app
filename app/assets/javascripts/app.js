@@ -159,6 +159,7 @@ function($stateProvider, $urlRouterProvider) {
           controller: 'newArtistCtrl'
       })
 
+
     .state('login', {
       url: '/login',
       templateUrl: 'auth/_login.html',
