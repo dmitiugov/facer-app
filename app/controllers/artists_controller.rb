@@ -4,7 +4,7 @@ class ArtistsController < ApplicationController
 
 
   def index
-    @embed = Artist.embed_player
+    #@embed = Artist.embed_player
     #byebug
     @accaunt = Accaunt.find(current_user.accaunt_id)
     respond_with @accaunt.artists
