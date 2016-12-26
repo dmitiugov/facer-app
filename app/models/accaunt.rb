@@ -6,4 +6,10 @@ class Accaunt < ActiveRecord::Base
   def as_json(options = {})
     super
   end
+<<<<<<< HEAD
 end
+=======
+
+
+end
+>>>>>>> iss01
