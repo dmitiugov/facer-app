@@ -33,10 +33,14 @@
                        ng-model="age"></input>
             </div>
 
-            <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
-                 ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-            >Select Photo</div>
 
+            <div class="btn btn-info" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                 ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+            >Выбрать фото&nbsp;<i class="fa fa-picture-o" aria-hidden="true"></i></div>
+            <div class="clearfix"></div>
+            <img ngf-src="file" ngf-resize="{width: 200, quality: 0.9}">
+            <div class="clearfix"></div>
+<br>
 
             <div class="form-group">
                 <div class="row">

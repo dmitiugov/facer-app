@@ -19,7 +19,11 @@ class VisitsController < ApplicationController
   end
 
   def update
-
+    #byebug
+    @visit = Visit.find(inside_params[:visit][:id])
+    @visit.inside = inside_params[:visit][:inside]
+    @visit.save!
+    respond_with @visit
   end
 
   def destroy
@@ -31,5 +35,8 @@ class VisitsController < ApplicationController
   private
   def visits_params
     params.permit(visits: [:event_id, :special_id])
+  end
+  def inside_params
+    params.permit(visit: [:id, :inside])
   end
 end

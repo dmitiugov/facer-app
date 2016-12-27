@@ -62,6 +62,12 @@ var o = {
             console.log("Status has been updated!")
         });
     };
+    o.changeSpecialInside = function(visit) {
+        console.log(visit)
+        return $http.put('/visits/'+ visit.id + '.json', visit).success(function(data){
+            console.log("Status has been updated!")
+        });
+    };
     o.createVisit = function(visits) {
         //console.log(visits);
         return $http.post('/visits.json', visits).success(function (data) {

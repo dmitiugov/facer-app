@@ -37,5 +37,6 @@ angular.module('flapperNews').controller('newSpecialGuestCtrl', [
             $scope.bio = '';
             $scope.age = '';
             $scope.flash = 'Гость добавлен';
+            $scope.file=null;
         };
     }])

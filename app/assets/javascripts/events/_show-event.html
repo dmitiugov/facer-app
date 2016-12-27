@@ -143,6 +143,22 @@
                 <img ng-src="{{guest.file}}">
                 <p>{{guest.name}}</p>
                 <p>{{guest.surname}}</p>
+                <a ng-click="changeStatus(guest.id, guest.inside, guest.guest_type)">
+                        <span ng-if="guest.inside == true">
+
+                            <i class="fa fa-sign-in" aria-hidden="true"
+                               uib-popover="{{inside}}"
+                               popover-trigger="'mouseenter'"
+                               popover-placement="right"></i>
+                        </span>
+                        <span ng-if="guest.inside == false">
+                                    <i class="fa fa-sign-out fa-flip-horizontal" aria-hidden="true"
+                                       uib-popover="{{outside}}"
+                                       popover-trigger="'mouseenter'"
+                                       popover-placement="right"></i>
+
+                        </span>
+                </a>
             </div>
         </div>
         <div class="clearfix"></div>
