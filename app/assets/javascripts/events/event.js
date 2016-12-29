@@ -38,7 +38,7 @@ var o = {
     };
 
   o.edit = function(event) {
-        //console.log(event)
+        console.log(event)
         return $http.put('/events/'+ event.id + '.json', event).success(function(data){
             return data
             console.log("Event has been updated!")
@@ -48,7 +48,6 @@ var o = {
     o.destroy = function(event) {
         return $http.delete('/events/' + event.id + '.json').success(function(data){
             console.log("Event has been deleted!")
-            $location.path('/events');
         });
     };
     o.get = function(id) {
@@ -90,6 +89,13 @@ var o = {
         //console.log(show);
         return $http.delete('/shows/' + show.show + '.json').success(function(data){
             console.log("Show has been deleted!")
+        });
+    }
+    o.deletePhotoFromEvent = function(event) {
+        console.log(event);
+        return $http.put('/events/'+ event.id + '.json', event).success(function(data){
+            return data
+            console.log("Event has been updated!")
         });
     }
     o.changeShows = function(edit_shows) {

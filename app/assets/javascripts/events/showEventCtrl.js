@@ -37,8 +37,10 @@ angular.module('flapperNews')
                         inside: !inside,
                     }).then(function(resp){
                         var id = $scope.eve.event.id
-                        $window.location.reload();
-                        //TODO: хардкорно перезагружаем, надо обновлять модельку
+                        //$window.location.reload();
+                        events.get(id).then(function (resp) {
+                            $scope.addVisitsStatusToSpecials();
+                        })
                     })
                 }
             } else {
@@ -47,22 +49,23 @@ angular.module('flapperNews')
                         id: id,
                         inside: !inside,
                     }).then(function (resp) {
-                        //console.log(resp)
                         var id = $scope.eve.event.id
-                        //console.log($scope.eve.event.id)
-                        events.get(id)
-                        $scope.eve = events
+                        events.get(id).then(function (resp) {
+                            $scope.addVisitsStatusToSpecials();
+                        })
                     }, function(error) {
                         //console.log('Error Status')
                     })
                 }
             }
         }
-        for (var i=0; i<$scope.eve.event.visits.length; i++) {
-            if ($scope.eve.event.visits[i].special_guest_id == $scope.eve.event.special_guests[i].id) {
-                $scope.eve.event.special_guests[i].inside = $scope.eve.event.visits[i].inside;
-                //console.log($scope.eve.event)
+        $scope.addVisitsStatusToSpecials = function () {
+            for (var i=0; i<$scope.eve.event.visits.length; i++) {
+                if ($scope.eve.event.visits[i].special_guest_id == $scope.eve.event.special_guests[i].id) {
+                    $scope.eve.event.special_guests[i].inside = $scope.eve.event.visits[i].inside;
+                    //console.log($scope.eve.event)
+                }
             }
         }
-        console.log($scope.eve.event);
+        $scope.addVisitsStatusToSpecials();
     }])

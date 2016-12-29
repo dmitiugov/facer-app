@@ -131,6 +131,15 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             }
 
         }
+        $scope.deletePhoto = function() {
+            //console.log('Delete Photo')
+            $scope.eve.file = null;
+            //console.log($scope.eve)
+            events.deletePhotoFromEvent({
+                id: $scope.eve.id,
+                file: null,
+            })
+        }
         $scope.resetAllArtists = function() {
             $scope.eve.artists.selected = null
             if ($scope.edit) {
@@ -225,14 +234,13 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             $scope.eve.guests[$index] = null
 
         }
-        $scope.addEvent = function(){
-
+        $scope.editFields = function() {
             events.edit({
-             name: $scope.eve.name,
-             description: $scope.eve.description,
-             date: $scope.eve.date,
-             id: $scope.eve.id,
-             }).then(function (data) {
+                name: $scope.eve.name,
+                description: $scope.eve.description,
+                date: $scope.eve.date,
+                id: $scope.eve.id,
+            }).then(function (data) {
                 var id = $scope.eve.id
                 for (var i=0; i<$scope.eve.newguests.length; i++) {
                     $scope.eve.newguests[i].event_id = ''
@@ -251,7 +259,6 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                         }
                     }
                 }
-                //console.log($scope.eve.shows);
 
                 events.changeShows({
                     edit_shows: $scope.eve.shows,
@@ -259,9 +266,34 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 events.createGuest({
                     guests: $scope.eve.newguests,
                 }).then(function (resp) {
-                    console.log(resp);
+                    console.log($scope.eve)
+                        //events.edit($scope.eve);
                 })
             })
+        }
+        $scope.upload = function (file) {
+            $scope.upload = Upload.upload({
+                url: '/events/'+ $scope.eve.id + '.json',
+                method: 'PUT',
+                fields: {
+                    'user[name]': $scope.user_name,
+                    file: file,
+                    id: $scope.eve.id
+                },
+            }).then(function(resp){
+                console.log(resp);
+                $scope.editFields()
+            })
+        }
+        $scope.addEvent = function(){
+            //console.log($scope.eve.file, $scope.eve)
+            if ($scope.eve.file && $scope.eve.file != '/images/missing.png' && $scope.eve.file.$ngfBlobUrl) {
+                $scope.upload($scope.eve.file);
+            } else {
+                console.log('!!!')
+                $scope.editFields();
+            }
+
             $scope.flash = 'Событие изменено';
         };
         $scope.action = 'Изменить событие'

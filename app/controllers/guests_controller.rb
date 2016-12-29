@@ -1,10 +1,12 @@
 class GuestsController < ApplicationController
   respond_to :json
   def index
-    respond_with Guest.all
+    @guest = Guest.all
+    respond_with @guest
   end
   def show
-    respond_with Guest.find(params[:id])
+    @guest = Guest.find(params[:id])
+    respond_with @guest
   end
   def create
     if (guest_params.has_key?(:guests))
@@ -16,16 +18,16 @@ class GuestsController < ApplicationController
   end
   def update
 
-    guest = Guest.find(inside_params[:guest][:id])
-    guest.inside = inside_params[:guest][:inside]
-    guest.save!
-    head :created, location: guest_path(guest)
+    @guest = Guest.find(inside_params[:guest][:id])
+    @guest.inside = inside_params[:guest][:inside]
+    @guest.save!
+    head :created, location: guest_path(@guest)
     #byebug
   end
   def destroy
-    guest = Guest.find(params[:id])
-    guest.destroy
-    respond_with guest
+    @guest = Guest.find(params[:id])
+    @guest.destroy
+    respond_with @guest
   end
 
 
