@@ -8,13 +8,10 @@ class EventsController < ApplicationController
     respond_with @accaunt.events
   end
   def show
-    #byebug
     @accaunt = Accaunt.find(current_user.accaunt_id)
     @event = Event.find(params[:id])
-    #byebug
     if @accaunt.events.ids.include?(@event.id)
       respond_with @event
-      #byebug
     else
       respond_with flash: "You don't have permission for this action"
     end

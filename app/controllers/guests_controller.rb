@@ -17,7 +17,6 @@ class GuestsController < ApplicationController
     head :created, location: events_path
   end
   def update
-
     @guest = Guest.find(inside_params[:guest][:id])
     @guest.inside = inside_params[:guest][:inside]
     @guest.save!
