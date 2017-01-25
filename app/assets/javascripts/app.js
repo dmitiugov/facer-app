@@ -153,6 +153,17 @@ function($stateProvider, $urlRouterProvider) {
           }
       })
 
+      .state('edit-artists', {
+          url: '/artists/edit/{id}',
+          templateUrl: 'artists/_new-artist.html',
+          controller: 'editArtistCtrl',
+          resolve: {
+              post: ['$stateParams', 'artists', function($stateParams, artists) {
+                  return artists.get($stateParams.id);
+              }]
+          }
+      })
+
       .state('new-artists', {
           url: '/new-artists',
           templateUrl: 'artists/_new-artist.html',
