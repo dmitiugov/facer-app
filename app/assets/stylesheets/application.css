@@ -12,6 +12,7 @@
  *
  *= require bootstrap/dist/css/bootstrap
  *= require angular-datepicker/dist/angular-datepicker
+ *= require angular-toastr/dist/angular-toastr
  *= require font-awesome
  *= require fullcalendar
  *= require angular-ui-select
@@ -42,6 +43,10 @@ ul.nav.navbar-nav li {
 }
 #main-template div.row.ng-scope {
     margin-top: 10px;
+}
+.toast a {
+    text-decoration: underline;
+    color: #00b3ee;
 }
 @media (min-width: 768px) {
     ul.nav.navbar-nav li {

@@ -1,4 +1,4 @@
-angular.module('flapperNews').factory('artists', ['$http', function($http){
+angular.module('flapperNews').factory('artists', ['$http', 'toastr', '$sce', function($http, toastr, $sce){
     var o = {
         artists: [
         ],
@@ -8,6 +8,10 @@ angular.module('flapperNews').factory('artists', ['$http', function($http){
     o.getAll = function() {
         return $http.get('/artists.json').success(function(data){
             angular.copy(data, o.artists);
+        }).error(function (data, status, headers, config) {
+            toastr.error('<a href="#/login"> Go to Log In Page!</a>', 'Auth Error ' + status, {
+                allowHtml: true
+            });
         });
     };
     o.destroy = function(special_guest) {

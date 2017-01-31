@@ -1,4 +1,4 @@
-angular.module('flapperNews').factory('special_guests', ['$http', function($http){
+angular.module('flapperNews').factory('special_guests', ['$http', 'toastr', function($http, toastr){
     var o = {
         special_guests: [
         ],
@@ -9,6 +9,10 @@ angular.module('flapperNews').factory('special_guests', ['$http', function($http
         return $http.get('/special_guests.json').success(function(data){
             angular.copy(data, o.special_guests);
             //console.log(o)
+        }).error(function (data, status, headers, config) {
+            toastr.error('<a href="#/login"> Go to Log In Page!</a>', 'Auth Error ' + status, {
+                allowHtml: true
+            });
         });
     };
     o.create = function(special_guest) {

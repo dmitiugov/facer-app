@@ -15,4 +15,5 @@
 //= require angular-datepicker
 //= require ng-file-upload
 //= require angular-ui-mask
+//= require angular-toastr
 //= require_tree .

@@ -9,7 +9,8 @@ angular.module('flapperNews',
     'datePicker',
     'ngFileUpload',
     'ui.select',
-    'ui.mask']).config([
+    'ui.mask',
+    'toastr']).config([
 '$stateProvider',
 '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {
@@ -24,7 +25,8 @@ function($stateProvider, $urlRouterProvider) {
           function(posts){
             return posts.getAll();
           }]
-		  }})
+		  }
+    })
 
 		.state('posts', {
 		  url: '/posts/{id}',
@@ -46,7 +48,7 @@ function($stateProvider, $urlRouterProvider) {
           function(events){
             return events.getAll();
           }]
-      }      
+      }
     })
 
       .state('events-show', {
@@ -91,6 +93,7 @@ function($stateProvider, $urlRouterProvider) {
           resolve: {
               specialGuestsPromise: ['special_guests',
                   function(special_guests){
+                  //console.log("!!!")
                       return special_guests.getAll();
                   }]
           }
