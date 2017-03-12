@@ -8,9 +8,6 @@ class ShowsController < ApplicationController
 
   end
 
-  def update_shows
-    byebug
-  end
 
   def create
 
@@ -39,9 +36,9 @@ class ShowsController < ApplicationController
   end
 
   def destroy
-    show = Show.find(params[:id])
-    show.destroy
-    respond_with show
+    @show = Show.find(params[:id])
+    @show.destroy
+    respond_with @show
   end
 
   private

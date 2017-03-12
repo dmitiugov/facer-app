@@ -78,6 +78,9 @@
                         </small>
                     </ui-select-choices>
                 </ui-select>
+
+
+
                 <br>
                 <a href="" ng-click="selectAll()">Выбрать всех</a>
                 <a href="" ng-click="resetAll()">Удалить всех</a>
@@ -164,20 +167,22 @@
         <div class="row">
             <div class="col-md-12">
 
-                    <h4>Постоянные гости:</h4>
-                    <ui-select multiple on-remove="deleteShow($item)" on-select="addShow($item)" ng-model="eve.artists.selected" close-on-select="false"
-                               style="width: 600px;" title="Choose a artist">
-                        <ui-select-match placeholder="Select artist...">{{$item.name}} {{item.description}}</ui-select-match>
-                        <ui-select-choices repeat="item in eve.artists track by $index"
-                                           refresh="refreshArtists($select.search)"
-                                           refresh-delay="0">
-                            <div ng-bind-html=""></div>
-                            <small>
-                                name: {{item.name}}
-                                description : {{item.description}}
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
+                    <h4>Артисты:</h4>
+
+                <ui-select multiple on-remove="deleteShow($item)" on-select="addShow($item)" ng-model="eve.artists.selected" close-on-select="false"
+                           style="width: 600px;" title="Choose an artist">
+                    <ui-select-match placeholder="Select artist...">{{$item.name}} {{item.description}}</ui-select-match>
+                    <ui-select-choices repeat="artist in eve.artists track by $index"
+                                       refresh="refreshArtists($select.search)"
+                                       refresh-delay="0">
+                        <div ng-bind-html="artist.name"></div>
+                        <small>
+                            name: {{artist.name}}
+                            description : {{artist.description}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
                     <br>
                     <a href="" ng-click="selectAllArtists()">Выбрать всех</a>
                     <a href="" ng-click="resetAllArtists()">Удалить всех</a>

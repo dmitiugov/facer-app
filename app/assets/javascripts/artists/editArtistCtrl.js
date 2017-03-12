@@ -17,27 +17,42 @@ angular.module('flapperNews').controller('editArtistCtrl', [
 
         $scope.name = artists.artist.name;
         $scope.description = artists.artist.description;
-        $scope.age = artists.artist.age;
         $scope.bandcamp = artists.artist.bandcamp;
         $scope.soundcloud = artists.artist.soundcloud;
         $scope.bio = artists.artist.bio;
         $scope.file = artists.artist.photo;
+        $scope.id = artists.artist.id;
         console.log(artists.artist)
+        $scope.editFields = function() {
+            artists.edit({
+                name: $scope.name,
+                description: $scope.description,
+                bandcamp: $scope.bandcamp,
+                bio: $scope.bio,
+                id: $scope.id,
+            })
+        }
+        $scope.upload = function (file) {
+            console.log(file)
+            $scope.upload = Upload.upload({
+                url: '/artists/'+ artists.artist.id + '.json',
+                method: 'PUT',
+                fields: {
+                    'user[name]': $scope.user_name,
+                    file: file,
+                    id: $scope.id
+                },
+            }).then(function(resp){
+                console.log(resp);
+                $scope.editFields()
+            })
+        }
         $scope.addArtist = function() {
 
-
-            //TODO: это нужно обернуть editFields и использовать фабрику artists
-            //artists.edit({
-              //  name: $scope.name,
-                //description: $scope.description,
-            //})
-
             if ($scope.file && $scope.file != '/images/missing.png' && $scope.file.$ngfBlobUrl) {
-                console.log('1')
-                //$scope.upload($scope.eve.file);
+                $scope.upload($scope.file);
             } else {
-                console.log('!!!')
-                //$scope.editFields();
+                $scope.editFields();
 
             }
         }

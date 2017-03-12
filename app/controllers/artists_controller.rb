@@ -22,15 +22,23 @@ class ArtistsController < ApplicationController
   end
   def create
     params[:photo] = params[:file]
-    params[:file] = false
     @artist = Artist.create(artist_params)
     @artist.accaunt = Accaunt.find(current_user.accaunt_id)
     @artist.save!
     respond_with @artist
   end
 
+
   def update
 
+    @artist = Artist.find(params[:id])
+    @artist.update!(artist_params)
+    respond_with @artist
+
+    if (params[:file])
+      @artist.photo = params[:file]
+      @artist.save
+    end
   end
 
   private

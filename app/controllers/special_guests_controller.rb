@@ -20,7 +20,6 @@ class SpecialGuestsController < ApplicationController
   end
   def create
     params[:avatar] = params[:file]
-    params[:file] = null
     @special = SpecialGuest.create(guest_params)
     @special.accaunt = Accaunt.find(current_user.accaunt_id)
     @special.save!

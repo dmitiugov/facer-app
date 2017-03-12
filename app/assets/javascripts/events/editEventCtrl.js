@@ -27,6 +27,12 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             maskDefinitions:
             { '2':/[0-2]/, '4':/[0-4]/, '5':/[0-5]/, '9':/[0-9]/ }
         }
+        var refreshStatusArtists = true
+        $scope.loadRefreshArtists = function() {
+            if (refreshStatusArtists)
+                $scope.refreshArtists();
+            refreshStatusArtists = false;
+        }
         $scope.refreshSpecials = function(name) {
             var selected = events.event.special_guests;
             var params = {name: name};
@@ -40,27 +46,12 @@ angular.module('flapperNews').controller('EditEventCtrl', [
 
         };
         $scope.refreshArtists = function (name) {
-            var selected = events.event.artists;
             var params = {name: name};
             return $http.get(
                 '/artists.json',
                 {params: params}
             ).then(function(response) {
                 $scope.eve.artists = response.data;
-                $scope.eve.artists.selected = selected;
-                for (var i=0; i<$scope.eve.artists.selected.length; i++) {
-                    //console.log($scope.eve.artists.selected, $scope.eve.shows);
-                    for (var j=0; j<$scope.eve.shows.length; j++) {
-                        if ($scope.eve.artists.selected[i].id == $scope.eve.shows[j].artist_id) {
-                            //console.log('win');
-                            $scope.eve.artists.selected[i].time_start=''
-                            $scope.eve.artists.selected[i].time_end=''
-                            $scope.eve.artists.selected[i].time_start=$scope.eve.shows[j].time_start
-                            $scope.eve.artists.selected[i].time_end=$scope.eve.shows[j].time_end
-                        }
-                    }
-                }
-            console.log($scope.eve);
             });
         }
         $scope.selectAllArtists = function() {
@@ -152,26 +143,28 @@ angular.module('flapperNews').controller('EditEventCtrl', [
 
         }
         $scope.deleteVisit = function($item) {
-            for (var i=0; i<$scope.eve.visits.length; i++) {
-                if($scope.eve.visits[i].special_guest_id == $item.id) {
-                    var visitId = $scope.eve.visits[i].id;
-                    //$scope.eve.visits.slice(i);
-                    $scope.eve.visits.splice(i,1);
-                }
-            }
-            events.deleteVisit({
-                visit: visitId,
-            })
+
+           events.checkVisit({
+               special_id: $item.id,
+               event_id: $scope.eve.id,
+           }).then(function(response){
+               console.log(response.data);
+               events.deleteVisit({
+                   visit: response.data,
+               })
+           })
         }
         $scope.deleteShow = function($item) {
+            console.log($item);
             for (var i=0; i<$scope.eve.shows.length; i++) {
-                console.log($scope.eve.shows[i])
+                //console.log($scope.eve.shows[i])
                 if($scope.eve.shows[i].artist_id == $item.id) {
                     var showId = $scope.eve.shows[i].id;
                     //$scope.eve.artists.slice(i);
                     $scope.eve.artists.splice(i,1);
                 }
             }
+            console.log($scope.eve.shows)
             events.deleteShow({
                  show: showId,
             })
@@ -204,7 +197,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             show.time_end='';
             $scope.eve.new_show = []
             $scope.eve.new_show.push(show);
-            //console.log($scope.eve.visits);
+            $scope.eve.new_show.push(show);
             events.createShow({
                 shows: $scope.eve.new_show,
             })
@@ -217,7 +210,6 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             visit.special_id = $item.id;
             $scope.eve.new_visit = []
             $scope.eve.new_visit.push(visit);
-            console.log($scope.eve.visits);
             events.createVisit({
                 visits: $scope.eve.new_visit,
             })

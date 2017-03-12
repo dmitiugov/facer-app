@@ -78,10 +78,16 @@ var o = {
         })
     }
     o.deleteVisit = function(visit) {
+        console.log(visit)
+            return $http.delete('/visits/' + visit.visit.id + '.json').success(function (data) {
+                console.log("Visit has been deleted!")
+            });
+    }
+    o.checkVisit = function (visit) {
         console.log(visit);
-        return $http.delete('/visits/' + visit.visit + '.json').success(function(data){
-          console.log("Visit has been deleted!")
-        });
+        return $http.post('/visits/check_visit.json', visit).success(function (data) {
+            //console.log(data);
+        })
     }
     o.createShow = function(shows) {
         console.log(shows);

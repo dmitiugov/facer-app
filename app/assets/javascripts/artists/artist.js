@@ -26,10 +26,10 @@ angular.module('flapperNews').factory('artists', ['$http', 'toastr', '$sce', fun
     };
     o.edit = function(artist) {
         console.log(artist)
-        //return $http.put('/artists/'+ artist.id + '.json', artist).success(function(data){
-          //  return data
-            //console.log("Artist has been updated!")
-        //});
+        return $http.put('/artists/'+ artist.id + '.json', artist).success(function(data){
+            return data
+            console.log("Artist has been updated!")
+        });
     };
     return o;
 }])

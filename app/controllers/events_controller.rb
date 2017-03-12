@@ -27,11 +27,6 @@ class EventsController < ApplicationController
     respond_with @event
   end
 
-  def edit
-    @event = Event.find(params[:id])
-    respond_with @event
-  end
-
   def update
     @event = Event.find(params[:id])
     @event.update!(event_params)

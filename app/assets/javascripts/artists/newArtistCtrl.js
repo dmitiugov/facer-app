@@ -36,6 +36,7 @@ angular.module('flapperNews').controller('newArtistCtrl', [
             $scope.bio = '';
             $scope.bandcamp = '';
             $scope.soundcloud = '';
+            $scope.file = null;
             $scope.flash = 'Artist добавлен';
 
         };
