@@ -27,12 +27,6 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             maskDefinitions:
             { '2':/[0-2]/, '4':/[0-4]/, '5':/[0-5]/, '9':/[0-9]/ }
         }
-        var refreshStatusArtists = true
-        $scope.loadRefreshArtists = function() {
-            if (refreshStatusArtists)
-                $scope.refreshArtists();
-            refreshStatusArtists = false;
-        }
         $scope.refreshSpecials = function(name) {
             var selected = events.event.special_guests;
             var params = {name: name};
@@ -46,12 +40,15 @@ angular.module('flapperNews').controller('EditEventCtrl', [
 
         };
         $scope.refreshArtists = function (name) {
+            console.log(events.event)
+            var selected = events.event.artists;
             var params = {name: name};
             return $http.get(
                 '/artists.json',
                 {params: params}
             ).then(function(response) {
                 $scope.eve.artists = response.data;
+                $scope.eve.artists.selected = selected;
             });
         }
         $scope.selectAllArtists = function() {
@@ -156,18 +153,19 @@ angular.module('flapperNews').controller('EditEventCtrl', [
         }
         $scope.deleteShow = function($item) {
             console.log($item);
-            for (var i=0; i<$scope.eve.shows.length; i++) {
-                //console.log($scope.eve.shows[i])
-                if($scope.eve.shows[i].artist_id == $item.id) {
-                    var showId = $scope.eve.shows[i].id;
-                    //$scope.eve.artists.slice(i);
-                    $scope.eve.artists.splice(i,1);
-                }
-            }
-            console.log($scope.eve.shows)
-            events.deleteShow({
-                 show: showId,
+            events.checkShow({
+                artist_id: $item.id,
+                event_id: $scope.eve.id,
+            }).then(function (response) {
+                console.log(response.data);
+                events.deleteShow({
+                    show: response.data,
+                })
             })
+            /*console.log($scope.eve.shows)
+            events.deleteShow({
+                 show: response.data,
+            })*/
         }
         $scope.AddOnEnter = function(keyEvent) {
             if (keyEvent.which === 13)
@@ -196,7 +194,6 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             show.time_start='';
             show.time_end='';
             $scope.eve.new_show = []
-            $scope.eve.new_show.push(show);
             $scope.eve.new_show.push(show);
             events.createShow({
                 shows: $scope.eve.new_show,

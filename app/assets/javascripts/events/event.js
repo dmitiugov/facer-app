@@ -78,7 +78,6 @@ var o = {
         })
     }
     o.deleteVisit = function(visit) {
-        console.log(visit)
             return $http.delete('/visits/' + visit.visit.id + '.json').success(function (data) {
                 console.log("Visit has been deleted!")
             });
@@ -90,14 +89,19 @@ var o = {
         })
     }
     o.createShow = function(shows) {
-        console.log(shows);
+        console.log('!!!');
         return $http.post('/shows.json', shows).success(function (data) {
             console.log(data);
         })
     }
+    o.checkShow = function (show) {
+        console.log(show);
+        return $http.post('/shows/check_show.json', show).success(function (data) {
+            console.log(data);
+        })
+    }
     o.deleteShow = function(show) {
-        //console.log(show);
-        return $http.delete('/shows/' + show.show + '.json').success(function(data){
+        return $http.delete('/shows/' + show.show.id + '.json').success(function(data){
             console.log("Show has been deleted!")
         });
     }

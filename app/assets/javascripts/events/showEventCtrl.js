@@ -18,6 +18,7 @@ angular.module('flapperNews')
         $scope.inside = 'Внутри'
         $scope.outside = 'Снаружи'
         $scope.eve = events
+        console.log($scope.eve.event)
         //console.log($scope.eve.event, $scope.eve);
         $scope.sortType     = 'name'; // set the default sort type
         $scope.sortReverse  = false;  // set the default sort order

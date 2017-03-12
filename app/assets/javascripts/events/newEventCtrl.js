@@ -160,7 +160,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                             shows: $scope.eve.shows,
                         })
                     })
-                    $location.path('#/events')
+                    //$location.path('#/events')
                 })
             });
         }

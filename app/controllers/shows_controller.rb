@@ -9,24 +9,22 @@ class ShowsController < ApplicationController
   end
 
 
-  def create
-
-    if (edit_show_params.has_key?(:edit_shows))
-      @edit = edit_show_params[:edit_shows]
-      @edit.each do |p|
-        @show = Show.find(p[:id])
-        @show.update(p)
-        #byebug
-      end
+  def check_show
+    @show = Show.where(:artist => params[:artist_id], :event => params[:event_id])
+    if @show.many?
+      @show = @show.to_a.uniq{|p| p.artist}
     end
+    respond_with @show[0]
+  end
 
+  def create
     if (shows_params.has_key?(:shows))
      # byebug
       shows_params[:shows].map { |show|
-       Show.create(event_id: show[:event_id], artist_id: show[:artist_id], artist_name: show[:artist_name], time_start: show[:time_start], time_end: show[:time_end])
+       @show = Show.create(event_id: show[:event_id], artist_id: show[:artist_id], artist_name: show[:artist_name], time_start: show[:time_start], time_end: show[:time_end])
       }
     end
-    head :created, location: events_path
+    respond_with @show
   end
 
   def update
