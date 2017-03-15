@@ -2,11 +2,14 @@
 angular.module('flapperNews').controller('NewEventCtrl', [
     '$scope',
     'events',
+    'shows',
     'Auth',
     'Upload',
     '$http',
     '$location',
-    function($scope, events, Auth, Upload, $http, $location){
+    'toastr',
+    function($scope, events, shows, Auth, Upload, $http, $location, toastr){
+        $scope.redirectUrl = '/events';
         $scope.action = 'Создать событие'
         $scope.dates = {
             today: moment.tz('UTC').hour(12).startOf('h'), //12:00 UTC, today.
@@ -156,11 +159,12 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                         visits: $scope.eve.visits,
                     }).then(function (resp) {
                         //console.log($scope.eve.shows)
-                        events.createShow({
+                        shows.createShow({
                             shows: $scope.eve.shows,
                         })
                     })
-                    //$location.path('#/events')
+                    toastr.success("Событие создано")
+                    $location.path($scope.redirectUrl);
                 })
             });
         }
@@ -233,11 +237,12 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                             visits: $scope.eve.visits,
                          }).then(function (resp) {
                              console.log($scope.eve.shows)
-                             events.createShow({
+                             shows.createShow({
                                  shows: $scope.eve.shows
                              })
                          }).then(function (resp) {
-                             $location.path('/events')
+                             toastr.success("Событие создано")
+                             $location.path($scope.redirectUrl);
                          })
                      })
                 }, function(error) {

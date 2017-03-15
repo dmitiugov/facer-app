@@ -1,11 +1,12 @@
 angular.module('flapperNews').controller('EditEventCtrl', [
     '$scope',
     'events',
+    'shows',
     'Auth',
     'Upload',
     '$http',
     '$location',
-    function($scope, events, Auth, Upload, $http, $location){
+    function($scope, events, shows, Auth, Upload, $http, $location){
     $scope.title = 'Редактировать событие'
         $scope.eve = {};
         $scope.edit = true
@@ -27,6 +28,13 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             maskDefinitions:
             { '2':/[0-2]/, '4':/[0-4]/, '5':/[0-5]/, '9':/[0-9]/ }
         }
+        $scope.addTimeToShow = function(){
+            console.log($scope.eve.artists.selected)
+        }
+        $scope.showScope = function () {
+            //console.log($scope.eve);
+            $scope.addTimeToShow();
+        }
         $scope.refreshSpecials = function(name) {
             var selected = events.event.special_guests;
             var params = {name: name};
@@ -40,7 +48,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
 
         };
         $scope.refreshArtists = function (name) {
-            console.log(events.event)
+            //console.log(events.event)
             var selected = events.event.artists;
             var params = {name: name};
             return $http.get(
@@ -49,6 +57,16 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             ).then(function(response) {
                 $scope.eve.artists = response.data;
                 $scope.eve.artists.selected = selected;
+                console.log($scope.eve)
+                for(var i=0;i<$scope.eve.artists.selected.length;i++){
+                    for (var j=0; j<$scope.eve.shows.length; j++) {
+                        if ($scope.eve.artists.selected[i].id == $scope.eve.shows[j].artist_id) {
+                            $scope.eve.artists.selected[i].time_start = $scope.eve.shows[j].time_start;
+                            $scope.eve.artists.selected[i].time_end = $scope.eve.shows[j].time_end;
+                        }
+                    }
+                }
+                console.log($scope.eve)
             });
         }
         $scope.selectAllArtists = function() {
@@ -58,11 +76,9 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 $scope.eve.artists.selected.push(artist);
             }
             if($scope.eve.shows.length!=0)
-                for (var i=0; i<$scope.eve.artists.length; i++) {
-                   events.deleteShow({
-                        show: $scope.eve.shows[i].id,
-                    })
-                }
+                shows.deleteAllShows({
+                    event: $scope.eve.id,
+                })
             $scope.eve.new_show = []
             if  ($scope.eve.artists.selected) {
                 for (var i=0; i<$scope.eve.artists.selected.length; i++) {
@@ -76,7 +92,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                     $scope.eve.new_show.push(show);
 
                 }
-                events.createShow({
+                shows.createShow({
                     shows: $scope.eve.new_show,
                 })
             }
@@ -120,24 +136,20 @@ angular.module('flapperNews').controller('EditEventCtrl', [
 
         }
         $scope.deletePhoto = function() {
-            //console.log('Delete Photo')
-            $scope.eve.file = null;
-            //console.log($scope.eve)
             events.deletePhotoFromEvent({
                 id: $scope.eve.id,
                 file: null,
+            }).then(function () {
+                $scope.eve.file = null;
             })
         }
         $scope.resetAllArtists = function() {
-            $scope.eve.artists.selected = null
-            if ($scope.edit) {
-                for (var i=0; i<$scope.eve.artists.length; i++) {
-                    events.deleteShow({
-                        show: $scope.eve.shows[i].id,
-                    })
-                }
-            }
-
+            if($scope.eve.artists.selected)
+                shows.deleteAllShows({
+                    event_id: $scope.eve.id,
+                }).then(function(){
+                    $scope.eve.artists.selected = null
+                })
         }
         $scope.deleteVisit = function($item) {
 
@@ -145,27 +157,22 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                special_id: $item.id,
                event_id: $scope.eve.id,
            }).then(function(response){
-               console.log(response.data);
+               //console.log(response.data);
                events.deleteVisit({
                    visit: response.data,
                })
            })
         }
         $scope.deleteShow = function($item) {
-            console.log($item);
-            events.checkShow({
+            shows.checkShow({
                 artist_id: $item.id,
                 event_id: $scope.eve.id,
             }).then(function (response) {
-                console.log(response.data);
-                events.deleteShow({
+                //console.log(response.data);
+                shows.deleteShow({
                     show: response.data,
                 })
             })
-            /*console.log($scope.eve.shows)
-            events.deleteShow({
-                 show: response.data,
-            })*/
         }
         $scope.AddOnEnter = function(keyEvent) {
             if (keyEvent.which === 13)
@@ -195,8 +202,11 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             show.time_end='';
             $scope.eve.new_show = []
             $scope.eve.new_show.push(show);
-            events.createShow({
+            shows.createShow({
                 shows: $scope.eve.new_show,
+            }).then(function (data) {
+                //console.log(data.data);
+                //console.log($scope.eve);
             })
         }
         $scope.addVisit = function($item) {
@@ -235,11 +245,11 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                     $scope.eve.newguests[i].event_id = ''
                     $scope.eve.newguests[i].event_id = id
                 }
-                if($scope.eve.specials.selected!=null)
+              /*  if($scope.eve.specials.selected!=null)
                     for (var i=0; i<$scope.eve.specials.selected.length; i++){
                         $scope.eve.specials.selected[i].event_id=''
                         $scope.eve.specials.selected[i].event_id = id
-                    }
+                    }*/
                 for(var i=0;i<$scope.eve.artists.selected.length;i++){
                     for (var j=0; j<$scope.eve.shows.length; j++) {
                         if ($scope.eve.artists.selected[i].id == $scope.eve.shows[j].artist_id) {
@@ -247,10 +257,11 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                             $scope.eve.shows[j].time_end = $scope.eve.artists.selected[i].time_end;
                         }
                     }
+                    console.log($scope.eve.shows)
                 }
 
-                events.changeShows({
-                    edit_shows: $scope.eve.shows,
+                shows.changeShowTime({
+                    shows: $scope.eve.shows,
                 })
                 events.createGuest({
                     guests: $scope.eve.newguests,
@@ -270,7 +281,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                     id: $scope.eve.id
                 },
             }).then(function(resp){
-                console.log(resp);
+                //console.log(resp);
                 $scope.editFields()
             })
         }
@@ -279,7 +290,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             if ($scope.eve.file && $scope.eve.file != '/images/missing.png' && $scope.eve.file.$ngfBlobUrl) {
                 $scope.upload($scope.eve.file);
             } else {
-                console.log('!!!')
+                //console.log('!!!')
                 $scope.editFields();
             }
 

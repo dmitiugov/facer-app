@@ -6,7 +6,9 @@ angular.module('flapperNews').controller('EventsCtrl', [
     'uiCalendarConfig',
     '$timeout',
     '$window',
-function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window){
+    '$location',
+function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window, $location){
+    $scope.redirectUrl = '/artists';
     $scope.auth = Auth.isAuthenticated()
     $scope.isCollapsed = true;
 	$scope.events=events
@@ -15,7 +17,7 @@ function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window){
             id: id,
         }).then(function () {
             //$window.location.reload();
-            events.getAll();
+            $location.path($scope.redirectUrl);
         });
     }
 

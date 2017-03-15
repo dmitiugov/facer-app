@@ -3,7 +3,8 @@ angular.module('flapperNews').controller('editArtistCtrl', [
     'artists',
     'Auth',
     'Upload',
-    function($scope, artists, Auth, Upload){
+    'toastr',
+    function($scope, artists, Auth, Upload, toastr){
         $scope.flash = ''
         $scope.title = 'Редактировать артиста'
 
@@ -30,6 +31,9 @@ angular.module('flapperNews').controller('editArtistCtrl', [
                 bandcamp: $scope.bandcamp,
                 bio: $scope.bio,
                 id: $scope.id,
+            }).then(function(data){
+                console.log(data)
+                toastr.success(data.config.data.name + " изменен");
             })
         }
         $scope.upload = function (file) {

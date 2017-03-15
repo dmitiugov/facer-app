@@ -27,7 +27,6 @@ class VisitsController < ApplicationController
   end
 
   def update
-    byebug
     @visit = Visit.find(inside_params[:visit][:id])
     @visit.inside = inside_params[:visit][:inside]
     @visit.save!

@@ -190,7 +190,7 @@
                 <div class="row">
                     <div ng-repeat="artist in eve.artists.selected" class="col-md-3">
                         {{artist.name}}<br>
-                        <img ng-src="{{artist.photo}}" class="img-thumbnail">
+                        <img ng-src="{{artist.photo}}" ng-click="showScope()" class="img-thumbnail">
                         <label for="time-start">Время начала</label>
                         <input type="text"
                                class="form-control"

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resources :special_guests, only: [:create, :index, :show, :destroy, :update]
   resources :shows, only: [:create, :index, :show, :destroy, :update]
   match '/shows/check_show' => 'shows#check_show', :via => :post
+  match '/shows/delete_all' => 'shows#delete_all', :via => :post
+  match '/shows/change_show_time' => 'shows#change_show_time', :via => :post
   resources :visits, only: [:create, :index, :show, :destroy, :update]
   match '/visits/check_visit' => 'visits#check_visit', :via => :post
   resources :artists, only: [:create, :index, :show, :destroy, :update, :embed]

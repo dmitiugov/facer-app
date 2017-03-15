@@ -88,23 +88,6 @@ var o = {
             //console.log(data);
         })
     }
-    o.createShow = function(shows) {
-        console.log('!!!');
-        return $http.post('/shows.json', shows).success(function (data) {
-            console.log(data);
-        })
-    }
-    o.checkShow = function (show) {
-        console.log(show);
-        return $http.post('/shows/check_show.json', show).success(function (data) {
-            console.log(data);
-        })
-    }
-    o.deleteShow = function(show) {
-        return $http.delete('/shows/' + show.show.id + '.json').success(function(data){
-            console.log("Show has been deleted!")
-        });
-    }
     o.deletePhotoFromEvent = function(event) {
         console.log(event);
         return $http.put('/events/'+ event.id + '.json', event).success(function(data){
@@ -112,11 +95,6 @@ var o = {
             console.log("Event has been updated!")
         });
     }
-    o.changeShows = function(edit_shows) {
-        console.log(edit_shows);
-        return $http.post('/shows.json', edit_shows).success(function(data){
-            console.log(data, 'Shows has been updated!');
-        })
-    }
+
 return o;
 }])

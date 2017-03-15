@@ -16,7 +16,7 @@ angular.module('flapperNews',
 function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-    .state('home', {
+      .state('home', {
       url: '/home',
       templateUrl: 'home/_home.html',
       controller: 'MainCtrl',
