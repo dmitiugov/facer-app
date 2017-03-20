@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   match '/shows/change_show_time' => 'shows#change_show_time', :via => :post
   resources :visits, only: [:create, :index, :show, :destroy, :update]
   match '/visits/check_visit' => 'visits#check_visit', :via => :post
+  match '/visits/delete_all' => 'visits#delete_all', :via => :post
   resources :artists, only: [:create, :index, :show, :destroy, :update, :embed]
   resources :event_files, only: [:create]
   resources :posts, only: [:create, :index, :show] do

@@ -17,6 +17,14 @@ class VisitsController < ApplicationController
     respond_with @visit[0]
   end
 
+  def delete_all
+    @visit = Visit.where(:event => params[:event_id])
+    if @visit.present?
+      @visit.delete_all
+    end
+    respond_with @visit[0], location: visits_url
+  end
+
   def create
     if (visits_params.has_key?(:visits))
       visits_params[:visits].map { |visit|

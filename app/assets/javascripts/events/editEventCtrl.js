@@ -2,11 +2,12 @@ angular.module('flapperNews').controller('EditEventCtrl', [
     '$scope',
     'events',
     'shows',
+    'visits',
     'Auth',
     'Upload',
     '$http',
     '$location',
-    function($scope, events, shows, Auth, Upload, $http, $location){
+    function($scope, events, shows, visits, Auth, Upload, $http, $location){
     $scope.title = 'Редактировать событие'
         $scope.eve = {};
         $scope.edit = true
@@ -105,7 +106,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             }
             if ($scope.eve.visits.length!=0)
                 for (var i=0; i<$scope.eve.visits.length; i++) {
-                    events.deleteVisit({
+                    visits.deleteVisit({
                         visit: $scope.eve.visits[i].id,
                     })
                 }
@@ -119,21 +120,18 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                     visit.special_id = $scope.eve.specials.selected[i].id;
                     $scope.eve.new_visit.push(visit);
                 }
-                events.createVisit({
+                visits.createVisit({
                     visits: $scope.eve.new_visit,
                 })
             }
         };
         $scope.resetAll = function() {
-            $scope.eve.specials.selected = null
-            if ($scope.edit) {
-                for (var i=0; i<$scope.eve.visits.length; i++) {
-                    events.deleteVisit({
-                        visit: $scope.eve.visits[i].id,
-                    })
-                }
-            }
-
+            if($scope.eve.specials.selected)
+                visits.deleteAllVisits({
+                    event_id: $scope.eve.id,
+                }).then(function(){
+                    $scope.eve.specials.selected = null
+                })
         }
         $scope.deletePhoto = function() {
             events.deletePhotoFromEvent({
@@ -153,12 +151,12 @@ angular.module('flapperNews').controller('EditEventCtrl', [
         }
         $scope.deleteVisit = function($item) {
 
-           events.checkVisit({
+           visits.checkVisit({
                special_id: $item.id,
                event_id: $scope.eve.id,
            }).then(function(response){
                //console.log(response.data);
-               events.deleteVisit({
+               visits.deleteVisit({
                    visit: response.data,
                })
            })
@@ -217,7 +215,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             visit.special_id = $item.id;
             $scope.eve.new_visit = []
             $scope.eve.new_visit.push(visit);
-            events.createVisit({
+            visits.createVisit({
                 visits: $scope.eve.new_visit,
             })
         }

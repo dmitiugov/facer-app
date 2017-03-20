@@ -16,6 +16,13 @@ angular.module('flapperNews',
 function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
+
+
+      .state('users-personal', {
+          url: '/users/:username',
+          templateUrl: 'users/_user.html',
+          controller: 'UsersCtrl'
+      })
       .state('home', {
       url: '/home',
       templateUrl: 'home/_home.html',
@@ -24,6 +31,7 @@ function($stateProvider, $urlRouterProvider) {
         postPromise: ['posts', 
           function(posts){
             return posts.getAll();
+
           }]
 		  }
     })
@@ -184,6 +192,16 @@ function($stateProvider, $urlRouterProvider) {
         })
       }]
     })
+      .state('logout', {
+          url: '/logout',
+          templateUrl: 'auth/_login.html',
+          controller: 'AuthCtrl',
+          onEnter: ['$state', 'Auth', function($state, Auth) {
+              Auth.currentUser().then(function (){
+                  $state.go('home');
+              })
+          }]
+      })
     .state('register', {
       url: '/register',
       templateUrl: 'auth/_register.html',

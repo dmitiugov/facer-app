@@ -3,12 +3,13 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     '$scope',
     'events',
     'shows',
+    'visits',
     'Auth',
     'Upload',
     '$http',
     '$location',
     'toastr',
-    function($scope, events, shows, Auth, Upload, $http, $location, toastr){
+    function($scope, events, shows, visits, Auth, Upload, $http, $location, toastr){
         $scope.redirectUrl = '/events';
         $scope.action = 'Создать событие'
         $scope.dates = {
@@ -233,7 +234,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                      guests: $scope.eve.guests,
                      }).then(function (resp) {
                          console.log($scope.eve);
-                         events.createVisit({
+                         visits.createVisit({
                             visits: $scope.eve.visits,
                          }).then(function (resp) {
                              console.log($scope.eve.shows)
