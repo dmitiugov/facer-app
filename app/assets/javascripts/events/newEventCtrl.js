@@ -1,4 +1,3 @@
-
 angular.module('flapperNews').controller('NewEventCtrl', [
     '$scope',
     'events',

@@ -10,28 +10,35 @@ angular.module('flapperNews',
     'ngFileUpload',
     'ui.select',
     'ui.mask',
-    'toastr']).config([
+    'toastr'])
+    /*.factory('auth', ['Auth', function(Auth){
+    }])
+    так объявляем фабрику
+    */
+    .config([
 '$stateProvider',
 '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-
-
-      .state('users-personal', {
-          url: '/users/:username',
+      .state('users', {
+          url: '/users/{id}',
           templateUrl: 'users/_user.html',
-          controller: 'UsersCtrl'
+          controller: 'UsersCtrl',
+          resolve: {
+              post: ['$stateParams', 'users', function($stateParams, users) {
+                  return users.getUser($stateParams.id);
+              }]
+          }
       })
       .state('home', {
       url: '/home',
       templateUrl: 'home/_home.html',
       controller: 'MainCtrl',
       resolve: {
-        postPromise: ['posts', 
+        postPromise: ['posts',
           function(posts){
             return posts.getAll();
-
           }]
 		  }
     })
@@ -212,5 +219,5 @@ function($stateProvider, $urlRouterProvider) {
         })
       }]
     });
-  $urlRouterProvider.otherwise('home');
+  $urlRouterProvider.otherwise('login');
 }]);

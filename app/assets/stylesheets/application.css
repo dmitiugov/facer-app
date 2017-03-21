@@ -48,6 +48,10 @@ ul.nav.navbar-nav li {
     text-decoration: underline;
     color: #00b3ee;
 }
+uib-tab-heading {
+    width: 100%;
+    display: block;
+}
 @media (min-width: 768px) {
     ul.nav.navbar-nav li {
         float: none;

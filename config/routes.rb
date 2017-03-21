@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   match '/visits/check_visit' => 'visits#check_visit', :via => :post
   match '/visits/delete_all' => 'visits#delete_all', :via => :post
   resources :artists, only: [:create, :index, :show, :destroy, :update, :embed]
+  resources :users, only: [:show]
   resources :event_files, only: [:create]
   resources :posts, only: [:create, :index, :show] do
     resources :comments, only: [:show, :create] do

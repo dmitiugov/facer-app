@@ -9,7 +9,8 @@ function($scope, $state, Auth, toastr){
     Auth.login($scope.user).then(function(){
       $state.go('home');
     }, function(error) {
-       //console.log(error.data.error)
+       console.log(error.data.error)
+
         toastr.error(error.data.error)
     });
   };
@@ -29,5 +30,5 @@ function($scope, $state, Auth, toastr){
         $scope.flash=error.data
     });
   };
-  console.log(Auth)
+  //console.log(Auth)
 }]);

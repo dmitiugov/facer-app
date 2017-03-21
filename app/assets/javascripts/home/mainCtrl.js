@@ -3,9 +3,16 @@ angular.module('flapperNews').controller('MainCtrl', [
 'posts',
     'Upload',
     'Auth',
-function($scope, posts, Upload, Auth){
-    //console.log(Upload)
-    //console.log(Auth);
+    '$state',
+function($scope, posts, Upload, Auth, $state){
+    Auth.currentUser().then(function(user) {
+        // User was logged in, or Devise returned
+        // previously authenticated session.
+        $scope.user_name = user.username;
+    }, function(error) {
+        // unauthenticated error
+        $state.go('login');
+    });
   $scope.test = 'Hello world!';
     //console.log($scope.test)
 	$scope.posts = posts.posts;

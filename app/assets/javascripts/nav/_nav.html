@@ -1,12 +1,13 @@
 <div class="collapse navbar-collapse pull-right" ng-controller="NavCtrl">
   <ul class="nav navbar-nav">
-    <li><a href="#/home">Home</a></li>
-    <li><a href="#/events">Events</a></li>
-      <li><a href="#/special_guests">SpecialGuests</a></li>
-      <li><a href="#/artists">Artists</a></li>
+    <li ng-show="signedIn()"><a href="#/home">Home</a></li>
+    <li ng-show="signedIn()"><a href="#/events">Events</a></li>
+      <li ng-show="signedIn()"><a href="#/special_guests">SpecialGuests</a></li>
+      <li ng-show="signedIn()"><a href="#/artists">Artists</a></li>
     <li ng-hide="signedIn()"><a href="#/login">Log In</a></li>
     <li ng-hide="signedIn()"><a href="#/register">Register</a></li>
     <li ng-show="signedIn()"><a href="#/users/{{user.username}}">{{ user.username }}</a></li>
     <li ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
+
   </ul>
 </div>
