@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   end
 
   def create
+
   end
 
   def update
@@ -17,5 +18,7 @@ class UsersController < ApplicationController
 
   def destroy
   end
+
+
 
 end

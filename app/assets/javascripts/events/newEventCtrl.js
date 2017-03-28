@@ -171,7 +171,6 @@ angular.module('flapperNews').controller('NewEventCtrl', [
 
         $scope.flash = ''
         $scope.events=events
-
         $scope.deleteGuest = function ($index) {
             $scope.eve.guests[$index] = null;
         }

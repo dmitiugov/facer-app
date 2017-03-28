@@ -4,7 +4,15 @@ angular.module('flapperNews')
 '$state',
 'Auth',
     'toastr',
-function($scope, $state, Auth, toastr){
+    'accaunt',
+function($scope, $state, Auth, toastr, accaunt){
+
+        accaunt.getAccaunt().then(function (data) {
+            $scope.accaunts = data.data;
+        })
+    accaunt.getAccaunt().then(function (data) {
+        $scope.accaunt = data.data;
+    })
   $scope.login = function() {
     Auth.login($scope.user).then(function(){
       $state.go('home');
@@ -23,11 +31,18 @@ function($scope, $state, Auth, toastr){
      );
   };
   $scope.register = function() {
-    Auth.register($scope.user).then(function(){
+      console.log($scope.accaunts[0])
+
+
+      $scope.user.accaunt = $scope.accaunts[0];
+
+      console.log($scope.user);
+    Auth.register($scope.user).then(function(response){
+        console.log(response);
       $state.go('home');
     }, function (error) {
-        toastr.error(error.data.error)
-        $scope.flash=error.data
+        console.log(error);
+        toastr.error(error.data.errors)
     });
   };
   //console.log(Auth)

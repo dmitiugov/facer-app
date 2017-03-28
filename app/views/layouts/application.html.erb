@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html>
 <head>
   <title>Facer App</title>
@@ -6,14 +6,34 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="flapperNews">
+<body ng-app="flapperNews" ng-controller="headController">
   <div class="row-fluid">
     <div class="col-md-2"><div ng-include="'nav/_nav.html'"></div></div>
     <div class="col-md-10">
-
+    <h1>{{loggedIn}}</h1>
       <ui-view id="main-template"></ui-view>
     </div>
   </div>
+</body>
+
+</html>-->
+
+<!DOCTYPE html>
+<html ng-app="flapperNews"  ng-controller="headController" ng-class="loggedIn ? '' : 'full-height'">
+<head>
+  <title>Facer App</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+<%= javascript_include_tag 'application' %>
+<%= csrf_meta_tags %>
+</head>
+<body ng-class="loggedIn ? '' : 'full-height'">
+<div ng-class="loggedIn ? 'row-fluid' : 'row full'">
+  <div class="col-md-2"><div ng-include="'nav/_nav.html'"></div></div>
+  <div ng-class="loggedIn ? 'col-md-10' : 'col-md-12'">
+
+    <ui-view id="main-template"></ui-view>
+  </div>
+</div>
 </body>
 
 </html>

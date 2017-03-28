@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  devise_for :users
+  devise_for :users, :controllers => { registrations: 'registrations' }
   get    'login'   => 'application#angular'
   root 'application#angular'
   resources :events, only: [:create, :index, :show, :destroy, :update]
   resources :guests, only: [:create, :index, :show, :destroy, :update]
+  match '/accaunts/get_all_accaunts' => 'accaunts#get_all_accaunts', :via => :get
   resources :special_guests, only: [:create, :index, :show, :destroy, :update]
   resources :shows, only: [:create, :index, :show, :destroy, :update]
   match '/shows/check_show' => 'shows#check_show', :via => :post

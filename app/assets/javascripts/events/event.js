@@ -6,6 +6,8 @@ var o = {
     ],
     special_guests: [
     ],
+    giphy: [
+    ],
   };
   o.getAll = function() {
   		return $http.get('/events.json').success(function(data){
