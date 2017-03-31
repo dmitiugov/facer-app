@@ -16,16 +16,26 @@
         <input type="email" class="form-control" placeholder="Email" ng-model="user.email">
       </div>
         <div class="clearfix"></div>
-        <!--<div class="input-group">
-            <label for="accauntSelect"> Выберите аккаунт: </label>
-            <select name="accauntSelect" ng-model="user.accaunt">
-                <option ng-repeat="option in accaunts" value="{{option}}">{{option.name}}</option>
-            </select>
-        </div>-->
+        <div class="input-group" style="width: 200px;">
+            <ui-select ng-model="accaunts.selected" title="Choose an accaunt">
+                <ui-select-match placeholder="Select">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="item in accaunts | filter: $select.search">
+                    <span ng-bind-html="item.name | highlight: $select.search"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
         <div class="clearfix"></div>
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Username" ng-model="user.username">
       </div>
+
+        <div class="clearfix"></div>
+        <div class="btn btn-info" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+             ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+        >Выбрать фото&nbsp;<i class="fa fa-picture-o" aria-hidden="true"></i></div>
+        <a ng-click="deletePhoto()"><i class="fa fa-trash-o" aria-hidden="true""></i></a>
+        <div class="clearfix"></div>
+        <img ngf-src="file" ngf-resize="{width: 200, quality: 0.9}">
         <div class="clearfix"></div>
       <div class="input-group">
         <input type="password" class="form-control" placeholder="Password" ng-model="user.password">

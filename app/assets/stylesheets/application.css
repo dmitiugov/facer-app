@@ -82,6 +82,9 @@ uib-tab-heading {
     border-radius: 20px;
     color: #2886d8;
 }
+.full-height .demo-page .input-group input[type="search"] {
+    border: 0;
+}
 .full-height {
     height: 100%;
 }
@@ -99,6 +102,12 @@ uib-tab-heading {
 }
 .row.full input, .row.full .input-group {
     display: inline-block;
+}
+.ui-select-match span.ui-select-toggle {
+    background: #fff;
+    border: 1px solid #2886d8;
+    border-radius: 20px;
+    color: #2886d8;
 }
 @media (min-width: 768px) {
     ul.nav.navbar-nav li {

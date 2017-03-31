@@ -90,6 +90,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                     {params: params}
                 ).then(function(response) {
                     $scope.eve.specials = response.data;
+                    console.log($scope.eve.specials)
                 });
         };
         $scope.refreshArtists = function (name) {
@@ -155,7 +156,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
                 events.createGuest({
                     guests: $scope.eve.guests,
                 }).then(function (resp) {
-                    events.createVisit({
+                    visits.createVisit({
                         visits: $scope.eve.visits,
                     }).then(function (resp) {
                         //console.log($scope.eve.shows)

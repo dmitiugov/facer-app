@@ -1,6 +1,5 @@
 class ArtistsController < ApplicationController
   respond_to :json
-
   def index
     #@embed = Artist.embed_player
     #byebug

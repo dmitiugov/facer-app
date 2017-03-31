@@ -69,7 +69,7 @@
                            style="width: 600px;" title="Choose a person">
                     <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.surname}}&gt;</ui-select-match>
                     <ui-select-choices repeat="item in eve.specials track by $index"
-                                       refresh="refreshAccaunts($select.search)"
+                                       refresh="refreshSpecials($select.search)"
                                        refresh-delay="0">
                         <div ng-bind-html="person.name"></div>
                         <small>

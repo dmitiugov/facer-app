@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161227133715) do
+ActiveRecord::Schema.define(version: 20170331122050) do
 
   create_table "accaunts", force: :cascade do |t|
     t.string   "name"
@@ -52,12 +52,6 @@ ActiveRecord::Schema.define(version: 20161227133715) do
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
-
-  create_table "event_files", force: :cascade do |t|
-    t.string   "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
