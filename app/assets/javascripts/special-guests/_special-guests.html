@@ -12,7 +12,12 @@
 <div ng-repeat="guest in special_guests">
 
         <div class="col-md-4"><a ng-href="#/special_guests/{{guest.id}}"> <img ng-src="{{guest.file}}" alt="" class="img-thumbnail"></a>
-            <h4><a ng-href="#/special_guests/{{guest.id}}">{{guest.name}} {{guest.surname}}</a></h4></div>
+            <h4><a ng-href="#/special_guests/{{guest.id}}">{{guest.name}} {{guest.surname}}</a></h4>
+            <a ng-href="#/special_guests/edit/{{guest.id}}">
+                <i class="fa fa-pencil-square" aria-hidden="true"></i>
+            </a>
+        </div>
+
     <div ng-class="isRow($index) ? 'clearfix' : ''"></div>
 
 </div>

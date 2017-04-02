@@ -3,7 +3,8 @@ angular.module('flapperNews').controller('newArtistCtrl', [
     'artists',
     'Auth',
     'Upload',
-    function($scope, artists, Auth, Upload){
+    '$state',
+    function($scope, artists, Auth, Upload, $state){
         $scope.flash = ''
         $scope.title = 'Добавить артиста'
         Auth.currentUser().then(function(user) {
@@ -38,6 +39,6 @@ angular.module('flapperNews').controller('newArtistCtrl', [
             $scope.soundcloud = '';
             $scope.file = null;
             $scope.flash = 'Artist добавлен';
-
+            $state.go('artists');
         };
     }])

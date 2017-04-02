@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row-fluid special">
     <div class="col-md-12">
         <h4>{{title}}</h4>
         <div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
@@ -48,12 +48,16 @@
                         <textarea type="text"
                                   class="form-control"
                                   placeholder="Description"
+                                  rows="1"
+                                  auto-resize
                                   ng-model="description"></textarea>
                     </div>
                     <div class="col-md-6">
                         <textarea type="text"
                                   class="form-control"
                                   placeholder="Bio"
+                                  rows="1"
+                                  auto-resize
                                   ng-model="bio"></textarea>
                     </div>
                 </div>

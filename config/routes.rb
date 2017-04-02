@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get    'login'   => 'application#angular'
   root 'application#angular'
   resources :events, only: [:create, :index, :show, :destroy, :update]
+  match '/files/add_file_to_event' => 'files#add_file_to_event', :via => :post
   resources :guests, only: [:create, :index, :show, :destroy, :update]
   resources :accaunts, only: [:create, :index, :show, :destroy, :update]
   match '/accaunts/add_accaunt_to_user' => 'accaunts#add_accaunt_to_user', :via => :post
@@ -12,11 +13,14 @@ Rails.application.routes.draw do
   resources :shows, only: [:create, :index, :show, :destroy, :update]
   match '/shows/check_show' => 'shows#check_show', :via => :post
   match '/shows/delete_all' => 'shows#delete_all', :via => :post
+  match '/shows/select_all' => 'shows#select_all', :via => :post
   match '/shows/change_show_time' => 'shows#change_show_time', :via => :post
   resources :visits, only: [:create, :index, :show, :destroy, :update]
   match '/visits/check_visit' => 'visits#check_visit', :via => :post
   match '/files/add_file_to_user' => 'files#add_file_to_user', :via => :post
+  match '/files/add_file_to_special' => 'files#add_file_to_special', :via => :post
   match '/visits/delete_all' => 'visits#delete_all', :via => :post
+  match '/visits/select_all' => 'visits#select_all', :via => :post
   resources :artists, only: [:create, :index, :show, :destroy, :update, :embed]
   resources :users, only: [:show, :update]
   resources :posts, only: [:create, :index, :show] do

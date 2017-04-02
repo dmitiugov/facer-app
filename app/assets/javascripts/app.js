@@ -11,62 +11,12 @@ angular.module('flapperNews',
     'ui.select',
     'ui.mask',
     'toastr'])
-    .controller('headController', [
-        '$scope',
-        'Auth',
-        '$state',
-        'giphy',
-        function ($scope, Auth, $state, giphy) {
-            //random gif depricated yet
-            /*giphy.getGiphy().then(function (data) {
-                var random = Math.ceil(Math.random() * 20);
-                $scope.image = 'url(https://media.giphy.com/media/' + data.data.data[random].id + '/giphy.gif)';
-                console.log($scope.image);
-            })*/
-            //random gif depricated yet
-            $scope.signedIn = Auth.isAuthenticated;
-            $scope.logout = Auth.logout;
-            Auth.currentUser().then(function (user){
-                $scope.user = user;
-                console.log($scope.user);
-                $scope.loggedIn = true
-
-            });
-
-            $scope.$on('devise:new-registration', function (e, user){
-                $scope.user = user;
-                $scope.loggedIn = true
-            });
-
-            $scope.$on('devise:login', function (e, user){
-                $scope.user = user;
-                $scope.loggedIn = true
-            });
-
-            $scope.$on('devise:logout', function (e, user){
-                $scope.user = {};
-                $state.go('login');
-                $scope.loggedIn = false
-            });
-            $scope.loggedIn = false
-        }
-    ])
     .config([
 '$stateProvider',
 '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-      .state('users', {
-          url: '/users/{id}',
-          templateUrl: 'users/_user.html',
-          controller: 'UsersCtrl',
-          resolve: {
-              post: ['$stateParams', 'users', function($stateParams, users) {
-                  return users.getUser($stateParams.id);
-              }]
-          }
-      })
       .state('home', {
       url: '/home',
       templateUrl: 'home/_home.html',
@@ -174,7 +124,7 @@ function($stateProvider, $urlRouterProvider) {
       })
 
       .state('edit-special_guests', {
-          url: '/speical_guests/edit/{id}',
+          url: '/special_guests/edit/{id}',
           templateUrl: 'special-guests/_new-special-guest.html',
           controller: 'editSpecialGuestCtrl',
           resolve: {
@@ -254,6 +204,21 @@ function($stateProvider, $urlRouterProvider) {
           $state.go('home');
         })
       }]
-    });
-  $urlRouterProvider.otherwise('login');
+    })
+      .state('users', {
+          url: '/users/{id}',
+          templateUrl: 'users/_user.html',
+          controller: 'UsersCtrl',
+          resolve: {
+              post: ['$stateParams', 'users', function($stateParams, users) {
+                  return users.getUser($stateParams.id);
+              }]
+          }
+      })
+    .state('edit-users', {
+        url: '/users/edit/{id}',
+        templateUrl: 'users/_edit-user.html',
+        controller: 'editUserCtrl',
+    })
+  $urlRouterProvider.otherwise('home');
 }]);

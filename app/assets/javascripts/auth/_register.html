@@ -18,7 +18,7 @@
         <div class="clearfix"></div>
         <div class="input-group" style="width: 200px;">
             <ui-select ng-model="accaunts.selected" title="Choose an accaunt">
-                <ui-select-match placeholder="Select">{{$select.selected.name}}</ui-select-match>
+                <ui-select-match placeholder="Выберите аккаунт">{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices repeat="item in accaunts | filter: $select.search">
                     <span ng-bind-html="item.name | highlight: $select.search"></span>
                 </ui-select-choices>

@@ -1,4 +1,10 @@
-<h1>{{user.username}}</h1>
+<h3>{{user.username}}&nbsp;<a ng-href="#/users/edit/{{user.id}}">
+    <i class="fa fa-pencil-square" aria-hidden="true"></i>
+</a></h3>
+
+<div class="clearfix"></div>
 <img ng-src="{{user.file}}">
+
 <p>{{user.name}}</p>
 <p>{{user.surname}}</p>
+

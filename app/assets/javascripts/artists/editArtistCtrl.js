@@ -4,7 +4,8 @@ angular.module('flapperNews').controller('editArtistCtrl', [
     'Auth',
     'Upload',
     'toastr',
-    function($scope, artists, Auth, Upload, toastr){
+    '$state',
+    function($scope, artists, Auth, Upload, toastr, $state){
         $scope.flash = ''
         $scope.title = 'Редактировать артиста'
 
@@ -33,6 +34,7 @@ angular.module('flapperNews').controller('editArtistCtrl', [
                 id: $scope.id,
             }).then(function(data){
                 console.log(data)
+                $state.go('artists')
                 toastr.success(data.config.data.name + " изменен");
             })
         }

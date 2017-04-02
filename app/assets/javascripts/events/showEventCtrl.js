@@ -14,7 +14,12 @@ angular.module('flapperNews')
         '$location',
         '$window',
     function($scope, events, Auth, $location, $window){
-
+        $scope.isRow = function($index){
+            console.log($index);
+            if ($index%3==2) {
+                return true
+            }
+        }
         $scope.inside = 'Внутри'
         $scope.outside = 'Снаружи'
         $scope.eve = events

@@ -7,17 +7,21 @@ angular.module('flapperNews').controller('EventsCtrl', [
     '$timeout',
     '$window',
     '$location',
-function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window, $location){
+    '$state',
+    'toastr',
+function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window, $location, $state, toastr){
     $scope.redirectUrl = '/artists';
     $scope.auth = Auth.isAuthenticated()
     $scope.isCollapsed = true;
 	$scope.events=events
+    console.log(events);
     $scope.deleteEvent = function(id){
         events.destroy({
             id: id,
         }).then(function () {
             //$window.location.reload();
-            $location.path($scope.redirectUrl);
+            //$location.path($scope.redirectUrl);
+            $state.reload()
         });
     }
 

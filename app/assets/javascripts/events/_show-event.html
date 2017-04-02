@@ -141,11 +141,12 @@
         <hr>
         <h4>Постоянные гости:</h4>
         <div class="row">
-            <div class="col-md-3" ng-repeat="guest in eve.event.special_guests">
-                <a ng-href="#/special_guests/{{guest.id}}"><img ng-src="{{guest.file}}"></a>
-                <p>
-                    <a ng-href="#/special_guests/{{guest.id}}">{{guest.name}} {{guest.surname}}</a>
-                    <a ng-click="changeStatus(guest.id, guest.inside, guest.guest_type)">
+            <div ng-repeat="guest in eve.event.special_guests">
+                <div class="col-md-3">
+                    <a ng-href="#/special_guests/{{guest.id}}"><img ng-src="{{guest.file}}"></a>
+                    <p>
+                        <a ng-href="#/special_guests/{{guest.id}}">{{guest.name}} {{guest.surname}}</a>
+                        <a ng-click="changeStatus(guest.id, guest.inside, guest.guest_type)">
                         <span ng-if="guest.inside == true">
 
                             <i class="fa fa-sign-in" aria-hidden="true"
@@ -153,17 +154,20 @@
                                popover-trigger="'mouseenter'"
                                popover-placement="right"></i>
                         </span>
-                        <span ng-if="guest.inside == false">
+                            <span ng-if="guest.inside == false">
                                     <i class="fa fa-sign-out fa-flip-horizontal" aria-hidden="true"
                                        uib-popover="{{outside}}"
                                        popover-trigger="'mouseenter'"
                                        popover-placement="right"></i>
 
                         </span>
-                    </a>
-                </p>
+                        </a>
+                    </p>
+                </div>
 
+                <div ng-class="isRow($index) ? 'clearfix' : ''"></div>
             </div>
+
         </div>
         <div class="clearfix"></div>
     </div>

@@ -26,13 +26,15 @@ class SpecialGuestsController < ApplicationController
     respond_with @special
   end
   def update
-
+    @special = SpecialGuest.find(guest_params[:id])
+    @special.update!(guest_params)
+    respond_with @special
   end
 
 
 
   private
   def guest_params
-    params.permit(:name, :surname, :avatar, :description, :bio, :age)
+    params.permit(:id, :name, :surname, :avatar, :description, :bio, :age)
   end
 end

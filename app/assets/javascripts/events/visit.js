@@ -33,5 +33,11 @@ angular.module('flapperNews').factory('visits', ['$http', 'toastr', function($ht
             console.log("All visits has been deleted!")
         })
     }
+    o.selectAllVisits = function (event) {
+        console.log(event);
+        return $http.post('/visits/select_all.json', event).success(function(data){
+            console.log("All visits has been selected!")
+        })
+    }
     return o;
 }])

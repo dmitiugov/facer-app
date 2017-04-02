@@ -7,7 +7,9 @@ angular.module('flapperNews').controller('EditEventCtrl', [
     'Upload',
     '$http',
     '$location',
-    function($scope, events, shows, visits, Auth, Upload, $http, $location){
+    '$state',
+    'toastr',
+    function($scope, events, shows, visits, Auth, Upload, $http, $location, $state, toastr){
     $scope.title = 'Редактировать событие'
         $scope.eve = {};
         $scope.edit = true
@@ -95,44 +97,37 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 }
                 shows.createShow({
                     shows: $scope.eve.new_show,
+                }).then(function (data) {
+                    console.log(data);
                 })
             }
         };
-        $scope.selectAll = function() {
-            $scope.eve.specials.selected = []
-            for(var i = 0; i<$scope.eve.specials.length; i++) {
-                var special = $scope.eve.specials[i]
-                $scope.eve.specials.selected.push(special);
-            }
-            if ($scope.eve.visits.length!=0)
-                for (var i=0; i<$scope.eve.visits.length; i++) {
-                    visits.deleteVisit({
-                        visit: $scope.eve.visits[i].id,
-                    })
-                }
-            $scope.eve.new_visit = []
-            if  ($scope.eve.specials.selected) {
-                for (var i=0; i<$scope.eve.specials.selected.length; i++) {
-                    var visit = {};
-                    visit.event_id = '';
-                    visit.event_id = $scope.eve.id;
-                    visit.special_id = '';
-                    visit.special_id = $scope.eve.specials.selected[i].id;
-                    $scope.eve.new_visit.push(visit);
-                }
-                visits.createVisit({
-                    visits: $scope.eve.new_visit,
-                })
-            }
-        };
+        //удалить всех спец гостей из события
         $scope.resetAll = function() {
             if($scope.eve.specials.selected)
                 visits.deleteAllVisits({
                     event_id: $scope.eve.id,
                 }).then(function(){
                     $scope.eve.specials.selected = null
+                    toastr.success("Гости удалены")
+                }, function (error) {
+                    toastr.error("Ошибка");
                 })
         }
+        //добавить всех спец гостей к событию
+        //TODO: переписать точно также артистов
+        $scope.selectAll = function() {
+               visits.selectAllVisits({
+                    event_id: $scope.eve.id,
+                    specials: $scope.eve.specials,
+                }).then(function(){
+                console.log($scope.eve.specials)
+                   $scope.eve.specials.selected = $scope.eve.specials
+                   toastr.success("Гости добавлены")
+                }, function (error) {
+                   toastr.error("Ошибка");
+               })
+        };
         $scope.deletePhoto = function() {
             events.deletePhotoFromEvent({
                 id: $scope.eve.id,
@@ -192,10 +187,13 @@ angular.module('flapperNews').controller('EditEventCtrl', [
         };
         $scope.addShow = function($item) {
             var show = {};
+            console.log($item);
             show.event_id = '';
             show.event_id = $scope.eve.id;
             show.artist_id = '';
             show.artist_id = $item.id;
+            show.artist_name = '';
+            show.artist_name = $item.name;
             show.time_start='';
             show.time_end='';
             $scope.eve.new_show = []
@@ -203,8 +201,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             shows.createShow({
                 shows: $scope.eve.new_show,
             }).then(function (data) {
-                //console.log(data.data);
-                //console.log($scope.eve);
+                console.log(data);
             })
         }
         $scope.addVisit = function($item) {
@@ -232,67 +229,58 @@ angular.module('flapperNews').controller('EditEventCtrl', [
 
         }
         $scope.editFields = function() {
-            events.edit({
-                name: $scope.eve.name,
-                description: $scope.eve.description,
-                date: $scope.eve.date,
-                id: $scope.eve.id,
-            }).then(function (data) {
-                var id = $scope.eve.id
-                for (var i=0; i<$scope.eve.newguests.length; i++) {
-                    $scope.eve.newguests[i].event_id = ''
-                    $scope.eve.newguests[i].event_id = id
-                }
-              /*  if($scope.eve.specials.selected!=null)
-                    for (var i=0; i<$scope.eve.specials.selected.length; i++){
-                        $scope.eve.specials.selected[i].event_id=''
-                        $scope.eve.specials.selected[i].event_id = id
-                    }*/
-                for(var i=0;i<$scope.eve.artists.selected.length;i++){
-                    for (var j=0; j<$scope.eve.shows.length; j++) {
-                        if ($scope.eve.artists.selected[i].id == $scope.eve.shows[j].artist_id) {
-                            $scope.eve.shows[j].time_start = $scope.eve.artists.selected[i].time_start;
-                            $scope.eve.shows[j].time_end = $scope.eve.artists.selected[i].time_end;
-                        }
-                    }
-                    console.log($scope.eve.shows)
-                }
 
-                shows.changeShowTime({
-                    shows: $scope.eve.shows,
-                })
-                events.createGuest({
-                    guests: $scope.eve.newguests,
-                }).then(function (resp) {
-                    console.log($scope.eve)
-                        //events.edit($scope.eve);
-                })
-            })
         }
-        $scope.upload = function (file) {
+        $scope.upload = function (file, id) {
             $scope.upload = Upload.upload({
-                url: '/events/'+ $scope.eve.id + '.json',
-                method: 'PUT',
+                url: '/files/add_file_to_event.json',
+                method: 'POST',
                 fields: {
-                    'user[name]': $scope.user_name,
+                    id: id,
                     file: file,
-                    id: $scope.eve.id
+                    fileFormDataName: 'user[image]'
                 },
-            }).then(function(resp){
-                //console.log(resp);
-                $scope.editFields()
-            })
+            }).then(function (resp) {
+                console.log(resp)
+            });
         }
         $scope.addEvent = function(){
-            //console.log($scope.eve.file, $scope.eve)
-            if ($scope.eve.file && $scope.eve.file != '/images/missing.png' && $scope.eve.file.$ngfBlobUrl) {
-                $scope.upload($scope.eve.file);
-            } else {
-                //console.log('!!!')
-                $scope.editFields();
-            }
+            var id = $scope.eve.id;
+                events.edit({
+                    name: $scope.eve.name,
+                    description: $scope.eve.description,
+                    date: $scope.eve.date,
+                    id: $scope.eve.id,
+                }).then(function (data) {
+                    var id = $scope.eve.id
+                    for (var i=0; i<$scope.eve.newguests.length; i++) {
+                        $scope.eve.newguests[i].event_id = ''
+                        $scope.eve.newguests[i].event_id = id
+                    }
+                    for(var i=0;i<$scope.eve.artists.selected.length;i++){
+                        for (var j=0; j<$scope.eve.shows.length; j++) {
+                            if ($scope.eve.artists.selected[i].id == $scope.eve.shows[j].artist_id) {
+                                $scope.eve.shows[j].time_start = $scope.eve.artists.selected[i].time_start;
+                                $scope.eve.shows[j].time_end = $scope.eve.artists.selected[i].time_end;
+                            }
+                        }
+                        console.log($scope.eve.shows)
+                    }
 
-            $scope.flash = 'Событие изменено';
+                    shows.changeShowTime({
+                        shows: $scope.eve.shows,
+                    })
+                    events.createGuest({
+                        guests: $scope.eve.newguests,
+                    }).then(function (resp) {
+                        console.log($scope.eve)
+                        //events.edit($scope.eve);
+                    })
+                }).then(function () {
+                    if ($scope.eve.file && $scope.eve.file != '/images/missing.png' && $scope.eve.file.$ngfBlobUrl) {
+                        $scope.upload($scope.eve.file, id);
+                    }
+                })
         };
         $scope.action = 'Изменить событие'
     }])

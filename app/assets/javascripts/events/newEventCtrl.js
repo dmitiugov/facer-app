@@ -8,7 +8,8 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     '$http',
     '$location',
     'toastr',
-    function($scope, events, shows, visits, Auth, Upload, $http, $location, toastr){
+    '$state',
+    function($scope, events, shows, visits, Auth, Upload, $http, $location, toastr, $state){
         $scope.redirectUrl = '/events';
         $scope.action = 'Создать событие'
         $scope.dates = {
@@ -108,67 +109,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
         }, function(error) {
             console.log(error)
         });
-        $scope.upload = function (file) {
-            $scope.upload = Upload.upload({
-                url: '/events.json',
-                method: 'POST',
-                fields: { 'user[name]': $scope.user_name,
-                    name: $scope.eve.name,
-                    description: $scope.eve.description,
-                    date: $scope.eve.date.format("YYYY-MM-DD HH:mm:ss"),
-                    file: file,
-                    fileFormDataName: 'user[image]'},
-            }).then(function (resp) {
-                var id = resp.data.id
 
-                for (var i=0; i<$scope.eve.guests.length; i++) {
-                    $scope.eve.guests[i].event_id = ''
-                    $scope.eve.guests[i].event_id = id
-                }
-                console.log($scope.eve.specials.selected);
-                if  ($scope.eve.specials.selected) {
-                    for (var i=0; i<$scope.eve.specials.selected.length; i++) {
-                        var visit = {};
-                        visit.event_id = '';
-                        visit.event_id = id;
-                        visit.special_id = '';
-                        visit.special_id = $scope.eve.specials.selected[i].id;
-                        $scope.eve.visits.push(visit);
-                    }
-                }
-                if ($scope.eve.artists.selected)
-                    for (var i=0; i<$scope.eve.artists.selected.length; i++) {
-                        var show={};
-                        show.event_id='';
-                        show.event_id = id;
-                        console.log($scope.eve.artists.selected)
-                        show.artist_id='';
-                        show.artist_id=$scope.eve.artists.selected[i].id;
-                        show.artist_name='';
-                        show.artist_name=$scope.eve.artists.selected[i].name;
-                        show.time_start='';
-                        show.time_end='';
-                        show.time_start=$scope.eve.artists.selected[i].time_start;
-                        show.time_end=$scope.eve.artists.selected[i].time_end;
-                        $scope.eve.shows.push(show);
-                    }
-                console.log($scope.eve);
-                events.createGuest({
-                    guests: $scope.eve.guests,
-                }).then(function (resp) {
-                    visits.createVisit({
-                        visits: $scope.eve.visits,
-                    }).then(function (resp) {
-                        //console.log($scope.eve.shows)
-                        shows.createShow({
-                            shows: $scope.eve.shows,
-                        })
-                    })
-                    toastr.success("Событие создано")
-                    $location.path($scope.redirectUrl);
-                })
-            });
-        }
 
         $scope.flash = ''
         $scope.events=events
@@ -187,68 +128,81 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             //ageHeading: 'Age',
             bio: 'Bio'
         };
-        $scope.addEvent = function(eve){
+        $scope.upload = function (file, id) {
+            $scope.upload = Upload.upload({
+                url: '/files/add_file_to_event.json',
+                method: 'POST',
+                fields: {
+                    id: id,
+                    file: file,
+                    fileFormDataName: 'user[image]'
+                },
+            }).then(function (resp) {
+                console.log(resp)
+            });
+        }
+        $scope.addEvent = function(){
 
-            if ($scope.eve.file) {
-                $scope.upload($scope.eve.file);
-            } else {
-                events.create({
-                    name: $scope.eve.name,
-                    description: $scope.eve.description,
-                    date: $scope.eve.date.format("YYYY-MM-DD HH:mm:ss"),
-                }).then(function(data) {
-                    var id = data.data.id
-                    for (var i=0; i<$scope.eve.guests.length; i++) {
-                        $scope.eve.guests[i].event_id = ''
-                        $scope.eve.guests[i].event_id = id
-                    }
-                    if  ($scope.eve.specials.selected) {
+            events.create({
+                name: $scope.eve.name,
+                description: $scope.eve.description,
+                date: $scope.eve.date.format("YYYY-MM-DD HH:mm:ss"),
+            }).then(function(data) {
+                var id = data.data.id
+                for (var i=0; i<$scope.eve.guests.length; i++) {
+                    $scope.eve.guests[i].event_id = ''
+                    $scope.eve.guests[i].event_id = id
+                }
+                if  ($scope.eve.specials.selected) {
 
-                        for (var i=0; i<$scope.eve.specials.selected.length; i++) {
-                            var visit = {};
-                            visit.event_id = '';
-                            visit.event_id = id;
-                            visit.special_id = '';
-                            visit.special_id = $scope.eve.specials.selected[i].id;
-                            $scope.eve.visits.push(visit);
-                        }
+                    for (var i=0; i<$scope.eve.specials.selected.length; i++) {
+                        var visit = {};
+                        visit.event_id = '';
+                        visit.event_id = id;
+                        visit.special_id = '';
+                        visit.special_id = $scope.eve.specials.selected[i].id;
+                        $scope.eve.visits.push(visit);
                     }
-                    if ($scope.eve.artists.selected)
-                        for (var i=0; i<$scope.eve.artists.selected.length; i++) {
-                            var show={};
-                            //console.log($scope.eve.artists.selected)
-                            show.event_id='';
-                            show.event_id = id;
-                            show.artist_id='';
-                            show.artist_id=$scope.eve.artists.selected[i].id;
-                            show.artist_name='';
-                            show.artist_name=$scope.eve.artists.selected[i].name;
-                            show.time_start='';
-                            show.time_end='';
-                            show.time_start=$scope.eve.artists.selected[i].time_start;
-                            show.time_end=$scope.eve.artists.selected[i].time_end;
-                            $scope.eve.shows.push(show);
+                }
+                if ($scope.eve.artists.selected)
+                    for (var i=0; i<$scope.eve.artists.selected.length; i++) {
+                        var show={};
+                        //console.log($scope.eve.artists.selected)
+                        show.event_id='';
+                        show.event_id = id;
+                        show.artist_id='';
+                        show.artist_id=$scope.eve.artists.selected[i].id;
+                        show.artist_name='';
+                        show.artist_name=$scope.eve.artists.selected[i].name;
+                        show.time_start='';
+                        show.time_end='';
+                        show.time_start=$scope.eve.artists.selected[i].time_start;
+                        show.time_end=$scope.eve.artists.selected[i].time_end;
+                        $scope.eve.shows.push(show);
+                    }
+                events.createGuest({
+                    guests: $scope.eve.guests,
+                }).then(function (resp) {
+                    console.log($scope.eve);
+                    visits.createVisit({
+                        visits: $scope.eve.visits,
+                    }).then(function (resp) {
+                        console.log($scope.eve.shows)
+                        shows.createShow({
+                            shows: $scope.eve.shows
+                        })
+                    }).then(function (resp) {
+                        console.log(id);
+                        if ($scope.eve.file) {
+                            $scope.upload($scope.eve.file, id);
                         }
-                     events.createGuest({
-                     guests: $scope.eve.guests,
-                     }).then(function (resp) {
-                         console.log($scope.eve);
-                         visits.createVisit({
-                            visits: $scope.eve.visits,
-                         }).then(function (resp) {
-                             console.log($scope.eve.shows)
-                             shows.createShow({
-                                 shows: $scope.eve.shows
-                             })
-                         }).then(function (resp) {
-                             toastr.success("Событие создано")
-                             $location.path($scope.redirectUrl);
-                         })
-                     })
-                }, function(error) {
-                    console.log('Error Create')
-                });
-            }
+                        toastr.success("Событие создано")
+                        $state.go("events");
+                    })
+                })
+            }, function(error) {
+                console.log('Error Create')
+            });
             $scope.flash = 'Событие добавлено';
         }
     }])

@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row-fluid artist-edit">
     <div class="col-md-12">
         <h4>{{title}}</h4>
         <div ng-if="flash" class="alert alert-success" role="alert">{{flash}}</div>
@@ -24,7 +24,7 @@
                  ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
             >Select Photo</div>
             <div class="clearfix"></div>
-            <img ngf-src="file" ngf-resize="{width: 200, quality: 0.9}">
+            <img ngf-src="file" ngf-resize="{width: 200, quality: 0.9}" class="img-thumbnail">
 
 
             <div class="form-group">
@@ -33,12 +33,16 @@
                         <textarea type="text"
                                   class="form-control"
                                   placeholder="Description"
+                                  rows="1"
+                                  auto-resize
                                   ng-model="description"></textarea>
                     </div>
                     <div class="col-md-6">
                         <textarea type="text"
                                   class="form-control"
                                   placeholder="Bio"
+                                  rows="1"
+                                  auto-resize
                                   ng-model="bio"></textarea>
                     </div>
                 </div>
@@ -48,12 +52,16 @@
                         <textarea type="text"
                                   class="form-control"
                                   placeholder="Bandcamp"
+                                  rows="1"
+                                  auto-resize
                                   ng-model="bandcamp"></textarea>
                     </div>
                     <div class="col-md-6">
                         <textarea type="text"
                                   class="form-control"
                                   placeholder="Soundcloud"
+                                  rows="1"
+                                  auto-resize
                                   ng-model="soundcloud"></textarea>
                     </div>
                 </div>

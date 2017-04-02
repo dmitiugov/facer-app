@@ -26,13 +26,17 @@ class ShowsController < ApplicationController
   end
 
   def change_show_time
-    params[:shows].map { |show|
-      @show = Show.find(show[:id])
-      @show.time_start = show[:time_start]
-      @show.time_end = show[:time_end]
-      @show.save!
-    }
-    respond_with @show
+    if (shows_params.has_key?(:shows))
+      params[:shows].map { |show|
+        @show = Show.find(show[:id])
+        @show.time_start = show[:time_start]
+        @show.time_end = show[:time_end]
+        @show.save!
+      }
+      respond_with @show
+    end
+  else
+    render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
   def create

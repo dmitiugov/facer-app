@@ -25,13 +25,27 @@ class VisitsController < ApplicationController
     respond_with @visit[0], location: visits_url
   end
 
+  def select_all
+    delete_all()
+    @event = Event.find(params[:event_id])
+    params[:specials].map { |special|
+      @visit = Visit.create(event_id: @event.id, special_guest_id: special[:id])
+    }
+    @visit = Visit.where(:event => params[:event_id])
+    #render json: @visit
+    return @visit
+  end
+
   def create
     if (visits_params.has_key?(:visits))
       visits_params[:visits].map { |visit|
         @visit = Visit.create(event_id: visit[:event_id], special_guest_id: visit[:special_id])
       }
+      respond_with @visit
+    else
+      render :nothing => true, :status => 200, :content_type => 'text/html'
     end
-    respond_with @visit
+
   end
 
   def update

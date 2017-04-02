@@ -21,7 +21,7 @@ angular.module('flapperNews')
     'fetchUsers',
 function($scope, $state, Auth, toastr, $http, Upload, fetchUsers){
     //console.log(Upload);
-    console.log(fetchUsers);
+    //console.log(fetchUsers);
     $scope.upload = function (file, id) {
         $scope.upload = Upload.upload({
             url: '/files/add_file_to_user.json',
@@ -42,7 +42,7 @@ function($scope, $state, Auth, toastr, $http, Upload, fetchUsers){
             '/accaunts.json'
         ).then(function(response) {
             $scope.accaunts = response.data;
-            console.log($scope.accaunts)
+            //console.log($scope.accaunts)
         });
     };
     $scope.refreshAccaunts();
