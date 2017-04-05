@@ -129,6 +129,10 @@ uib-tab-heading {
 #main-template a:hover {
     text-decoration: none;
 }
+.events-archive i {
+    color:#008cba;
+    cursor: pointer;
+}
 .demo-page span.ui-select-toggle, .demo-page .input-group > .ui-select-bootstrap > input.ui-select-search.form-control {
     border-radius: 20px;
 }

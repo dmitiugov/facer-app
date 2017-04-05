@@ -1,13 +1,14 @@
 class EventsController < ApplicationController
   respond_to :json
   #before_filter :authenticate_user!
+  before_action :accaunt_check, only: [:show, :show_archived_events]
+
 
 	def index
     @accaunt = Accaunt.find(current_user.accaunt_id)
-    respond_with @accaunt.events
+    respond_with @accaunt.events.not_archive
   end
   def show
-    @accaunt = Accaunt.find(current_user.accaunt_id)
     @event = Event.find(params[:id])
     if @accaunt.events.ids.include?(@event.id)
       respond_with @event
@@ -15,15 +16,35 @@ class EventsController < ApplicationController
       respond_with flash: "You don't have permission for this action"
     end
   end
-  def get_ranged
 
+  def get_ranged
     @accaunt = Accaunt.find(current_user.accaunt_id)
     @date_from = params[:range][:date_from]
     @date_to = params[:range][:date_to]
-    @events = @accaunt.events.created_between(@date_from, @date_to)
+    @events = @accaunt.events.created_between(@date_from, @date_to).not_archive
     @events = @events.to_a.uniq{|p| p.id}
     render json: @events
     #byebug
+  end
+  def move_event_to_archive
+    @event=Event.find(params[:id])
+    @event.archive=true
+    @event.save!
+    @accaunt = Accaunt.find(current_user.accaunt_id)
+    render json: @accaunt.events.not_archive
+  end
+  def show_archived_events
+    @archive = params[:archive]
+    if @archive == true
+      @events = @accaunt.events.archive
+      @events = @events.to_a.uniq{|p| p.id}
+      render json: @events
+    end
+    if @archive == false
+      @events = @accaunt.events.not_archive
+      @events = @events.to_a.uniq{|p| p.id}
+      render json: @events
+    end
   end
   def create
     #accaunt = Accaunt.find(current_user.accaunt_id)
@@ -65,5 +86,8 @@ class EventsController < ApplicationController
   end
   def guests_params
    params.permit(guests: [:name, :surname])
+  end
+  def accaunt_check
+    @accaunt = Accaunt.find(current_user.accaunt_id)
   end
 end

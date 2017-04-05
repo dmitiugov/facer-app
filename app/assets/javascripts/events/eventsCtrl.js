@@ -28,7 +28,23 @@ function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window, $l
 
 //console.log($scope.uiConfig.calendar)
 
+$scope.moveEventToArchive = function (id) {
+    //console.log(id);
+    events.moveEventToArchive({
+        id: id,
+    }).then(function(data){
+        $scope.events.events = data.data;
+    })
 
+}
+$scope.showArchivedEvents = function (archive) {
+    //console.log(archive);
+    events.showArchivedEvents({
+        archive: archive,
+    }).then(function(data){
+        $scope.events.events = data.data;
+    })
+}
 
 
     $scope.eventy = [{

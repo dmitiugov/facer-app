@@ -80,6 +80,20 @@ var o = {
             console.log("Event has been updated!")
         });
     }
+    o.moveEventToArchive = function(id) {
+        console.log(id)
+        return $http.post('/events/move_event_to_archive.json', id).success(function(data){
+            return(data)
+            //console.log(data)
+        })
+    }
+    o.showArchivedEvents = function(archive){
+        console.log(archive);
+        return $http.post('/events/show_archived_events.json', archive).success(function(data){
+            return(data)
+            //console.log(data)
+        })
+    }
 
 return o;
 }])

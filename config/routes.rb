@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   root 'application#angular'
   resources :events, only: [:create, :index, :show, :destroy, :update]
   match '/events/get_ranged' => 'events#get_ranged', :via => :post
+  match '/events/move_event_to_archive' => 'events#move_event_to_archive', :via => :post
+  match '/events/show_archived_events' => 'events#show_archived_events', :via => :post
   match '/files/add_file_to_event' => 'files#add_file_to_event', :via => :post
   resources :guests, only: [:create, :index, :show, :destroy, :update]
   resources :accaunts, only: [:create, :index, :show, :destroy, :update]

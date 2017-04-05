@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row events">
     <div class="col-md-9"><h4>Мероприятия:</h4></div>
 
     <div class="col-md-3">
@@ -30,6 +30,12 @@
           </span>
         </p>
     </div>
+    <div class="col-md-2">
+        <label for="archive"></label>Архив
+        <input id="archive" type="checkbox" data-ng-click="showArchivedEvents(archive)"
+               ng-model="archive" 
+               value="">
+    </div>
 </div>
 <br>
 <uib-tabset justified="true">
@@ -56,10 +62,10 @@
                                                                         uib-popover="Редактировать"
                                                                         popover-trigger="'mouseenter'"
                                                                         popover-placement="top"></i></a>
-                                <a href="#" ng-click='archiveEvent(event.id)'><i class="fa fa-archive" aria-hidden="true"
+                                <span class="events-archive" ng-click='moveEventToArchive(event.id)'><i class="fa fa-archive" aria-hidden="true"
                                                                                  uib-popover="Архивировать"
                                                                                  popover-trigger="'mouseenter'"
-                                                                                 popover-placement="top"></i></a>
+                                                                                 popover-placement="top"></i></span>
                                 <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>
                                     <i class="fa fa-trash-o" aria-hidden="true"
                                        uib-popover="Удалить"
