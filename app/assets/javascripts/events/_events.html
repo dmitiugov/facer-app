@@ -5,6 +5,32 @@
         <a href="#/new-event" class="btn btn-primary">Создать&nbsp;&nbsp;<i class="fa fa-plus-square-o" aria-hidden="true"></i></a>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-3">
+        <span class="label label-default">С:</span>
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt_from" is-open="popup1.opened"
+                   datepicker-options="dateOptions" ng-required="true"
+                   close-text="Close"
+                   alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+    </div>
+    <div class="col-md-3">
+        <span class="label label-default">По:</span>
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt_to" is-open="popup2.opened"
+                   datepicker-options="dateOptions" ng-required="true"
+                   close-text="Close"
+                   alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+    </div>
+</div>
 <br>
 <uib-tabset justified="true">
     <uib-tab index="1"
@@ -22,7 +48,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="label label-default" style="margin-right: 5px">
-                                    Начало в: {{event.date | date:'yyyy-MM-dd HH:mm'}}
+                                    Начало в: {{event.date | date:'medium'}}
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -87,7 +113,7 @@
                         </div>
                         <hr>
                         <div class="label label-default" style="margin-right: 5px">
-                            Создан: {{event.created_at | date:'yyyy-MM-dd HH:mm'}}
+                            Создан: {{event.created_at | date:'medium'}}
                             <span ng-if="event.user">
                                  by {{event.user.name}}&nbsp;{{event.user.surname}}
                             </span>
@@ -95,7 +121,7 @@
 
                         </div>
                         <div class="label label-default">
-                            Изменен: {{event.updated_at | date:'yyyy-MM-dd HH:mm'}}
+                            Изменен: {{event.updated_at | date:'medium'}}
                         </div>
 
 

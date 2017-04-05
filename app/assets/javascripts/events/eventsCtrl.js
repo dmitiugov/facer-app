@@ -14,7 +14,7 @@ function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window, $l
     $scope.auth = Auth.isAuthenticated()
     $scope.isCollapsed = true;
 	$scope.events=events
-    console.log(events);
+    console.log($scope.events);
     $scope.deleteEvent = function(id){
         events.destroy({
             id: id,
@@ -71,5 +71,110 @@ function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window, $l
         $timeout(function(){
             uiCalendarConfig.calendars.myCalendar.fullCalendar('render')
         }, 200);
+    }
+
+    ////выбор даты
+    var weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    var weekForward = new Date();
+    weekForward.setDate(weekForward.getDate() + 7);
+    $scope.today = function() {
+        $scope.dt_from = weekAgo;
+        $scope.dt_to = weekForward;
+    };
+    $scope.today();
+    console.log($scope.dt_from);
+    $scope.clear = function() {
+        $scope.dt_from = null;
+        $scope.dt_to = null;
+    };
+
+    $scope.inlineOptions = {
+        customClass: getDayClass,
+        minDate: new Date(),
+        showWeeks: true
+    };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        maxDate: new Date(2020, 5, 22),
+        minDate: new Date(),
+        startingDay: 1
+    };
+
+
+
+    $scope.toggleMin = function() {
+        $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+        $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
+
+    $scope.toggleMin();
+
+    $scope.open1 = function() {
+        $scope.popup1.opened = true;
+    };
+    $scope.open2 = function() {
+        $scope.popup2.opened = true;
+    };
+
+
+
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.popup1 = {
+        opened: false
+    };
+
+    $scope.popup2 = {
+        opened: false
+    };
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var afterTomorrow = new Date();
+    afterTomorrow.setDate(tomorrow.getDate() + 1);
+
+
+    $scope.range = [];
+
+    $scope.$watchCollection('[dt_from, dt_to]', function(newValues)
+    {
+         $scope.range =
+            {
+                date_from: newValues[0],
+                date_to: newValues[1]
+            };
+         $scope.eventsRangeDates($scope.range)
+    });
+
+    $scope.eventsRangeDates = function(range) {
+        //console.log(range);
+        events.getRangedEvents({
+            range: range,
+        }).then(function(data){
+            $scope.events.events = data.data;
+        })
+    }
+
+    function getDayClass(data) {
+        var date = data.date,
+            mode = data.mode;
+        if (mode === 'day') {
+            var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+            for (var i = 0; i < $scope.events.length; i++) {
+                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+                if (dayToCheck === currentDay) {
+                    return $scope.events[i].status;
+                }
+            }
+        }
+
+        return '';
     }
 }])

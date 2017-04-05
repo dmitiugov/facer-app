@@ -25,6 +25,16 @@ class ShowsController < ApplicationController
     respond_with @show[0], location: shows_url
   end
 
+  def select_all
+    delete_all()
+    @event = Event.find(params[:event_id])
+    params[:artists].map { |artist|
+      @show = Show.create(event_id: @event.id, artist_id: artist[:id])
+    }
+    @show = Show.where(:event => params[:event_id])
+    return @show
+  end
+
   def change_show_time
     if (shows_params.has_key?(:shows))
       params[:shows].map { |show|
@@ -35,8 +45,6 @@ class ShowsController < ApplicationController
       }
       respond_with @show
     end
-  else
-    render :nothing => true, :status => 200, :content_type => 'text/html'
   end
 
   def create

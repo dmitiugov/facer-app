@@ -18,6 +18,12 @@ var o = {
             });
         });
   };
+  o.getRangedEvents = function(range) {
+        return $http.post('/events/get_ranged.json', range).success(function(data){
+            console.log(data);
+            return(data);
+        });
+    };
   o.getSpecials = function() {
       return $http.get('/special_guests.json').success(function(data) {
           angular.copy(data, o.special_guests);

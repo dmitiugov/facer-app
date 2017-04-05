@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   has_attached_file :file, styles: { medium: "300x300>", thumb: "100x100>", big: "700x700>" }, default_url: "/images/missing.png"
   validates_attachment_content_type :file, content_type: /\Aimage\/.*\z/
+  scope :created_between, lambda {|start_date, end_date| where("date >= ? AND date <= ?", start_date, end_date )}
   belongs_to :accaunt
   belongs_to :user
   has_many :guests, dependent: :destroy

@@ -15,16 +15,17 @@ angular.module('flapperNews')
         '$window',
     function($scope, events, Auth, $location, $window){
         $scope.isRow = function($index){
-            console.log($index);
+            //console.log($index);
             if ($index%3==2) {
                 return true
             }
         }
+
         $scope.inside = 'Внутри'
         $scope.outside = 'Снаружи'
         $scope.eve = events
         console.log($scope.eve.event)
-        //console.log($scope.eve.event, $scope.eve);
+
         $scope.sortType     = 'name'; // set the default sort type
         $scope.sortReverse  = false;  // set the default sort order
         $scope.searchSurname   = '';     // set the default search/filter term

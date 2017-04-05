@@ -34,9 +34,21 @@ angular.module('flapperNews').controller('EditEventCtrl', [
         $scope.addTimeToShow = function(){
             console.log($scope.eve.artists.selected)
         }
-        $scope.showScope = function () {
-            //console.log($scope.eve);
-            $scope.addTimeToShow();
+        if ($scope.eve.specials) {
+            var refreshStatusSpecials = true;
+        }
+        if ($scope.eve.artists) {
+            var refreshStatusArtists = true;
+        }
+        $scope.loadRefreshArtists = function() {
+            if (refreshStatusArtists)
+                $scope.refreshArtists();
+            refreshStatusArtists = false;
+        }
+        $scope.loadRefreshSpecials = function() {
+            if (refreshStatusSpecials)
+                $scope.refreshSpecials();
+            refreshStatusSpecials = false;
         }
         $scope.refreshSpecials = function(name) {
             var selected = events.event.special_guests;
@@ -48,7 +60,6 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 $scope.eve.specials = response.data;
                 $scope.eve.specials.selected = selected;
             });
-
         };
         $scope.refreshArtists = function (name) {
             //console.log(events.event)
@@ -60,7 +71,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             ).then(function(response) {
                 $scope.eve.artists = response.data;
                 $scope.eve.artists.selected = selected;
-                console.log($scope.eve)
+                //console.log($scope.eve)
                 for(var i=0;i<$scope.eve.artists.selected.length;i++){
                     for (var j=0; j<$scope.eve.shows.length; j++) {
                         if ($scope.eve.artists.selected[i].id == $scope.eve.shows[j].artist_id) {
@@ -69,39 +80,28 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                         }
                     }
                 }
-                console.log($scope.eve)
             });
         }
         $scope.selectAllArtists = function() {
-            $scope.eve.artists.selected = []
-            for(var i = 0; i<$scope.eve.artists.length; i++) {
-                var artist = $scope.eve.artists[i]
-                $scope.eve.artists.selected.push(artist);
-            }
-            if($scope.eve.shows.length!=0)
-                shows.deleteAllShows({
-                    event: $scope.eve.id,
+                shows.selectAllShows({
+                    event_id: $scope.eve.id,
+                    artists: $scope.eve.artists,
+                }).then(function(){
+                    $scope.eve.artists.selected = $scope.eve.artists
+                    toastr.success("Артисты добавлены")
+                }, function (error) {
+                    toastr.error("Ошибка");
                 })
-            $scope.eve.new_show = []
-            if  ($scope.eve.artists.selected) {
-                for (var i=0; i<$scope.eve.artists.selected.length; i++) {
-                    var show = {};
-                    show.event_id = '';
-                    show.event_id = $scope.eve.id;
-                    show.artist_id = '';
-                    show.artist_id = $scope.eve.artists.selected[i].id;
-                    show.time_start='';
-                    show.time_end='';
-                    $scope.eve.new_show.push(show);
-
-                }
-                shows.createShow({
-                    shows: $scope.eve.new_show,
-                }).then(function (data) {
-                    console.log(data);
-                })
-            }
         };
+        $scope.resetAllArtists = function() {
+            if($scope.eve.artists.selected)
+                shows.deleteAllShows({
+                    event_id: $scope.eve.id,
+                }).then(function(){
+                    $scope.eve.artists.selected = null
+                    toastr.success("Артисты удалены из события")
+                })
+        }
         //удалить всех спец гостей из события
         $scope.resetAll = function() {
             if($scope.eve.specials.selected)
@@ -115,13 +115,11 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 })
         }
         //добавить всех спец гостей к событию
-        //TODO: переписать точно также артистов
         $scope.selectAll = function() {
                visits.selectAllVisits({
                     event_id: $scope.eve.id,
                     specials: $scope.eve.specials,
                 }).then(function(){
-                console.log($scope.eve.specials)
                    $scope.eve.specials.selected = $scope.eve.specials
                    toastr.success("Гости добавлены")
                 }, function (error) {
@@ -136,21 +134,12 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 $scope.eve.file = null;
             })
         }
-        $scope.resetAllArtists = function() {
-            if($scope.eve.artists.selected)
-                shows.deleteAllShows({
-                    event_id: $scope.eve.id,
-                }).then(function(){
-                    $scope.eve.artists.selected = null
-                })
-        }
         $scope.deleteVisit = function($item) {
 
            visits.checkVisit({
                special_id: $item.id,
                event_id: $scope.eve.id,
            }).then(function(response){
-               //console.log(response.data);
                visits.deleteVisit({
                    visit: response.data,
                })
@@ -161,7 +150,6 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 artist_id: $item.id,
                 event_id: $scope.eve.id,
             }).then(function (response) {
-                //console.log(response.data);
                 shows.deleteShow({
                     show: response.data,
                 })
@@ -187,7 +175,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
         };
         $scope.addShow = function($item) {
             var show = {};
-            console.log($item);
+
             show.event_id = '';
             show.event_id = $scope.eve.id;
             show.artist_id = '';
@@ -201,7 +189,7 @@ angular.module('flapperNews').controller('EditEventCtrl', [
             shows.createShow({
                 shows: $scope.eve.new_show,
             }).then(function (data) {
-                console.log(data);
+                toastr.success(data.data.artist_name + " добавлен в событие")
             })
         }
         $scope.addVisit = function($item) {
@@ -241,7 +229,8 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                     fileFormDataName: 'user[image]'
                 },
             }).then(function (resp) {
-                console.log(resp)
+               toastr.success("Событие изменено");
+               $state.go("events");
             });
         }
         $scope.addEvent = function(){
@@ -279,6 +268,9 @@ angular.module('flapperNews').controller('EditEventCtrl', [
                 }).then(function () {
                     if ($scope.eve.file && $scope.eve.file != '/images/missing.png' && $scope.eve.file.$ngfBlobUrl) {
                         $scope.upload($scope.eve.file, id);
+                    } else {
+                        toastr.success("Событие изменено");
+                        $state.go("events");
                     }
                 })
         };

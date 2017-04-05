@@ -5,19 +5,16 @@ var o = {
     ],
 }
     o.createShow = function(shows) {
-        console.log('!!!');
         return $http.post('/shows.json', shows).success(function (data) {
             console.log(data);
         })
     }
     o.checkShow = function (show) {
-        console.log(show);
         return $http.post('/shows/check_show.json', show).success(function (data) {
             console.log(data);
         })
     }
     o.deleteShow = function(show) {
-        console.log(show)
         if(show.show.id) {
             return $http.delete('/shows/' + show.show.id + '.json').success(function(data){
                 console.log("Show has been deleted!")
@@ -30,9 +27,13 @@ var o = {
 
     }
     o.deleteAllShows = function (event) {
-        console.log(event);
         return $http.post('/shows/delete_all.json', event).success(function(data){
             console.log("All shows has been deleted!")
+        })
+    }
+    o.selectAllShows = function (show) {
+        return $http.post('/shows/select_all.json', show).success(function(data){
+            console.log("All shows has been selected!")
         })
     }
     o.changeShowTime = function(shows) {

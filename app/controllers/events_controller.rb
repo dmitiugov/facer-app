@@ -15,6 +15,16 @@ class EventsController < ApplicationController
       respond_with flash: "You don't have permission for this action"
     end
   end
+  def get_ranged
+
+    @accaunt = Accaunt.find(current_user.accaunt_id)
+    @date_from = params[:range][:date_from]
+    @date_to = params[:range][:date_to]
+    @events = @accaunt.events.created_between(@date_from, @date_to)
+    @events = @events.to_a.uniq{|p| p.id}
+    render json: @events
+    #byebug
+  end
   def create
     #accaunt = Accaunt.find(current_user.accaunt_id)
 

@@ -9,7 +9,8 @@ angular.module('flapperNews').controller('NewEventCtrl', [
     '$location',
     'toastr',
     '$state',
-    function($scope, events, shows, visits, Auth, Upload, $http, $location, toastr, $state){
+    '$timeout',
+    function($scope, events, shows, visits, Auth, Upload, $http, $location, toastr, $state, $timeout){
         $scope.redirectUrl = '/events';
         $scope.action = 'Создать событие'
         $scope.dates = {
@@ -17,6 +18,11 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             //minDate: moment.tz('UTC').add(-4, 'd').hour(12).startOf('h'), //12:00 UTC, four days ago.
             //maxDate: moment.tz('UTC').add(4, 'd').hour(12).startOf('h'), //12:00 UTC, in four days.
         };
+        $scope.renderScope = function() {
+            $timeout(function(){
+                console.log("!!!")
+            }, 200);
+        }
         $scope.eve = {
             name: '',
             file: '',
@@ -146,7 +152,7 @@ angular.module('flapperNews').controller('NewEventCtrl', [
             events.create({
                 name: $scope.eve.name,
                 description: $scope.eve.description,
-                date: $scope.eve.date.format("YYYY-MM-DD HH:mm:ss"),
+                date: $scope.eve.date,
             }).then(function(data) {
                 var id = data.data.id
                 for (var i=0; i<$scope.eve.guests.length; i++) {
