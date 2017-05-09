@@ -9,7 +9,10 @@ angular.module('flapperNews').controller('EventsCtrl', [
     '$location',
     '$state',
     'toastr',
-function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window, $location, $state, toastr){
+    '$cookies',
+function($scope, events, Auth, $compile, uiCalendarConfig, $timeout, $window, $location, $state, toastr, $cookies){
+    //console.log($cookies);
+    var params = {};
     $scope.redirectUrl = '/artists';
     $scope.auth = Auth.isAuthenticated()
     $scope.isCollapsed = true;
@@ -37,11 +40,24 @@ $scope.moveEventToArchive = function (id) {
     })
 
 }
+    $scope.moveEventFromArchive = function (id) {
+        //console.log(id);
+        events.moveEventFromArchive({
+            id: id,
+        }).then(function(data){
+            console.log(data);
+            $scope.events.events = data.data;
+        })
+
+    }
 $scope.showArchivedEvents = function (archive) {
-    //console.log(archive);
+    console.log(archive);
+    params.archive = archive;
+    console.log(params);
     events.showArchivedEvents({
         archive: archive,
     }).then(function(data){
+        $cookies.put('module.events.filters.isArchive', params.archive);
         $scope.events.events = data.data;
     })
 }
@@ -171,6 +187,7 @@ $scope.showArchivedEvents = function (archive) {
         //console.log(range);
         events.getRangedEvents({
             range: range,
+            archive: $scope.archive,
         }).then(function(data){
             $scope.events.events = data.data;
         })
@@ -193,4 +210,12 @@ $scope.showArchivedEvents = function (archive) {
 
         return '';
     }
+    var archive = $cookies.get('module.events.filters.isArchive')
+    console.log(archive);
+    if (archive == 'true')
+        archive = true
+    else
+        archive = false
+    $scope.archive = archive;
+    $scope.showArchivedEvents($scope.archive);
 }])

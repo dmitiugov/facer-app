@@ -19,6 +19,7 @@ var o = {
         });
   };
   o.getRangedEvents = function(range) {
+      console.log(range);
         return $http.post('/events/get_ranged.json', range).success(function(data){
             console.log(data);
             return(data);
@@ -83,6 +84,13 @@ var o = {
     o.moveEventToArchive = function(id) {
         console.log(id)
         return $http.post('/events/move_event_to_archive.json', id).success(function(data){
+            return(data)
+            //console.log(data)
+        })
+    }
+    o.moveEventFromArchive = function(id) {
+        console.log(id)
+        return $http.post('/events/move_event_from_archive.json', id).success(function(data){
             return(data)
             //console.log(data)
         })

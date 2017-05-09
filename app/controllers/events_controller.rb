@@ -21,7 +21,13 @@ class EventsController < ApplicationController
     @accaunt = Accaunt.find(current_user.accaunt_id)
     @date_from = params[:range][:date_from]
     @date_to = params[:range][:date_to]
-    @events = @accaunt.events.created_between(@date_from, @date_to).not_archive
+    @archive = params[:archive]
+
+    if @archive
+      @events = @accaunt.events.created_between(@date_from, @date_to).archive
+    else
+      @events = @accaunt.events.created_between(@date_from, @date_to).not_archive
+    end
     @events = @events.to_a.uniq{|p| p.id}
     render json: @events
     #byebug
@@ -32,6 +38,13 @@ class EventsController < ApplicationController
     @event.save!
     @accaunt = Accaunt.find(current_user.accaunt_id)
     render json: @accaunt.events.not_archive
+  end
+  def move_event_from_archive
+    @event=Event.find(params[:id])
+    @event.archive=false
+    @event.save!
+    @accaunt = Accaunt.find(current_user.accaunt_id)
+    render json: @accaunt.events.archive
   end
   def show_archived_events
     @archive = params[:archive]

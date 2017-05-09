@@ -62,10 +62,16 @@
                                                                         uib-popover="Редактировать"
                                                                         popover-trigger="'mouseenter'"
                                                                         popover-placement="top"></i></a>
-                                <span class="events-archive" ng-click='moveEventToArchive(event.id)'><i class="fa fa-archive" aria-hidden="true"
+                                <span ng-if="!event.archive" class="events-archive" ng-click='moveEventToArchive(event.id)'><i class="fa fa-archive" aria-hidden="true"
                                                                                  uib-popover="Архивировать"
                                                                                  popover-trigger="'mouseenter'"
                                                                                  popover-placement="top"></i></span>
+                                <span ng-if="event.archive" class="events-archive" ng-click='moveEventFromArchive(event.id)'>
+                                    <i class="fa fa-caret-square-o-right" aria-hidden="true"
+                                       uib-popover="Убрать из архива"
+                                       popover-trigger="'mouseenter'"
+                                       popover-placement="top"></i>
+                                </span>
                                 <a ng-if="event.name" href="#" ng-click='deleteEvent(event.id)'>
                                     <i class="fa fa-trash-o" aria-hidden="true"
                                        uib-popover="Удалить"

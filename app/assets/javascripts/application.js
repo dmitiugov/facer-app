@@ -11,6 +11,7 @@
 //= require angular-sanitize
 //= require angular-animate
 //= require interact
+//= require angular-cookies
 //= require angular-devise
 //= require angular-datepicker
 //= require ng-file-upload

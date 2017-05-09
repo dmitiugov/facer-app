@@ -1,6 +1,7 @@
 angular.module('flapperNews',
     ['ngAnimate',
     'ngSanitize',
+    'ngCookies',
     'ui.router',
     'ui.bootstrap',
     'ui.calendar',
